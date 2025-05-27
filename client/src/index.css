@@ -1,0 +1,116 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 0 0% 100%; /* #ffffff */
+  --foreground: 20 14.3% 4.1%; /* #1a1a1a */
+  --muted: 240 4.8% 95.9%; /* #f2f2f7 */
+  --muted-foreground: 25 5.3% 44.7%; /* #8e8e93 */
+  --popover: 0 0% 100%; /* #ffffff */
+  --popover-foreground: 20 14.3% 4.1%; /* #1a1a1a */
+  --card: 0 0% 100%; /* #ffffff */
+  --card-foreground: 20 14.3% 4.1%; /* #1a1a1a */
+  --border: 220 13% 91%; /* #e5e5ea */
+  --input: 220 13% 91%; /* #e5e5ea */
+  --primary: 214 100% 54%; /* #007aff */
+  --primary-foreground: 0 0% 100%; /* #ffffff */
+  --secondary: 240 4.8% 95.9%; /* #f2f2f7 */
+  --secondary-foreground: 24 9.8% 10%; /* #1a1a1a */
+  --accent: 240 4.8% 95.9%; /* #f2f2f7 */
+  --accent-foreground: 24 9.8% 10%; /* #1a1a1a */
+  --destructive: 0 84.2% 60.2%; /* #ff3b30 */
+  --destructive-foreground: 60 9.1% 97.8%; /* #ffffff */
+  --ring: 214 100% 54%; /* #007aff */
+  --radius: 0.75rem;
+  
+  /* Custom iOS colors */
+  --ios-blue: 214 100% 54%; /* #007aff */
+  --ios-gray: 240 4.8% 95.9%; /* #f2f2f7 */
+  --ios-text: 214 6% 26%; /* #3c3c43 */
+  --ios-secondary: 240 2% 56%; /* #8e8e93 */
+  --ios-success: 142 76% 36%; /* #34c759 */
+  --ios-error: 4 90% 58%; /* #ff3b30 */
+}
+
+.dark {
+  --background: 240 10% 3.9%;
+  --foreground: 0 0% 98%;
+  --muted: 240 3.7% 15.9%;
+  --muted-foreground: 240 5% 64.9%;
+  --popover: 240 10% 3.9%;
+  --popover-foreground: 0 0% 98%;
+  --card: 240 10% 3.9%;
+  --card-foreground: 0 0% 98%;
+  --border: 240 3.7% 15.9%;
+  --input: 240 3.7% 15.9%;
+  --primary: 214 100% 54%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 240 3.7% 15.9%;
+  --secondary-foreground: 0 0% 98%;
+  --accent: 240 3.7% 15.9%;
+  --accent-foreground: 0 0% 98%;
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 98%;
+  --ring: 240 4.9% 83.9%;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply antialiased bg-background text-foreground;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+}
+
+/* Custom utility classes */
+.text-ios-blue {
+  color: hsl(var(--ios-blue));
+}
+
+.text-ios-gray {
+  color: hsl(var(--ios-gray));
+}
+
+.text-ios-text {
+  color: hsl(var(--ios-text));
+}
+
+.text-ios-secondary {
+  color: hsl(var(--ios-secondary));
+}
+
+.text-ios-success {
+  color: hsl(var(--ios-success));
+}
+
+.text-ios-error {
+  color: hsl(var(--ios-error));
+}
+
+.bg-ios-blue {
+  background-color: hsl(var(--ios-blue));
+}
+
+.bg-ios-gray {
+  background-color: hsl(var(--ios-gray));
+}
+
+.bg-ios-success {
+  background-color: hsl(var(--ios-success));
+}
+
+.bg-ios-error {
+  background-color: hsl(var(--ios-error));
+}
+
+.border-ios-blue {
+  border-color: hsl(var(--ios-blue));
+}
+
+.hover\:bg-ios-blue:hover {
+  background-color: hsl(var(--ios-blue));
+}
