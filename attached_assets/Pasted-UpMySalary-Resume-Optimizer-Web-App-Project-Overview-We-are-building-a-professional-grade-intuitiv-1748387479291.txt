@@ -1,0 +1,124 @@
+UpMySalary Resume Optimizer Web App
+Project Overview:
+We are building a professional-grade, intuitive, and extremely simple web application for www.upmysalary.com. The app helps professionals turn their resume into a perfect, ATS-optimized document using AI. Users can:
+
+Upload a basic resume → Get a polished version (Standard Mode)
+
+Upload a resume + multiple job listings → Get tailored versions (Advanced Mode)
+
+This is the only purpose of the site. There are no extra pages, menus, or distractions.
+
+🔑 TECH STACK
+Frontend: HTML/CSS/JS (or Tailwind + React for a clean UI)
+
+Backend: Node.js or Python Flask (connected to ChatGPT API + Google Sheets API)
+
+Database (optional): Firebase or Supabase (for session and file tracking)
+
+APIs: OpenAI API (ChatGPT 4), Google Drive API (to generate/export to Google Docs)
+
+Hosting: Replit or a serverless platform with file handling ability
+
+🧭 PAGES & USER FLOW
+1. Landing Page ("/")
+Brief intro: "Turn your resume into a perfect, AI-polished document."
+
+Two big buttons:
+
+“✨ Standard Resume Polish”
+
+“🎯 Tailor Resume to a Job”
+
+2. Standard Mode Page ("/standard")
+Function: Users upload a basic resume → output: optimized, polished version (Google Doc + PDF download)
+
+Fields:
+
+Upload Resume (.docx or .pdf)
+
+Upload supporting details (optional): cover letter, LinkedIn, etc.
+
+User email (for download link delivery if needed)
+
+Backend process:
+
+Parse uploaded resume → send to ChatGPT via prompt template:
+
+“Take this resume and make it a 10/10. Add formal structure, enhance weak phrasing, highlight results with metrics where possible, and rewrite for clarity and power.”
+
+Output saved to Google Doc + downloadable PDF
+
+Buttons:
+
+[Download as Google Doc]
+
+[Download PDF]
+
+3. Advanced Mode Page ("/tailored")
+Function: User uploads resume + up to 20 job listings → output: 20 tailored resumes
+
+Fields:
+
+Upload Resume (.docx or .pdf)
+
+Upload Job Descriptions (up to 20, drag-and-drop or multi-upload)
+
+Email address (optional for tracking)
+
+Backend process:
+
+Loop: For each job description:
+
+Prompt ChatGPT:
+
+“Using this job description and this resume, create a version of the resume that is perfectly tailored to this job. Include keywords from the job listing, match skills with job requirements, and highlight relevant accomplishments.”
+
+Output: One resume per job listing → Download links (Google Doc + PDF for each)
+
+Buttons:
+
+[Download All as ZIP]
+
+[Download Google Docs]
+
+[Download All PDFs]
+
+4. Success Page ("/done")
+Confirmation message
+
+Links to download files
+
+CTA: “Need help applying fast? Try our Resume Blaster” (placeholder for future product)
+
+🧠 LOGIC & BACKEND FLOW
+Upload → Save file temporarily
+
+Extract text (docx/pdf parsing)
+
+Google Sheet stores each user request (timestamp, email, file names)
+
+ChatGPT (via OpenAI API) receives the proper structured prompt (you will get templates from us)
+
+Format output resume using a consistent style guide
+
+Export via Google Docs API and PDF converter
+
+Serve download links to user
+
+📦 OPTIONAL FEATURES
+Progress bar (especially for 20-job batch uploads)
+
+Session-saving (if using Supabase/Firebase)
+
+Branded, styled Google Docs (header/footer/logo)
+
+👩🏽‍💼 DESIGN NOTES
+Minimalist. Apple-style interface: white background, black/gray text, accent color in blue.
+
+Fonts: Inter, Helvetica, or similar
+
+Must be mobile-responsive
+
+Error states and progress feedback are essential
+
+📝 DELIVERABLES
