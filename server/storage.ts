@@ -1,6 +1,6 @@
 import { resumeJobs, storedFiles, type ResumeJob, type InsertResumeJob, type UpdateResumeJob, type InsertStoredFile, type StoredFile } from "@shared/schema";
 import { db } from "./db";
-import { eq, and, lt } from "drizzle-orm";
+import { eq, and, gt, lt } from "drizzle-orm";
 
 // modify the interface with any CRUD methods
 // you might need
@@ -72,7 +72,7 @@ export class DatabaseStorage implements IStorage {
       .where(and(
         eq(storedFiles.downloadUrl, downloadUrl),
         // Only return non-expired files
-        lt(new Date(), storedFiles.expiresAt)
+        gt(storedFiles.expiresAt, new Date())
       ));
     return file || undefined;
   }
@@ -84,14 +84,15 @@ export class DatabaseStorage implements IStorage {
       .where(and(
         eq(storedFiles.jobId, jobId),
         // Only return non-expired files
-        lt(new Date(), storedFiles.expiresAt)
+        gt(storedFiles.expiresAt, new Date())
       ));
   }
 
   async cleanupExpiredFiles(): Promise<void> {
+    const now = new Date();
     await db
       .delete(storedFiles)
-      .where(lt(storedFiles.expiresAt, new Date()));
+      .where(lt(storedFiles.expiresAt, now));
   }
 }
 
