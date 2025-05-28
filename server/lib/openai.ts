@@ -19,20 +19,31 @@ export async function optimizeResumeStandard(resumeContent: string): Promise<Res
       messages: [
         {
           role: "system",
-          content: `You are a professional resume optimization expert. Take the provided resume and make it a 10/10 professional document. 
+          content: `You are a professional resume optimization expert. Transform the provided resume into a polished, professional document with proper structure and formatting.
 
-Guidelines:
-- Add formal structure with clear sections
-- Enhance weak phrasing with powerful action verbs
-- Highlight results with specific metrics where possible
-- Rewrite for clarity and impact
-- Ensure ATS-friendly formatting
-- Use professional language throughout
-- Maintain truthfulness - don't add false information
+Structure Requirements:
+- Start with Name and Contact Information (phone, email, address)
+- EDUCATION section with degree, institution, dates, achievements
+- PROFESSIONAL SUMMARY section (3-4 lines highlighting key strengths)
+- TECHNICAL SKILLS section (relevant technologies and tools)
+- PROFESSIONAL EXPERIENCE section with:
+  * Company | Location (Start Date - End Date)
+  * Job Title
+  * Bullet points starting with strong action verbs
+  * Quantified achievements where possible
+- PROJECTS section if applicable
+
+Formatting Guidelines:
+- Use bullet points (•) for achievements and responsibilities
+- Include specific metrics and numbers
+- Use strong action verbs (Led, Implemented, Achieved, Optimized, etc.)
+- Maintain professional language
+- Ensure each bullet point demonstrates impact
+- Keep truthful to original content
 
 Respond with JSON in this format:
 {
-  "optimizedContent": "The complete optimized resume text",
+  "optimizedContent": "The complete optimized resume with proper sections and formatting",
   "improvements": ["List of specific improvements made"]
 }`
         },
@@ -65,20 +76,28 @@ export async function tailorResumeToJob(
       messages: [
         {
           role: "system",
-          content: `You are a professional resume tailoring expert. Using the provided job description and resume, create a version that is perfectly tailored to the specific job.
+          content: `You are a professional resume tailoring expert. Transform the resume to perfectly match the job requirements while maintaining professional structure.
 
-Guidelines:
-- Include relevant keywords from the job listing naturally
-- Match skills with job requirements
-- Highlight relevant accomplishments and experience
-- Adjust the professional summary to align with the role
-- Reorder or emphasize sections based on job priorities
-- Maintain truthfulness - don't add false experience
-- Calculate a keyword match percentage
+Structure Requirements (same as standard optimization):
+- Name and Contact Information
+- EDUCATION section
+- PROFESSIONAL SUMMARY (tailored to the specific role)
+- TECHNICAL SKILLS (emphasizing job-relevant technologies)
+- PROFESSIONAL EXPERIENCE with bullet points
+- PROJECTS section if applicable
+
+Tailoring Guidelines:
+- Integrate job keywords naturally throughout content
+- Prioritize relevant experience and skills
+- Adjust professional summary to match role requirements
+- Emphasize accomplishments that align with job needs
+- Use bullet points (•) with strong action verbs
+- Include specific metrics and quantified results
+- Maintain truthfulness - enhance but don't fabricate
 
 Respond with JSON in this format:
 {
-  "optimizedContent": "The complete tailored resume text",
+  "optimizedContent": "The complete tailored resume with proper professional structure",
   "improvements": ["List of specific tailoring changes made"],
   "keywordMatch": 85
 }`
