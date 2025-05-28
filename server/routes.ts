@@ -28,20 +28,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // File download route - serves stored resume files
   app.get("/api/download/:fileId", async (req, res) => {
     try {
+      const { getStoredFile } = await import("./lib/file-storage");
       const fileId = req.params.fileId;
-      const file = await storage.getFile(`/api/download/${fileId}`);
+      const file = getStoredFile(fileId);
       
       if (!file) {
         return res.status(404).json({ error: "File not found or expired" });
       }
 
       // Decode base64 content
-      const fileBuffer = Buffer.from(file.fileContent, 'base64');
+      const fileBuffer = Buffer.from(file.content, 'base64');
       
       // Set appropriate headers
       res.setHeader('Content-Type', file.mimeType);
       res.setHeader('Content-Disposition', `attachment; filename="${file.fileName}"`);
-      res.setHeader('Content-Length', file.fileSize);
+      res.setHeader('Content-Length', fileBuffer.length);
       
       // Send file
       res.send(fileBuffer);

@@ -59,11 +59,15 @@ export function getStoredFile(fileId: string): StoredFile | null {
 // Clean up expired files periodically
 setInterval(() => {
   const now = new Date();
-  for (const [fileId, file] of fileStorage.entries()) {
+  const keysToDelete: string[] = [];
+  
+  fileStorage.forEach((file, fileId) => {
     if (file.expiresAt < now) {
-      fileStorage.delete(fileId);
+      keysToDelete.push(fileId);
     }
-  }
+  });
+  
+  keysToDelete.forEach(fileId => fileStorage.delete(fileId));
 }, 60 * 60 * 1000); // Clean up every hour
 
 export async function createDownloadableFile(
