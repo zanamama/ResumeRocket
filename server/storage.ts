@@ -1,6 +1,6 @@
-import { resumeJobs, type ResumeJob, type InsertResumeJob, type UpdateResumeJob } from "@shared/schema";
+import { resumeJobs, storedFiles, type ResumeJob, type InsertResumeJob, type UpdateResumeJob, type InsertStoredFile, type StoredFile } from "@shared/schema";
 import { db } from "./db";
-import { eq } from "drizzle-orm";
+import { eq, and, lt } from "drizzle-orm";
 
 // modify the interface with any CRUD methods
 // you might need
@@ -10,6 +10,12 @@ export interface IStorage {
   getResumeJob(id: number): Promise<ResumeJob | undefined>;
   updateResumeJob(id: number, updates: UpdateResumeJob): Promise<ResumeJob | undefined>;
   getResumeJobsByEmail(email: string): Promise<ResumeJob[]>;
+  
+  // File storage methods
+  storeFile(file: InsertStoredFile): Promise<StoredFile>;
+  getFile(downloadUrl: string): Promise<StoredFile | undefined>;
+  getFilesByJobId(jobId: number): Promise<StoredFile[]>;
+  cleanupExpiredFiles(): Promise<void>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -48,6 +54,44 @@ export class DatabaseStorage implements IStorage {
 
   async getResumeJobsByEmail(email: string): Promise<ResumeJob[]> {
     return await db.select().from(resumeJobs).where(eq(resumeJobs.email, email));
+  }
+
+  // File storage implementation
+  async storeFile(file: InsertStoredFile): Promise<StoredFile> {
+    const [storedFile] = await db
+      .insert(storedFiles)
+      .values(file)
+      .returning();
+    return storedFile;
+  }
+
+  async getFile(downloadUrl: string): Promise<StoredFile | undefined> {
+    const [file] = await db
+      .select()
+      .from(storedFiles)
+      .where(and(
+        eq(storedFiles.downloadUrl, downloadUrl),
+        // Only return non-expired files
+        lt(new Date(), storedFiles.expiresAt)
+      ));
+    return file || undefined;
+  }
+
+  async getFilesByJobId(jobId: number): Promise<StoredFile[]> {
+    return await db
+      .select()
+      .from(storedFiles)
+      .where(and(
+        eq(storedFiles.jobId, jobId),
+        // Only return non-expired files
+        lt(new Date(), storedFiles.expiresAt)
+      ));
+  }
+
+  async cleanupExpiredFiles(): Promise<void> {
+    await db
+      .delete(storedFiles)
+      .where(lt(storedFiles.expiresAt, new Date()));
   }
 }
 

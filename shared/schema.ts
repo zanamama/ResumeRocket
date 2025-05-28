@@ -15,6 +15,19 @@ export const resumeJobs = pgTable("resume_jobs", {
   completedAt: timestamp("completed_at"),
 });
 
+export const storedFiles = pgTable("stored_files", {
+  id: serial("id").primaryKey(),
+  jobId: integer("job_id").references(() => resumeJobs.id).notNull(),
+  fileName: text("file_name").notNull(),
+  fileContent: text("file_content").notNull(), // Base64 encoded file content
+  fileType: text("file_type").notNull(), // "pdf", "docx", etc.
+  mimeType: text("mime_type").notNull(),
+  fileSize: integer("file_size").notNull(),
+  downloadUrl: text("download_url").notNull(), // URL path for downloading
+  createdAt: timestamp("created_at").defaultNow(),
+  expiresAt: timestamp("expires_at").notNull(), // 24 hours from creation
+});
+
 export const insertResumeJobSchema = createInsertSchema(resumeJobs).omit({
   id: true,
   createdAt: true,
@@ -26,9 +39,16 @@ export const updateResumeJobSchema = createInsertSchema(resumeJobs).partial().om
   createdAt: true,
 });
 
+export const insertStoredFileSchema = createInsertSchema(storedFiles).omit({
+  id: true,
+  createdAt: true,
+});
+
 export type InsertResumeJob = z.infer<typeof insertResumeJobSchema>;
 export type UpdateResumeJob = z.infer<typeof updateResumeJobSchema>;
 export type ResumeJob = typeof resumeJobs.$inferSelect;
+export type InsertStoredFile = z.infer<typeof insertStoredFileSchema>;
+export type StoredFile = typeof storedFiles.$inferSelect;
 
 // Additional types for file handling
 export const fileUploadSchema = z.object({
