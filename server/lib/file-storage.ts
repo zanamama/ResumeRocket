@@ -1,5 +1,12 @@
-import { storage } from "../storage";
-import crypto from "crypto";
+// Simple in-memory file storage for 24-hour access
+interface StoredFile {
+  content: string;
+  fileName: string;
+  mimeType: string;
+  expiresAt: Date;
+}
+
+const fileStorage = new Map<string, StoredFile>();
 
 export interface StoredFileInfo {
   downloadUrl: string;
@@ -14,7 +21,7 @@ export async function storeFileForDownload(
   fileType: 'pdf' | 'docx'
 ): Promise<StoredFileInfo> {
   // Generate unique file ID
-  const fileId = crypto.randomUUID();
+  const fileId = `${jobId}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
   const downloadUrl = `/api/download/${fileId}`;
   
   // Calculate expiration time (24 hours from now)
@@ -24,15 +31,11 @@ export async function storeFileForDownload(
   // Determine MIME type
   const mimeType = fileType === 'pdf' ? 'application/pdf' : 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
   
-  // Store file in database
-  await storage.storeFile({
-    jobId,
+  // Store file in memory
+  fileStorage.set(fileId, {
+    content,
     fileName,
-    fileContent: content, // Base64 encoded content
-    fileType,
     mimeType,
-    fileSize: Buffer.from(content, 'base64').length,
-    downloadUrl,
     expiresAt,
   });
   
@@ -42,6 +45,26 @@ export async function storeFileForDownload(
     fileType,
   };
 }
+
+export function getStoredFile(fileId: string): StoredFile | null {
+  const file = fileStorage.get(fileId);
+  if (!file || file.expiresAt < new Date()) {
+    // Clean up expired file
+    if (file) fileStorage.delete(fileId);
+    return null;
+  }
+  return file;
+}
+
+// Clean up expired files periodically
+setInterval(() => {
+  const now = new Date();
+  for (const [fileId, file] of fileStorage.entries()) {
+    if (file.expiresAt < now) {
+      fileStorage.delete(fileId);
+    }
+  }
+}, 60 * 60 * 1000); // Clean up every hour
 
 export async function createDownloadableFile(
   content: string,

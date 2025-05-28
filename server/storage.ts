@@ -10,12 +10,6 @@ export interface IStorage {
   getResumeJob(id: number): Promise<ResumeJob | undefined>;
   updateResumeJob(id: number, updates: UpdateResumeJob): Promise<ResumeJob | undefined>;
   getResumeJobsByEmail(email: string): Promise<ResumeJob[]>;
-  
-  // File storage methods
-  storeFile(file: InsertStoredFile): Promise<StoredFile>;
-  getFile(downloadUrl: string): Promise<StoredFile | undefined>;
-  getFilesByJobId(jobId: number): Promise<StoredFile[]>;
-  cleanupExpiredFiles(): Promise<void>;
 }
 
 export class DatabaseStorage implements IStorage {

@@ -4,7 +4,7 @@ import { storage } from "./storage";
 import { insertResumeJobSchema, updateResumeJobSchema, type JobDescription } from "@shared/schema";
 import { parseFileContent, validateFileUpload } from "./lib/file-parser";
 import { optimizeResumeStandard, tailorResumeToJob } from "./lib/openai";
-import { createGoogleDoc, createMultipleGoogleDocs, generateDownloadZipUrl } from "./lib/google-docs";
+import { createDownloadableDocument, createMultipleDownloadableDocuments, generateDownloadZipUrl } from "./lib/google-docs";
 import multer from "multer";
 
 // Configure multer for file uploads
@@ -227,10 +227,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Optimize resume
       const result = await optimizeResumeStandard(job.resumeContent);
 
-      // Create Google Doc
-      const docExport = await createGoogleDoc(
+      // Create downloadable document
+      const docExport = await createDownloadableDocument(
         result.optimizedContent,
-        `Optimized_${job.resumeFileName.replace(/\.(pdf|docx)$/i, '')}`
+        `Optimized_${job.resumeFileName.replace(/\.(pdf|docx)$/i, '')}`,
+        jobId
       );
 
       // Update job with results
@@ -283,12 +284,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
-      // Create Google Docs for all tailored resumes
-      const docExports = await createMultipleGoogleDocs(
+      // Create downloadable documents for all tailored resumes
+      const docExports = await createMultipleDownloadableDocuments(
         tailoredResumes.map(resume => ({
           content: resume.content,
           title: resume.title,
-        }))
+        })),
+        jobId
       );
 
       // Generate ZIP download URL
