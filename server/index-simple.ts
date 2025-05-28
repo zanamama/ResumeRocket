@@ -9,6 +9,7 @@ const server = createServer(app);
 // Basic middleware
 app.use(express.json());
 app.use(express.static("client/dist"));
+app.use("/assets", express.static("attached_assets"));
 
 // Configure multer for file uploads
 const upload = multer({
