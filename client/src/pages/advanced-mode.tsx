@@ -79,9 +79,7 @@ export default function AdvancedMode() {
         <div className="max-w-6xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-ios-blue rounded-lg flex items-center justify-center">
-                <span className="text-white font-semibold text-sm">UM</span>
-              </div>
+              <img src="/assets/UpMySalary Logo no words.png" alt="UpMySalary" className="w-8 h-8" />
               <span className="text-xl font-semibold text-black">UpMySalary</span>
             </div>
           </div>
