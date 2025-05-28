@@ -16,7 +16,7 @@ export default function Landing() {
             <div className="hidden md:flex items-center space-x-8">
               <Link href="/how-it-works" className="text-ios-text hover:text-black transition-colors">How it Works</Link>
               <a href="#" className="text-ios-text hover:text-black transition-colors">Examples</a>
-              <a href="#" className="text-ios-text hover:text-black transition-colors">Support</a>
+              <a href="mailto:upmypay@gmail.com?subject=UpMySalary Support Request" className="text-ios-text hover:text-black transition-colors">Support</a>
             </div>
           </div>
         </div>

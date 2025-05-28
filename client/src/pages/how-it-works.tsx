@@ -24,6 +24,7 @@ export default function HowItWorks() {
             <nav className="hidden md:flex space-x-8">
               <Link href="/" className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">Home</Link>
               <Link href="/how-it-works" className="text-blue-600 dark:text-blue-400 font-medium">How it works</Link>
+              <a href="mailto:upmypay@gmail.com?subject=UpMySalary Support Request" className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">Support</a>
             </nav>
           </div>
         </div>
