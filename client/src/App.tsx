@@ -9,11 +9,13 @@ import StandardMode from "./pages/standard-mode";
 import AdvancedMode from "./pages/advanced-mode";
 import Processing from "./pages/processing";
 import Success from "./pages/success";
+import HowItWorks from "./pages/how-it-works";
 
 function Router() {
   return (
     <Switch>
       <Route path="/" component={Landing} />
+      <Route path="/how-it-works" component={HowItWorks} />
       <Route path="/standard" component={StandardMode} />
       <Route path="/advanced" component={AdvancedMode} />
       <Route path="/processing/:jobId" component={Processing} />
