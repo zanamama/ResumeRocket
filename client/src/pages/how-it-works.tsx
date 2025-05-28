@@ -155,7 +155,7 @@ export default function HowItWorks() {
       <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white dark:bg-gray-900">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-3xl font-bold text-center text-gray-900 dark:text-white mb-12">
-            Simple 4-Step Process
+            Our Enhancement System - Simple 4-Step Process
           </h2>
           <div className="grid md:grid-cols-4 gap-8">
             {/* Step 1 */}
@@ -164,9 +164,10 @@ export default function HowItWorks() {
                 <Upload className="h-8 w-8 text-blue-600 dark:text-blue-400" />
               </div>
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">1. Upload Resume</h3>
-              <p className="text-gray-600 dark:text-gray-300">
+              <p className="text-gray-600 dark:text-gray-300 mb-2">
                 Upload your existing resume in PDF or DOCX format
               </p>
+              <Badge variant="outline" className="text-xs">Instant upload</Badge>
             </div>
 
             {/* Step 2 */}
@@ -175,9 +176,10 @@ export default function HowItWorks() {
                 <FileText className="h-8 w-8 text-green-600 dark:text-green-400" />
               </div>
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">2. Add Job Descriptions</h3>
-              <p className="text-gray-600 dark:text-gray-300">
+              <p className="text-gray-600 dark:text-gray-300 mb-2">
                 Paste job descriptions you want to target (Advanced mode only)
               </p>
+              <Badge variant="outline" className="text-xs">30 seconds setup</Badge>
             </div>
 
             {/* Step 3 */}
@@ -185,10 +187,11 @@ export default function HowItWorks() {
               <div className="bg-purple-100 dark:bg-purple-900 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
                 <Zap className="h-8 w-8 text-purple-600 dark:text-purple-400" />
               </div>
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">3. AI Processing</h3>
-              <p className="text-gray-600 dark:text-gray-300">
-                Our AI analyzes and optimizes your resume content
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">3. AI Enhancement</h3>
+              <p className="text-gray-600 dark:text-gray-300 mb-2">
+                Our AI analyzes, optimizes, and enhances your resume content
               </p>
+              <Badge variant="default" className="text-xs bg-purple-600">2-5 minutes processing</Badge>
             </div>
 
             {/* Step 4 */}
@@ -196,10 +199,141 @@ export default function HowItWorks() {
               <div className="bg-orange-100 dark:bg-orange-900 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
                 <Download className="h-8 w-8 text-orange-600 dark:text-orange-400" />
               </div>
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">4. Download Results</h3>
-              <p className="text-gray-600 dark:text-gray-300">
-                Get your optimized resume(s) as Google Docs and PDFs
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">4. Download Enhanced Docs</h3>
+              <p className="text-gray-600 dark:text-gray-300 mb-2">
+                Receive your enhanced resume(s) as Google Docs and PDFs
               </p>
+              <Badge variant="outline" className="text-xs">Ready for download</Badge>
+            </div>
+          </div>
+
+          {/* Processing Time Details */}
+          <div className="mt-16 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-800 dark:to-gray-700 rounded-lg p-8">
+            <h3 className="text-2xl font-bold text-center text-gray-900 dark:text-white mb-6">
+              Processing Times & What to Expect
+            </h3>
+            <div className="grid md:grid-cols-2 gap-8">
+              <div className="text-center">
+                <div className="bg-blue-600 text-white rounded-lg p-4 mb-4">
+                  <h4 className="font-semibold text-lg">Standard Polish</h4>
+                  <p className="text-2xl font-bold">2-3 minutes</p>
+                </div>
+                <p className="text-gray-600 dark:text-gray-300">
+                  Quick enhancement of your resume with improved formatting, grammar, and ATS optimization
+                </p>
+              </div>
+              <div className="text-center">
+                <div className="bg-purple-600 text-white rounded-lg p-4 mb-4">
+                  <h4 className="font-semibold text-lg">Advanced Tailoring</h4>
+                  <p className="text-2xl font-bold">3-5 minutes</p>
+                </div>
+                <p className="text-gray-600 dark:text-gray-300">
+                  Comprehensive analysis and customization for up to 20 job descriptions with keyword matching
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Enhancement System Details */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-3xl font-bold text-center text-gray-900 dark:text-white mb-12">
+            What Happens During Enhancement
+          </h2>
+          <div className="grid md:grid-cols-3 gap-8 mb-16">
+            <Card className="border-2 border-blue-200">
+              <CardHeader>
+                <CardTitle className="flex items-center space-x-2">
+                  <Target className="h-6 w-6 text-blue-600" />
+                  <span>Content Analysis</span>
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-2 text-gray-600 dark:text-gray-300">
+                  <li>• Grammar and spelling corrections</li>
+                  <li>• Sentence structure improvements</li>
+                  <li>• Professional tone optimization</li>
+                  <li>• Quantifiable metrics enhancement</li>
+                  <li>• Action verb strengthening</li>
+                </ul>
+              </CardContent>
+            </Card>
+
+            <Card className="border-2 border-green-200">
+              <CardHeader>
+                <CardTitle className="flex items-center space-x-2">
+                  <CheckCircle className="h-6 w-6 text-green-600" />
+                  <span>ATS Optimization</span>
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-2 text-gray-600 dark:text-gray-300">
+                  <li>• Keyword integration and placement</li>
+                  <li>• Format compatibility checks</li>
+                  <li>• Section structure optimization</li>
+                  <li>• Font and spacing adjustments</li>
+                  <li>• Machine-readable formatting</li>
+                </ul>
+              </CardContent>
+            </Card>
+
+            <Card className="border-2 border-purple-200">
+              <CardHeader>
+                <CardTitle className="flex items-center space-x-2">
+                  <Zap className="h-6 w-6 text-purple-600" />
+                  <span>Job Matching (Advanced)</span>
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-2 text-gray-600 dark:text-gray-300">
+                  <li>• Job description analysis</li>
+                  <li>• Skills alignment and highlighting</li>
+                  <li>• Experience relevance scoring</li>
+                  <li>• Custom keyword integration</li>
+                  <li>• Company-specific tailoring</li>
+                </ul>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Delivery Information */}
+          <div className="bg-gradient-to-r from-green-50 to-blue-50 dark:from-gray-800 dark:to-gray-700 rounded-lg p-8">
+            <h3 className="text-2xl font-bold text-center text-gray-900 dark:text-white mb-6">
+              How You Receive Your Enhanced Documents
+            </h3>
+            <div className="grid md:grid-cols-2 gap-8">
+              <div className="flex items-start space-x-4">
+                <div className="bg-blue-600 text-white rounded-full p-2">
+                  <FileText className="h-6 w-6" />
+                </div>
+                <div>
+                  <h4 className="font-semibold text-lg text-gray-900 dark:text-white mb-2">Google Docs Format</h4>
+                  <p className="text-gray-600 dark:text-gray-300">
+                    Fully editable Google Docs with professional formatting. You can make final adjustments, 
+                    share with others, and collaborate easily. Perfect for ongoing customization.
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-start space-x-4">
+                <div className="bg-red-600 text-white rounded-full p-2">
+                  <Download className="h-6 w-6" />
+                </div>
+                <div>
+                  <h4 className="font-semibold text-lg text-gray-900 dark:text-white mb-2">PDF Download</h4>
+                  <p className="text-gray-600 dark:text-gray-300">
+                    Print-ready PDF files that maintain perfect formatting across all devices. 
+                    Ready to submit directly to employers or upload to job boards.
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="mt-8 text-center">
+              <Badge variant="secondary" className="px-4 py-2">
+                All documents are available immediately after processing completes
+              </Badge>
             </div>
           </div>
         </div>
