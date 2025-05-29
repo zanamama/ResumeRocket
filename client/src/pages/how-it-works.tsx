@@ -11,9 +11,8 @@ export default function HowItWorks() {
         <div className="max-w-6xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <Link href="/">
-              <div className="flex items-center space-x-2 cursor-pointer">
+              <div className="flex items-center cursor-pointer">
                 <img src="/assets/logo-2.70e507e8.png" alt="UpMySalary" className="w-8 h-8" />
-                <span className="text-xl font-semibold text-black">UpMySalary</span>
               </div>
             </Link>
             <div className="hidden md:flex items-center space-x-8">
