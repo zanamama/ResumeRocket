@@ -1,4 +1,5 @@
 import type { FileUpload } from "@shared/schema";
+import mammoth from "mammoth";
 
 export async function parseFileContent(file: FileUpload): Promise<string> {
   try {
@@ -18,26 +19,51 @@ export async function parseFileContent(file: FileUpload): Promise<string> {
 }
 
 async function parsePdfContent(buffer: Buffer): Promise<string> {
-  // For now, we'll return a placeholder implementation
-  // In a real implementation, you would use a library like pdf-parse
   try {
-    // Simulating PDF parsing - in production, use pdf-parse library
-    const text = buffer.toString('utf-8');
-    // Basic extraction - this would be replaced with proper PDF parsing
-    return text.replace(/[^\x20-\x7E\n\r]/g, '').trim();
+    // For PDF files, we'll use a basic text extraction approach
+    // This handles simple PDFs with extractable text
+    const text = buffer.toString('binary');
+    
+    // Extract text between content streams
+    const textRegex = /BT\s*(.*?)\s*ET/gs;
+    const textMatches = text.match(textRegex) || [];
+    
+    let extractedText = '';
+    for (const match of textMatches) {
+      // Extract text from PDF operators
+      const cleanText = match
+        .replace(/BT|ET/g, '')
+        .replace(/\/\w+\s+\d+(\.\d+)?\s+Tf/g, '')
+        .replace(/\d+(\.\d+)?\s+\d+(\.\d+)?\s+Td/g, '')
+        .replace(/\((.*?)\)\s*Tj/g, '$1 ')
+        .replace(/\[(.*?)\]\s*TJ/g, '$1 ')
+        .trim();
+      
+      extractedText += cleanText + ' ';
+    }
+    
+    // If no text found through regex, try simple string extraction
+    if (!extractedText.trim()) {
+      // Look for readable text in the PDF
+      const readableText = text.replace(/[^\x20-\x7E\n\r]/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim();
+      
+      if (readableText.length > 50) {
+        extractedText = readableText;
+      }
+    }
+    
+    return extractedText.trim() || "Unable to extract text from PDF. Please try uploading a different format or ensure the PDF contains selectable text.";
   } catch (error) {
-    throw new Error('Failed to extract text from PDF');
+    return "Unable to extract text from PDF. Please try uploading a DOCX file instead.";
   }
 }
 
 async function parseDocxContent(buffer: Buffer): Promise<string> {
-  // For now, we'll return a placeholder implementation
-  // In a real implementation, you would use a library like mammoth
   try {
-    // Simulating DOCX parsing - in production, use mammoth library
-    const text = buffer.toString('utf-8');
-    // Basic extraction - this would be replaced with proper DOCX parsing
-    return text.replace(/[^\x20-\x7E\n\r]/g, '').trim();
+    const result = await mammoth.extractRawText({ buffer });
+    return result.value.trim();
   } catch (error) {
     throw new Error('Failed to extract text from DOCX');
   }
