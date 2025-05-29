@@ -28,8 +28,8 @@ export async function storeFileForDownload(
   const expiresAt = new Date();
   expiresAt.setHours(expiresAt.getHours() + 24);
   
-  // Determine MIME type - using text for all downloads for now to avoid corruption
-  const mimeType = 'text/plain';
+  // Determine MIME type based on file type
+  const mimeType = fileType === 'pdf' ? 'application/pdf' : 'text/plain';
   
   // Store file in memory
   fileStorage.set(fileId, {
@@ -75,10 +75,14 @@ export async function createDownloadableFile(
   fileName: string,
   format: 'pdf' | 'docx' = 'pdf'
 ): Promise<string> {
-  // For now, return properly formatted text content
-  // This ensures downloads work without corruption
-  const formattedContent = formatResumeContent(content);
-  return Buffer.from(formattedContent).toString('base64');
+  if (format === 'pdf') {
+    const { generateResumePDF } = await import('./pdf-generator');
+    const pdfBuffer = generateResumePDF(content, fileName);
+    return pdfBuffer.toString('base64');
+  } else {
+    const formattedContent = formatResumeContent(content);
+    return Buffer.from(formattedContent).toString('base64');
+  }
 }
 
 async function createPdfDocument(content: string, fileName: string): Promise<string> {
