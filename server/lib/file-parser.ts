@@ -25,7 +25,7 @@ async function parsePdfContent(buffer: Buffer): Promise<string> {
     const text = buffer.toString('binary');
     
     // Extract text between content streams
-    const textRegex = /BT\s*(.*?)\s*ET/gs;
+    const textRegex = /BT\s*(.*?)\s*ET/g;
     const textMatches = text.match(textRegex) || [];
     
     let extractedText = '';
