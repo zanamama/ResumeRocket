@@ -29,7 +29,7 @@ export async function storeFileForDownload(
   expiresAt.setHours(expiresAt.getHours() + 24);
   
   // Determine MIME type
-  const mimeType = fileType === 'pdf' ? 'application/pdf' : 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+  const mimeType = fileType === 'pdf' ? 'text/html' : 'application/rtf';
   
   // Store file in memory
   fileStorage.set(fileId, {
@@ -75,10 +75,67 @@ export async function createDownloadableFile(
   fileName: string,
   format: 'pdf' | 'docx' = 'pdf'
 ): Promise<string> {
-  // For now, create well-formatted text files with proper structure
-  // This ensures the resume processing works while we can improve document generation later
   const formattedContent = formatResumeContent(content);
-  return Buffer.from(formattedContent).toString('base64');
+  
+  if (format === 'pdf') {
+    // Create a simple HTML-based PDF-like content
+    const htmlContent = createHtmlResume(formattedContent, fileName);
+    return Buffer.from(htmlContent).toString('base64');
+  } else {
+    // For DOCX, create RTF format which is compatible with Word
+    const rtfContent = createRtfResume(formattedContent);
+    return Buffer.from(rtfContent).toString('base64');
+  }
+}
+
+function createHtmlResume(content: string, fileName: string): string {
+  return `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>${fileName}</title>
+  <style>
+    @page { margin: 1in; }
+    body { 
+      font-family: 'Times New Roman', serif; 
+      font-size: 11pt; 
+      line-height: 1.4; 
+      color: #000; 
+      margin: 0; 
+      padding: 0;
+    }
+    .header { text-align: center; margin-bottom: 20px; }
+    .name { font-size: 16pt; font-weight: bold; margin-bottom: 5px; }
+    .contact { font-size: 10pt; margin-bottom: 2px; }
+    .section-title { 
+      font-size: 12pt; 
+      font-weight: bold; 
+      text-transform: uppercase; 
+      margin-top: 15px; 
+      margin-bottom: 5px; 
+      border-bottom: 1px solid #000; 
+      padding-bottom: 2px; 
+    }
+    .content { margin-bottom: 5px; }
+    .bullet { margin-left: 20px; }
+  </style>
+</head>
+<body>
+  <pre style="font-family: 'Times New Roman', serif; white-space: pre-wrap;">${content}</pre>
+</body>
+</html>`;
+}
+
+function createRtfResume(content: string): string {
+  // Create RTF format (Rich Text Format) which can be opened by Word
+  const rtfHeader = '{\\rtf1\\ansi\\deff0 {\\fonttbl {\\f0 Times New Roman;}}';
+  const rtfContent = content
+    .replace(/\\/g, '\\\\')
+    .replace(/{/g, '\\{')
+    .replace(/}/g, '\\}')
+    .replace(/\n/g, '\\par\n');
+  
+  return `${rtfHeader}\\f0\\fs22 ${rtfContent}}`;
 }
 
 function formatResumeContent(content: string): string {
