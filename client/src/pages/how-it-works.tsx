@@ -12,7 +12,7 @@ export default function HowItWorks() {
           <div className="flex items-center justify-between">
             <Link href="/">
               <div className="flex items-center space-x-2 cursor-pointer">
-                <img src="/assets/UpMySalary Logo no words.png" alt="UpMySalary" className="w-8 h-8" />
+                <img src="/assets/logo-2.70e507e8.png" alt="UpMySalary" className="w-8 h-8" />
                 <span className="text-xl font-semibold text-black">UpMySalary</span>
               </div>
             </Link>
