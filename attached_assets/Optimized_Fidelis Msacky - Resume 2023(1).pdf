@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Optimized_Fidelis Msacky - Resume 2023.pdf</title>
+  <style>
+    @page { margin: 1in; }
+    body { 
+      font-family: 'Times New Roman', serif; 
+      font-size: 11pt; 
+      line-height: 1.4; 
+      color: #000; 
+      margin: 0; 
+      padding: 0;
+    }
+    .header { text-align: center; margin-bottom: 20px; }
+    .name { font-size: 16pt; font-weight: bold; margin-bottom: 5px; }
+    .contact { font-size: 10pt; margin-bottom: 2px; }
+    .section-title { 
+      font-size: 12pt; 
+      font-weight: bold; 
+      text-transform: uppercase; 
+      margin-top: 15px; 
+      margin-bottom: 5px; 
+      border-bottom: 1px solid #000; 
+      padding-bottom: 2px; 
+    }
+    .content { margin-bottom: 5px; }
+    .bullet { margin-left: 20px; }
+  </style>
+</head>
+<body>
+  <pre style="font-family: 'Times New Roman', serif; white-space: pre-wrap;">Fidelis Msacky
+5555 Cardinal Pl. Alexandria, VA 22304
+(202) 813-5776
+fidelismsacky@gmail.com
+
+
+EDUCATION
+=========
+
+Bachelor of Science in Computer Science and Mathematics, 2011-2014
+Midwestern State University, TX
+    - Member of Golden Key International Honor Society
+
+
+PROFESSIONAL SUMMARY
+====================
+
+
+
+SEASONED SENIOR ENGINEER WITH OVER A DECADE OF EXPERIENCE IN FULL STACK WEB DEVELOPMENT AND TEAM LEADERSHIP. ACCOMPLISHED IN SUPPORTING FORTUNE 500 TECHNOLOGY ENTERPRISES. ADEPT AT DELIVERING HIGH-QUALITY, EFFICIENT, AND SCALABLE SOLUTIONS, MAINTAINING CUTTING-EDGE TECHNICAL SKILLS TO CONSISTENTLY EXCEED BUSINESS REQUIREMENTS.
+========================================================================================================================================================================================================================================================================================================================================
+
+
+
+TECHNICAL SKILLS
+================
+
+    - Advanced Java
+    - Amazon Web Services (AWS)
+    - JavaScript
+    - NodeJS
+    - WC3 Accessibility
+    - Agile Methodology
+    - ReactJS
+    - VueJS
+    - Spring Boot
+    - Maven
+    - MySQL
+    - WildFly JBoss
+    - GitLab
+
+
+PROFESSIONAL EXPERIENCE
+=======================
+
+SAIC | Reston, VA (01/22 - Present)
+Technical Lead
+    - Led initiatives to resolve critical production issues impacting 25,000 patent examiners, preventing sprint delays.
+    - Mentored and supported 6 developers, enhancing their ticket delivery consistency and accuracy.
+    - Collaborated with product owners across 4 functional teams to manage complex system requirements, ensuring responsive communication.
+    - Directed architectural decisions to enhance UI development, boosting customer satisfaction and adherence to deadlines.
+    - Implemented best practices through pair programming and code reviews.
+    - Facilitated planning meetings to identify and mitigate future implementation risks, supporting resource allocation.
+    - Developed UI components for 6 single page applications, enhancing patent processes such as examination and mailing.
+    - Implemented REST APIs using Java/Spring Boot, improving application functionality.
+    - Translated initial design concepts into sophisticated user interfaces, aligning with user experience standards.
+Senior Software Engineer, Northeast USA (SAIC) (11/19 - 12/22)
+    - Spearheaded the development of an enterprise web application to replace a legacy thick-client system.
+    - Enhanced code maintainability through the implementation of a unit testing framework.
+    - Supervised software development processes, ensuring timely and quality deliveries.
+    - Built accessible components compliant with section 508 standards using JAWS and WAI-ARIA/W3C guidelines.
+    - Updated the application stack to be ES6+ compatible, enabling cutting-edge JavaScript use.
+Software Engineer (SAIC) (03/16 - 12/19)
+    - Optimized underperforming code modules, improving efficiency and maintainability.
+    - Diagnosed and resolved critical user-reported defects.
+Gold Coast IT | McLean/Fairfax, VA (04/15 - 03/16)
+Software Engineer
+    - Collaborated on a team to replace a suboptimal DOJO-based web solution with a jQuery application.
+    - Developed self-contained modules using jQuery Widget Factory, streamlining application performance.
+    - Worked with architect teams to customize a jQuery framework adapting to user requirements.
+    - Utilized existing server-side architectures for expedited product delivery.
+    - Conducted code reviews to uphold industry best practices.
+
+
+PROJECTS
+========
+
+SIG Insurance Services Website | Washington, DC (08/20 - Present)
+Developer
+    - Developed a strategic segment of an insurance company website receiving 70,000+ monthly visitors.
+    - Boosted customer engagement through a custom online form and local SEO support for Google and Bing.
+    - Technologies: VueJS, NodeJS, ExpressJS, AWS
+    - Hosted on AWS EC2; followed ARIA Accessibility standards and SEO optimization.
+    - Link: https://www.siginsassociates.com/
+LinkedIn: https://www.linkedin.com/in/fidelis-msacky/
+
+
+================================================================================
+Generated by UpMySalary Resume Optimizer
+5/29/2025</pre>
+</body>
+</html>

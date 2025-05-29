@@ -29,7 +29,7 @@ export async function storeFileForDownload(
   expiresAt.setHours(expiresAt.getHours() + 24);
   
   // Determine MIME type
-  const mimeType = fileType === 'pdf' ? 'text/html' : 'application/rtf';
+  const mimeType = fileType === 'pdf' ? 'text/plain' : 'text/plain';
   
   // Store file in memory
   fileStorage.set(fileId, {
@@ -76,16 +76,7 @@ export async function createDownloadableFile(
   format: 'pdf' | 'docx' = 'pdf'
 ): Promise<string> {
   const formattedContent = formatResumeContent(content);
-  
-  if (format === 'pdf') {
-    // Create a simple HTML-based PDF-like content
-    const htmlContent = createHtmlResume(formattedContent, fileName);
-    return Buffer.from(htmlContent).toString('base64');
-  } else {
-    // For DOCX, create RTF format which is compatible with Word
-    const rtfContent = createRtfResume(formattedContent);
-    return Buffer.from(rtfContent).toString('base64');
-  }
+  return Buffer.from(formattedContent).toString('base64');
 }
 
 function createHtmlResume(content: string, fileName: string): string {
