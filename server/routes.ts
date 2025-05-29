@@ -415,21 +415,22 @@ export async function registerRoutes(app: Express): Promise<Server> {
   }
 
   // Download PDF endpoint
-  app.get("/api/download/prince-ncube-resume", (req, res) => {
+  app.get("/api/download/prince-ncube-resume", async (req, res) => {
     try {
-      const fs = require('fs');
-      const path = require('path');
+      const fs = await import('fs');
+      const path = await import('path');
       const filePath = path.join(process.cwd(), 'Prince_Ncube_Resume.pdf');
       
       if (!fs.existsSync(filePath)) {
+        console.log('File not found at:', filePath);
         return res.status(404).json({ error: 'PDF file not found' });
       }
       
       res.setHeader('Content-Type', 'application/pdf');
       res.setHeader('Content-Disposition', 'attachment; filename="Prince_Ncube_Optimized_Resume.pdf"');
       
-      const fileStream = fs.createReadStream(filePath);
-      fileStream.pipe(res);
+      const fileBuffer = fs.readFileSync(filePath);
+      res.send(fileBuffer);
     } catch (error) {
       console.error('Download error:', error);
       res.status(500).json({ error: 'Failed to download PDF' });
