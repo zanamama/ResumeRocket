@@ -14,10 +14,20 @@ const upload = multer({
     fileSize: 10 * 1024 * 1024, // 10MB limit
   },
   fileFilter: (req, file, cb) => {
-    const allowedTypes = ['application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
-    if (allowedTypes.includes(file.mimetype)) {
+    const allowedTypes = [
+      'application/pdf', 
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      'application/msword',
+      'application/octet-stream'
+    ];
+    const allowedExtensions = ['.pdf', '.docx', '.doc'];
+    const hasValidType = allowedTypes.includes(file.mimetype);
+    const hasValidExtension = allowedExtensions.some(ext => file.originalname.toLowerCase().endsWith(ext));
+    
+    if (hasValidType || hasValidExtension) {
       cb(null, true);
     } else {
+      console.log('Rejected file:', file.originalname, 'MIME type:', file.mimetype);
       cb(new Error('Only PDF and DOCX files are allowed'));
     }
   },
