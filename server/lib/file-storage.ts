@@ -29,7 +29,7 @@ export async function storeFileForDownload(
   expiresAt.setHours(expiresAt.getHours() + 24);
   
   // Determine MIME type
-  const mimeType = fileType === 'pdf' ? 'text/plain' : 'text/plain';
+  const mimeType = fileType === 'pdf' ? 'application/pdf' : 'text/plain';
   
   // Store file in memory
   fileStorage.set(fileId, {
@@ -75,8 +75,123 @@ export async function createDownloadableFile(
   fileName: string,
   format: 'pdf' | 'docx' = 'pdf'
 ): Promise<string> {
+  if (format === 'pdf') {
+    return await createPdfDocument(content, fileName);
+  } else {
+    const formattedContent = formatResumeContent(content);
+    return Buffer.from(formattedContent).toString('base64');
+  }
+}
+
+async function createPdfDocument(content: string, fileName: string): Promise<string> {
+  try {
+    const puppeteer = await import('puppeteer');
+    
+    const browser = await puppeteer.default.launch({
+      headless: true,
+      args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage']
+    });
+    
+    const page = await browser.newPage();
+    
+    // Create HTML version with professional styling
+    const htmlContent = createResumeHtml(content);
+    await page.setContent(htmlContent, { waitUntil: 'networkidle0' });
+    
+    // Generate PDF
+    const pdfBuffer = await page.pdf({
+      format: 'A4',
+      margin: {
+        top: '0.75in',
+        right: '0.75in',
+        bottom: '0.75in',
+        left: '0.75in'
+      },
+      printBackground: true
+    });
+    
+    await browser.close();
+    return pdfBuffer.toString('base64');
+    
+  } catch (error) {
+    console.error('PDF generation failed, falling back to formatted text:', error);
+    const formattedContent = formatResumeContent(content);
+    return Buffer.from(formattedContent).toString('base64');
+  }
+}
+
+function createResumeHtml(content: string): string {
   const formattedContent = formatResumeContent(content);
-  return Buffer.from(formattedContent).toString('base64');
+  
+  return `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    @page { 
+      margin: 0.75in; 
+      size: A4;
+    }
+    body { 
+      font-family: 'Times New Roman', serif; 
+      font-size: 11pt; 
+      line-height: 1.4; 
+      color: #000; 
+      margin: 0; 
+      padding: 0;
+      background: white;
+    }
+    .header { 
+      text-align: center; 
+      margin-bottom: 20px; 
+      border-bottom: 2px solid #000; 
+      padding-bottom: 10px; 
+    }
+    .name { 
+      font-size: 18pt; 
+      font-weight: bold; 
+      margin-bottom: 8px; 
+    }
+    .contact { 
+      font-size: 10pt; 
+      margin-bottom: 4px; 
+    }
+    .section-title { 
+      font-size: 12pt; 
+      font-weight: bold; 
+      text-transform: uppercase; 
+      margin-top: 18px; 
+      margin-bottom: 8px; 
+      border-bottom: 1px solid #333; 
+      padding-bottom: 3px; 
+    }
+    .job-title { 
+      font-weight: bold; 
+      margin-top: 12px; 
+      margin-bottom: 3px; 
+    }
+    .company-date { 
+      font-style: italic; 
+      margin-bottom: 6px; 
+    }
+    .bullet { 
+      margin-left: 20px; 
+      margin-bottom: 3px; 
+    }
+    .education-item { 
+      margin-bottom: 6px; 
+    }
+    pre {
+      font-family: 'Times New Roman', serif;
+      white-space: pre-wrap;
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+  <pre>${formattedContent}</pre>
+</body>
+</html>`;
 }
 
 function createHtmlResume(content: string, fileName: string): string {
