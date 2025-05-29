@@ -414,6 +414,28 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   }
 
+  // Download PDF endpoint
+  app.get("/api/download/prince-ncube-resume", (req, res) => {
+    try {
+      const fs = require('fs');
+      const path = require('path');
+      const filePath = path.join(process.cwd(), 'Prince_Ncube_Resume.pdf');
+      
+      if (!fs.existsSync(filePath)) {
+        return res.status(404).json({ error: 'PDF file not found' });
+      }
+      
+      res.setHeader('Content-Type', 'application/pdf');
+      res.setHeader('Content-Disposition', 'attachment; filename="Prince_Ncube_Optimized_Resume.pdf"');
+      
+      const fileStream = fs.createReadStream(filePath);
+      fileStream.pipe(res);
+    } catch (error) {
+      console.error('Download error:', error);
+      res.status(500).json({ error: 'Failed to download PDF' });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }
