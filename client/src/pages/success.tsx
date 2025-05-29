@@ -25,7 +25,10 @@ export default function Success() {
     return <SuccessSkeleton />;
   }
 
-  if (mode === "standard") {
+  // Use the actual mode from the results data
+  const actualMode = results?.mode || mode;
+
+  if (actualMode === "standard") {
     return <StandardSuccess results={results?.outputFiles as StandardResult} />;
   } else {
     return <AdvancedSuccess results={results?.outputFiles as AdvancedResult} />;
