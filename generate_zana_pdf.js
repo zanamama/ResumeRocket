@@ -123,12 +123,18 @@ function generateZanaPDF() {
   ];
   
   bullets1.forEach(bullet => {
+    // Check for page break
+    if (yPosition > doc.internal.pageSize.getHeight() - 30) {
+      doc.addPage();
+      yPosition = margin;
+    }
+    
     doc.setFontSize(9);
     doc.setFont('helvetica', 'normal');
     doc.text('●', margin + 8, yPosition);
     const bulletLines = doc.splitTextToSize(bullet, maxLineWidth - 20);
     doc.text(bulletLines, margin + 15, yPosition);
-    yPosition += bulletLines.length * lineHeight + 2;
+    yPosition += bulletLines.length * lineHeight + 3;
   });
   
   yPosition += 8;
@@ -161,22 +167,29 @@ function generateZanaPDF() {
   ];
   
   bullets2.forEach(bullet => {
+    // Check for page break
+    if (yPosition > doc.internal.pageSize.getHeight() - 30) {
+      doc.addPage();
+      yPosition = margin;
+    }
+    
     doc.setFontSize(9);
     doc.setFont('helvetica', 'normal');
     doc.text('●', margin + 8, yPosition);
     const bulletLines = doc.splitTextToSize(bullet, maxLineWidth - 20);
     doc.text(bulletLines, margin + 15, yPosition);
-    yPosition += bulletLines.length * lineHeight + 2;
+    yPosition += bulletLines.length * lineHeight + 3;
   });
   
   // Note: Education section is already at the top, following template format
   
-  // Save the PDF
+  // Save the PDF with a new name to ensure fresh download
   const pdfBuffer = Buffer.from(doc.output('arraybuffer'));
-  fs.writeFileSync('client/public/Zana_Mathuthu_Professional_Resume.pdf', pdfBuffer);
+  fs.writeFileSync('client/public/Zana_Mathuthu_Complete_Resume_v2.pdf', pdfBuffer);
   
-  console.log('Professional PDF generated: Zana_Mathuthu_Professional_Resume.pdf');
+  console.log('Complete PDF generated: Zana_Mathuthu_Complete_Resume_v2.pdf');
   console.log('File size:', pdfBuffer.length, 'bytes');
+  console.log('Total pages:', doc.getNumberOfPages());
 }
 
 generateZanaPDF();
