@@ -1,0 +1,43 @@
+ZANA MATHUTHU
+zmathuthu@yahoo.com | Philadelphia, PA
+
+PROFESSIONAL SUMMARY
+
+Results-driven Senior Business Analyst with over 5 years of experience bridging the gap between business needs and technical solutions, with a recent focus on healthcare technology and enterprise solutions. Adept at leading cross-functional teams to deliver impactful projects, including complex integrations. Expertise in stakeholder management, requirements elicitation, and data-driven decision-making to enhance user experiences and drive operational efficiency.
+
+TECHNICAL SKILLS
+
+SQL, JIRA, Confluence, MS Visio, CRM Systems, SnagIt, Tableau, Excel, Slack, Salesforce
+User Acceptance Testing, Project Management, Data Analysis, Agile Methodology, Waterfall Methodology
+Wireframe, Requirements Elicitation, End User Support, Data Visualization
+
+PROFESSIONAL EXPERIENCE
+
+Uber Technologies | Philadelphia, PA (12/2022 - Present)
+Senior Business Analyst (Contractor)
+• Develop visually compelling Tableau and PowerPoint presentations that translate complex data into clear, strategic and actionable insights for stakeholders
+• Collaborate independently with business stakeholders and users to define concepts and clarify functional and non-functional requirements
+• Work with users to translate functional and non-functional requirements into actionable application deliverables, reducing development rework by 20%
+• Develop and share comprehensive business process documentation, resulting in a 30% reduction in training time for new users
+• Partner with project managers to track and manage Agile-based SDLC projects, ensuring on-time delivery for 10+ initiatives
+• Facilitate requirements-gathering meetings with cross-functional teams, resulting in a 20% increase in operational efficiency
+• Conduct user acceptance tests (UAT) to identify bottlenecks and defects, reducing post-production issues by 35% and saving $200K annually
+• Provide detailed process improvement recommendations that streamline workflows and increase productivity by 18% across departments
+
+UBER TECHNOLOGIES | Philadelphia, PA (03/2020 - 12/2022)
+Associate Business Analyst (Contractor)
+• Lead onboarding initiatives for healthcare partnerships and logistics teams, contributing to a 15% increase in user satisfaction ratings
+• Coordinated with delivery teams to enhance service processes, achieving operational excellence and saving over $150K annually
+• Utilized analytics and reporting tools to monitor project performance, improving decision-making and boosting delivery timelines by 22%
+• Utilized the Salesforce platform, design approach, configuration and integration; Revenue Cloud/CPQ
+• Worked with project teams to gather and document business needs and requirements, contributing to a 20% improvement in project delivery timelines
+• Monitored projects throughout the SDLC process using Agile/SCRUM methodologies, ensuring 95% on-time delivery rate
+• Facilitated meetings for elicitation and review of requirements, resulting in a 25% reduction in requirement ambiguities
+• Provided Subject Matter Expert (SME) assistance to team members, enhancing team productivity by 15%
+
+EDUCATION
+
+Bachelor of Arts (B.A.) | Ursinus College | Economics, Statistics
+Certified Scrum Master (CSM) | International SCRUM Institute (Certification ID 33818054800387)
+Certified Scrum Product Owner (CSPO) | International SCRUM Institute
+Full Stack Web Development Certificate 2021 | Columbia Engineering, The Fu Foundation School of Engineering & Applied Science
