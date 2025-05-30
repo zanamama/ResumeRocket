@@ -1,4 +1,6 @@
 // Simple in-memory file storage for 24-hour access
+import { Document, Packer, Paragraph, TextRun, HeadingLevel, AlignmentType } from 'docx';
+
 interface StoredFile {
   content: string;
   fileName: string;
@@ -29,7 +31,7 @@ export async function storeFileForDownload(
   expiresAt.setHours(expiresAt.getHours() + 24);
   
   // Determine MIME type based on file type
-  const mimeType = fileType === 'pdf' ? 'application/pdf' : 'text/plain';
+  const mimeType = fileType === 'pdf' ? 'application/pdf' : 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
   
   // Store file in memory
   fileStorage.set(fileId, {
@@ -80,8 +82,7 @@ export async function createDownloadableFile(
     const pdfBuffer = generateResumePDF(content, fileName);
     return pdfBuffer.toString('base64');
   } else {
-    const formattedContent = formatResumeContent(content);
-    return Buffer.from(formattedContent).toString('base64');
+    return await createWordDocument(content, fileName);
   }
 }
 
@@ -215,6 +216,182 @@ function createRtfResume(content: string): string {
     .replace(/\n/g, '\\par\n');
   
   return `${rtfHeader}\\f0\\fs22 ${rtfContent}}`;
+}
+
+async function createWordDocument(content: string, fileName: string): Promise<string> {
+  // Parse the resume content into structured sections
+  const sections = parseResumeContent(content);
+  
+  const doc = new Document({
+    sections: [{
+      properties: {},
+      children: [
+        // Header with name and contact info
+        new Paragraph({
+          children: [
+            new TextRun({
+              text: sections.name || "Resume",
+              bold: true,
+              size: 24,
+            }),
+          ],
+          alignment: AlignmentType.CENTER,
+          spacing: { after: 240 },
+        }),
+        
+        // Contact information
+        ...(sections.contact ? [new Paragraph({
+          children: [
+            new TextRun({
+              text: sections.contact,
+              size: 20,
+            }),
+          ],
+          alignment: AlignmentType.CENTER,
+          spacing: { after: 480 },
+        })] : []),
+        
+        // Education section
+        ...(sections.education ? [
+          new Paragraph({
+            children: [
+              new TextRun({
+                text: "EDUCATION",
+                bold: true,
+                size: 22,
+              }),
+            ],
+            heading: HeadingLevel.HEADING_2,
+            spacing: { before: 240, after: 120 },
+          }),
+          new Paragraph({
+            children: [
+              new TextRun({
+                text: sections.education,
+                size: 20,
+              }),
+            ],
+            spacing: { after: 240 },
+          }),
+        ] : []),
+        
+        // Professional Summary section
+        ...(sections.summary ? [
+          new Paragraph({
+            children: [
+              new TextRun({
+                text: "PROFESSIONAL SUMMARY",
+                bold: true,
+                size: 22,
+              }),
+            ],
+            heading: HeadingLevel.HEADING_2,
+            spacing: { before: 240, after: 120 },
+          }),
+          new Paragraph({
+            children: [
+              new TextRun({
+                text: sections.summary,
+                size: 20,
+              }),
+            ],
+            spacing: { after: 240 },
+          }),
+        ] : []),
+        
+        // Technical Skills section
+        ...(sections.skills ? [
+          new Paragraph({
+            children: [
+              new TextRun({
+                text: "TECHNICAL SKILLS",
+                bold: true,
+                size: 22,
+              }),
+            ],
+            heading: HeadingLevel.HEADING_2,
+            spacing: { before: 240, after: 120 },
+          }),
+          new Paragraph({
+            children: [
+              new TextRun({
+                text: sections.skills,
+                size: 20,
+              }),
+            ],
+            spacing: { after: 240 },
+          }),
+        ] : []),
+        
+        // Professional Experience section
+        ...(sections.experience ? [
+          new Paragraph({
+            children: [
+              new TextRun({
+                text: "PROFESSIONAL EXPERIENCE",
+                bold: true,
+                size: 22,
+              }),
+            ],
+            heading: HeadingLevel.HEADING_2,
+            spacing: { before: 240, after: 120 },
+          }),
+          new Paragraph({
+            children: [
+              new TextRun({
+                text: sections.experience,
+                size: 20,
+              }),
+            ],
+            spacing: { after: 240 },
+          }),
+        ] : []),
+      ],
+    }],
+  });
+  
+  const buffer = await Packer.toBuffer(doc);
+  return buffer.toString('base64');
+}
+
+function parseResumeContent(content: string): any {
+  // Simple parser to extract sections from resume content
+  const sections: any = {};
+  
+  // Extract name (usually the first line or prominently displayed)
+  const lines = content.split('\n').filter(line => line.trim());
+  if (lines.length > 0) {
+    sections.name = lines[0].trim();
+  }
+  
+  // Look for contact information patterns
+  const contactMatch = content.match(/([\w\.-]+@[\w\.-]+\.\w+|[\(\)\d\s\-\+]+)/g);
+  if (contactMatch) {
+    sections.contact = contactMatch.join(' | ');
+  }
+  
+  // Extract sections based on headers
+  const educationMatch = content.match(/EDUCATION([\s\S]*?)(?=\n[A-Z]{2,}|\n\n[A-Z]{2,}|$)/i);
+  if (educationMatch) {
+    sections.education = educationMatch[1].trim();
+  }
+  
+  const summaryMatch = content.match(/(?:PROFESSIONAL\s+)?SUMMARY([\s\S]*?)(?=\n[A-Z]{2,}|\n\n[A-Z]{2,}|$)/i);
+  if (summaryMatch) {
+    sections.summary = summaryMatch[1].trim();
+  }
+  
+  const skillsMatch = content.match(/(?:TECHNICAL\s+)?SKILLS([\s\S]*?)(?=\n[A-Z]{2,}|\n\n[A-Z]{2,}|$)/i);
+  if (skillsMatch) {
+    sections.skills = skillsMatch[1].trim();
+  }
+  
+  const experienceMatch = content.match(/(?:PROFESSIONAL\s+)?EXPERIENCE([\s\S]*?)(?=\n[A-Z]{2,}|\n\n[A-Z]{2,}|$)/i);
+  if (experienceMatch) {
+    sections.experience = experienceMatch[1].trim();
+  }
+  
+  return sections;
 }
 
 function formatResumeContent(content: string): string {
