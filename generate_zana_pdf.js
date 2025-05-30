@@ -34,8 +34,8 @@ function generateZanaPDF() {
   doc.text('EDUCATION', margin, yPosition);
   yPosition += 4;
   
-  // Add 3pt thick black divider
-  doc.setLineWidth(3);
+  // Add 1pt thick black divider
+  doc.setLineWidth(1);
   doc.setDrawColor(0, 0, 0);
   doc.line(margin, yPosition, pageWidth - margin, yPosition);
   yPosition += 8;
@@ -74,8 +74,8 @@ function generateZanaPDF() {
   doc.text('PROFESSIONAL SUMMARY', margin, yPosition);
   yPosition += 4;
   
-  // Add 3pt thick black divider
-  doc.setLineWidth(3);
+  // Add 1pt thick black divider
+  doc.setLineWidth(1);
   doc.setDrawColor(0, 0, 0);
   doc.line(margin, yPosition, pageWidth - margin, yPosition);
   yPosition += 8;
@@ -93,8 +93,8 @@ function generateZanaPDF() {
   doc.text('TECHNICAL SKILLS', margin, yPosition);
   yPosition += 4;
   
-  // Add 3pt thick black divider
-  doc.setLineWidth(3);
+  // Add 1pt thick black divider
+  doc.setLineWidth(1);
   doc.setDrawColor(0, 0, 0);
   doc.line(margin, yPosition, pageWidth - margin, yPosition);
   yPosition += 8;
@@ -112,8 +112,8 @@ function generateZanaPDF() {
   doc.text('PROFESSIONAL EXPERIENCE', margin, yPosition);
   yPosition += 4;
   
-  // Add 3pt thick black divider
-  doc.setLineWidth(3);
+  // Add 1pt thick black divider
+  doc.setLineWidth(1);
   doc.setDrawColor(0, 0, 0);
   doc.line(margin, yPosition, pageWidth - margin, yPosition);
   yPosition += 8;
@@ -209,9 +209,9 @@ function generateZanaPDF() {
   
   // Save the PDF with a new name to ensure fresh download
   const pdfBuffer = Buffer.from(doc.output('arraybuffer'));
-  fs.writeFileSync('client/public/Zana_Mathuthu_Professional_Dividers_Resume.pdf', pdfBuffer);
+  fs.writeFileSync('client/public/Zana_Mathuthu_1pt_Dividers_Resume.pdf', pdfBuffer);
   
-  console.log('Professional PDF with dividers generated: Zana_Mathuthu_Professional_Dividers_Resume.pdf');
+  console.log('Professional PDF with 1pt dividers generated: Zana_Mathuthu_1pt_Dividers_Resume.pdf');
   console.log('File size:', pdfBuffer.length, 'bytes');
   console.log('Total pages:', doc.getNumberOfPages());
 }
