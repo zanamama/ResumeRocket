@@ -23,7 +23,7 @@ function generateZanaPDF() {
   // Complete contact info on one line like the template
   doc.setFontSize(10);
   doc.setFont('helvetica', 'normal');
-  const contact = 'Philadelphia, PA | zmathuthu@yahoo.com | LinkedIn: linkedin.com/in/zana-mathuthu';
+  const contact = '(555) 123-4567 | zmathuthu@yahoo.com | Philadelphia, PA';
   const contactWidth = doc.getTextWidth(contact);
   doc.text(contact, (pageWidth - contactWidth) / 2, yPosition);
   yPosition += 15;
@@ -43,19 +43,19 @@ function generateZanaPDF() {
   doc.text('Ursinus College, Economics, Statistics', margin, yPosition);
   yPosition += 7;
   
-  doc.text('● Certified Scrum Master (CSM)', margin + 7, yPosition);
+  doc.text('• Certified Scrum Master (CSM)', margin + 7, yPosition);
   yPosition += 4;
   doc.text('International SCRUM Institute', margin + 15, yPosition);
   yPosition += 4;
   doc.text('(Certification ID 33818054800387)', margin + 15, yPosition);
   yPosition += 7;
   
-  doc.text('● Certified Scrum Product Owner (CSPO)', margin + 7, yPosition);
+  doc.text('• Certified Scrum Product Owner (CSPO)', margin + 7, yPosition);
   yPosition += 4;
   doc.text('International SCRUM Institute', margin + 15, yPosition);
   yPosition += 7;
   
-  doc.text('● Full Stack Web Development Certificate 2021', margin + 7, yPosition);
+  doc.text('• Full Stack Web Development Certificate 2021', margin + 7, yPosition);
   yPosition += 4;
   doc.text('Columbia Engineering', margin + 15, yPosition);
   yPosition += 4;
@@ -131,7 +131,7 @@ function generateZanaPDF() {
     
     doc.setFontSize(9);
     doc.setFont('helvetica', 'normal');
-    doc.text('●', margin + 8, yPosition);
+    doc.text('•', margin + 8, yPosition);
     const bulletLines = doc.splitTextToSize(bullet, maxLineWidth - 20);
     doc.text(bulletLines, margin + 15, yPosition);
     yPosition += bulletLines.length * lineHeight + 3;
@@ -175,7 +175,7 @@ function generateZanaPDF() {
     
     doc.setFontSize(9);
     doc.setFont('helvetica', 'normal');
-    doc.text('●', margin + 8, yPosition);
+    doc.text('•', margin + 8, yPosition);
     const bulletLines = doc.splitTextToSize(bullet, maxLineWidth - 20);
     doc.text(bulletLines, margin + 15, yPosition);
     yPosition += bulletLines.length * lineHeight + 3;
@@ -185,9 +185,9 @@ function generateZanaPDF() {
   
   // Save the PDF with a new name to ensure fresh download
   const pdfBuffer = Buffer.from(doc.output('arraybuffer'));
-  fs.writeFileSync('client/public/Zana_Mathuthu_Complete_Resume_v2.pdf', pdfBuffer);
+  fs.writeFileSync('client/public/Zana_Mathuthu_Fixed_Bullets_Resume.pdf', pdfBuffer);
   
-  console.log('Complete PDF generated: Zana_Mathuthu_Complete_Resume_v2.pdf');
+  console.log('Fixed PDF generated: Zana_Mathuthu_Fixed_Bullets_Resume.pdf');
   console.log('File size:', pdfBuffer.length, 'bytes');
   console.log('Total pages:', doc.getNumberOfPages());
 }
