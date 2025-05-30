@@ -32,6 +32,12 @@ function generateZanaPDF() {
   doc.setFontSize(11);
   doc.setFont('helvetica', 'bold');
   doc.text('EDUCATION', margin, yPosition);
+  yPosition += 4;
+  
+  // Add 3pt thick black divider
+  doc.setLineWidth(3);
+  doc.setDrawColor(0, 0, 0);
+  doc.line(margin, yPosition, pageWidth - margin, yPosition);
   yPosition += 8;
   
   doc.setFontSize(9);
@@ -66,6 +72,12 @@ function generateZanaPDF() {
   doc.setFontSize(11);
   doc.setFont('helvetica', 'bold');
   doc.text('PROFESSIONAL SUMMARY', margin, yPosition);
+  yPosition += 4;
+  
+  // Add 3pt thick black divider
+  doc.setLineWidth(3);
+  doc.setDrawColor(0, 0, 0);
+  doc.line(margin, yPosition, pageWidth - margin, yPosition);
   yPosition += 8;
   
   doc.setFontSize(9);
@@ -79,6 +91,12 @@ function generateZanaPDF() {
   doc.setFontSize(11);
   doc.setFont('helvetica', 'bold');
   doc.text('TECHNICAL SKILLS', margin, yPosition);
+  yPosition += 4;
+  
+  // Add 3pt thick black divider
+  doc.setLineWidth(3);
+  doc.setDrawColor(0, 0, 0);
+  doc.line(margin, yPosition, pageWidth - margin, yPosition);
   yPosition += 8;
   
   doc.setFontSize(9);
@@ -92,6 +110,12 @@ function generateZanaPDF() {
   doc.setFontSize(11);
   doc.setFont('helvetica', 'bold');
   doc.text('PROFESSIONAL EXPERIENCE', margin, yPosition);
+  yPosition += 4;
+  
+  // Add 3pt thick black divider
+  doc.setLineWidth(3);
+  doc.setDrawColor(0, 0, 0);
+  doc.line(margin, yPosition, pageWidth - margin, yPosition);
   yPosition += 8;
   
   // First Job - exactly like template format
@@ -185,9 +209,9 @@ function generateZanaPDF() {
   
   // Save the PDF with a new name to ensure fresh download
   const pdfBuffer = Buffer.from(doc.output('arraybuffer'));
-  fs.writeFileSync('client/public/Zana_Mathuthu_Fixed_Bullets_Resume.pdf', pdfBuffer);
+  fs.writeFileSync('client/public/Zana_Mathuthu_Professional_Dividers_Resume.pdf', pdfBuffer);
   
-  console.log('Fixed PDF generated: Zana_Mathuthu_Fixed_Bullets_Resume.pdf');
+  console.log('Professional PDF with dividers generated: Zana_Mathuthu_Professional_Dividers_Resume.pdf');
   console.log('File size:', pdfBuffer.length, 'bytes');
   console.log('Total pages:', doc.getNumberOfPages());
 }
