@@ -79,7 +79,7 @@ export function generateResumePDF(content: string, fileName: string): Buffer {
     
     // Add wrapped text with proper line width
     const cleanText = text.replace(/^[•●-]\s*/, '').trim();
-    const wrappedLines = doc.splitTextToSize(cleanText, maxLineWidth - 25);
+    const wrappedLines = doc.splitTextToSize(cleanText, maxLineWidth - 30);
     doc.text(wrappedLines, margin + 15, yPosition);
     yPosition += wrappedLines.length * lineHeight + 2;
   }
