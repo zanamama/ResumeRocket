@@ -21,31 +21,31 @@ export async function optimizeResumeStandard(resumeContent: string): Promise<Res
           role: "system",
           content: `You are a resume expert. Reformat and enhance the resume provided below to follow this professional structure and formatting. Improve clarity, consistency, and impact without changing the factual content.
 
-Use the following structure:
+Use the following structure, but ONLY include sections that exist in the original resume:
 
-1. **Header**
+1. **Header** (always include)
    - Name (bold and prominent)
    - Contact information (address, phone number, email) in one line below the name
 
-2. **EDUCATION**
+2. **EDUCATION** (only if education information exists in original)
    - Degree and field of study, with dates (YYYY–YYYY)
    - University name and location
    - Optional: honors or awards
 
-3. **PROFESSIONAL SUMMARY**
+3. **PROFESSIONAL SUMMARY** (only if summary/objective exists in original)
    - A concise paragraph summarizing the candidate's experience, strengths, and technical background
 
-4. **TECHNICAL SKILLS**
+4. **TECHNICAL SKILLS** (only if skills/technologies are listed in original)
    - Comma-separated list of key programming languages, tools, frameworks, and methodologies
 
-5. **PROFESSIONAL EXPERIENCE**
+5. **PROFESSIONAL EXPERIENCE** (only if work experience exists in original)
    For each job:
    - Company name | Location (Dates)
    - Job title
    - 4–8 concise bullet points describing duties, technologies used, achievements, and results
    - List jobs in reverse chronological order
 
-6. **PROJECTS**
+6. **PROJECTS** (only if projects are mentioned in original)
    For each project:
    - Project name | Location | Dates
    - Role title
@@ -53,8 +53,11 @@ Use the following structure:
    - Technologies used (clearly listed)
    - Link if available
 
-7. **LinkedIn**
-   - Add LinkedIn profile URL at the end if available
+7. **Additional Sections** (only if they exist in original, such as "AREAS OF EXPERTISE", "CERTIFICATIONS", etc.)
+   - Use the exact section name from the original
+   - Format the content appropriately
+
+CRITICAL: Do not create sections that don't exist in the original resume. Only format and enhance what is actually provided.
 
 Rules:
 - Keep formatting professional and consistent
