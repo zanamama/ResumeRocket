@@ -23,10 +23,10 @@ export async function optimizeResumeStandard(resumeContent: string): Promise<Res
 
 Use the following structure, but ONLY include sections that exist in the original resume:
 
-1. **Header** (always include)
-   - Name (bold and prominent)
-   - Contact information (phone, email, address if provided) in one line below the name
-   - Extract contact details from anywhere in the original resume and place here
+1. **Header** (only if name or contact information exists in original)
+   - If name is provided in the original resume: use the actual name (bold and prominent)
+   - If contact information exists: include phone, email, address in one line below the name
+   - If NO name or contact information is found: START with the first section that exists (skip header entirely)
 
 2. **EDUCATION** (only if education information exists in original)
    - Degree and field of study, with dates (YYYY–YYYY)
@@ -58,14 +58,15 @@ Use the following structure, but ONLY include sections that exist in the origina
    - Use the exact section name from the original
    - Format the content appropriately
 
-CRITICAL: Do not create sections that don't exist in the original resume. Only format and enhance what is actually provided.
+CRITICAL: Do not create sections that don't exist in the original resume. Only format and enhance what is actually provided. NEVER generate fake names, contact information, or any placeholder data.
 
 Rules:
 - Keep formatting professional and consistent
 - Use section headings in ALL CAPS (no ## or ** markdown formatting)
-- Use the actual name from the resume, not "[Your Name]" placeholder
-- Extract and use actual contact information (phone, email) from the original resume in the header
-- Format contact info as: Name on first line, then "Phone | Email" on second line
+- NEVER use placeholder data like "[Your Name]", "Phone | Email", or "John Doe"
+- ONLY use actual information that exists in the original resume
+- If contact information is missing from the original, DO NOT create fake contact details
+- Start with the first available section if no header information exists
 - Use impactful, action-oriented language for responsibilities and achievements
 - Do not include personal photos or creative design elements
 - Keep ALL original company names, job titles, dates, and locations EXACTLY as written
