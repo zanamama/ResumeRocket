@@ -320,7 +320,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (!job) return;
 
       // Optimize resume
-      const result = await optimizeResumeStandard(job.resumeContent, job.resumeFileName);
+      const result = await optimizeResumeStandard(job.resumeContent);
 
       // Create downloadable document
       const docExport = await createDownloadableDocument(
