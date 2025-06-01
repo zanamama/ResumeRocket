@@ -242,12 +242,17 @@ async function createWordDocument(content: string, fileName: string): Promise<st
                             cleanLine.includes('PROJECTS') ||
                             cleanLine.includes('LINKEDIN')));
     
+    // Check if this line starts with bullet point
+    const isBulletPoint = cleanLine.startsWith('•') || cleanLine.startsWith('-');
+    
     // Check if this is the name (first non-empty line or has ** formatting)
     const isName = (isFirstLine && !isSectionHeader) || 
                    (trimmedLine.includes('**') && (trimmedLine.includes('Name') || isFirstLine));
     
-    // Check if this line starts with bullet point
-    const isBulletPoint = cleanLine.startsWith('•') || cleanLine.startsWith('-');
+    // Check if this is contact information (contains email, phone, or pipe separators)
+    const isContactInfo = !isFirstLine && !isSectionHeader && !isBulletPoint && 
+                         (cleanLine.includes('@') || cleanLine.includes('|') || 
+                          /\(\d{3}\)|\d{3}-\d{3}-\d{4}/.test(cleanLine));
     
     // Check if this is bold text (wrapped in **)
     const isBoldText = trimmedLine.includes('**') && !isName && !isSectionHeader;
@@ -267,6 +272,19 @@ async function createWordDocument(content: string, fileName: string): Promise<st
         spacing: { after: 200 },
       }));
       isFirstLine = false;
+    } else if (isContactInfo) {
+      // Contact information - centered, smaller than name
+      paragraphs.push(new Paragraph({
+        children: [
+          new TextRun({
+            text: cleanLine,
+            size: 22,
+            font: "Calibri",
+          }),
+        ],
+        alignment: AlignmentType.CENTER,
+        spacing: { after: 240 },
+      }));
     } else if (isSectionHeader) {
       // Section headers - bold, larger
       paragraphs.push(new Paragraph({

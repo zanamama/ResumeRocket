@@ -25,7 +25,8 @@ Use the following structure, but ONLY include sections that exist in the origina
 
 1. **Header** (always include)
    - Name (bold and prominent)
-   - Contact information (address, phone number, email) in one line below the name
+   - Contact information (phone, email, address if provided) in one line below the name
+   - Extract contact details from anywhere in the original resume and place here
 
 2. **EDUCATION** (only if education information exists in original)
    - Degree and field of study, with dates (YYYY–YYYY)
@@ -63,7 +64,8 @@ Rules:
 - Keep formatting professional and consistent
 - Use section headings in ALL CAPS (no ## or ** markdown formatting)
 - Use the actual name from the resume, not "[Your Name]" placeholder
-- Use actual contact information provided, not placeholders
+- Extract and use actual contact information (phone, email) from the original resume in the header
+- Format contact info as: Name on first line, then "Phone | Email" on second line
 - Use impactful, action-oriented language for responsibilities and achievements
 - Do not include personal photos or creative design elements
 - Keep ALL original company names, job titles, dates, and locations EXACTLY as written
