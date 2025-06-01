@@ -249,9 +249,15 @@ async function createWordDocument(content: string, fileName: string): Promise<st
     const isName = (isFirstLine && !isSectionHeader) || 
                    (trimmedLine.includes('**') && (trimmedLine.includes('Name') || isFirstLine));
     
-    // Check if this is contact information (contains email, phone, or pipe separators)
-    const isContactInfo = !isFirstLine && !isSectionHeader && !isBulletPoint && 
-                         (cleanLine.includes('@') || cleanLine.includes('|') || 
+    // Check if this is a company/job header (contains company name and dates)
+    const isCompanyHeader = !isFirstLine && !isSectionHeader && !isBulletPoint &&
+                           cleanLine.includes('|') && 
+                           /\(\d{1,2}\/\d{4}|\d{4}\)/.test(cleanLine) &&
+                           !cleanLine.includes('@');
+    
+    // Check if this is contact information (contains email or phone, but not company headers)
+    const isContactInfo = !isFirstLine && !isSectionHeader && !isBulletPoint && !isCompanyHeader &&
+                         (cleanLine.includes('@') || 
                           /\(\d{3}\)|\d{3}-\d{3}-\d{4}/.test(cleanLine));
     
     // Check if this is bold text (wrapped in **)
@@ -284,6 +290,20 @@ async function createWordDocument(content: string, fileName: string): Promise<st
         ],
         alignment: AlignmentType.CENTER,
         spacing: { after: 240 },
+      }));
+    } else if (isCompanyHeader) {
+      // Company headers - left-aligned, bold
+      paragraphs.push(new Paragraph({
+        children: [
+          new TextRun({
+            text: cleanLine,
+            bold: true,
+            size: 22,
+            font: "Calibri",
+          }),
+        ],
+        alignment: AlignmentType.LEFT,
+        spacing: { before: 180, after: 60 },
       }));
     } else if (isSectionHeader) {
       // Section headers - bold, larger
