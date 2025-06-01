@@ -30,8 +30,17 @@ export function generateResumePDF(content: string, fileName: string): Buffer {
   }
   
   // Helper function for section headers
-  function addSectionHeader(text: string) {
+  function addSectionHeader(text: string, isFirstSection: boolean = false) {
     yPosition += sectionSpacing;
+    
+    // Add divider line before section (except for first section)
+    if (!isFirstSection) {
+      doc.setLineWidth(0.5);
+      doc.setDrawColor(0, 0, 0);
+      doc.line(margin, yPosition - 5, pageWidth - margin, yPosition - 5);
+      yPosition += 3;
+    }
+    
     doc.setFontSize(11);
     doc.setFont('helvetica', 'bold');
     doc.text(text, margin, yPosition);
@@ -98,6 +107,7 @@ export function generateResumePDF(content: string, fileName: string): Buffer {
   let currentSection = '';
   let nameExtracted = false;
   let contactExtracted = false;
+  let isFirstSection = true;
   
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
@@ -129,8 +139,9 @@ export function generateResumePDF(content: string, fileName: string): Buffer {
     if (line === 'EDUCATION' || line === 'PROFESSIONAL SUMMARY' || 
         line === 'TECHNICAL SKILLS' || line === 'PROFESSIONAL EXPERIENCE' || 
         line === 'PROJECTS' || line === 'CERTIFICATIONS') {
-      addSectionHeader(line);
+      addSectionHeader(line, isFirstSection);
       currentSection = line;
+      isFirstSection = false;
       continue;
     }
     
