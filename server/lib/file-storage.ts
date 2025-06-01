@@ -1,5 +1,5 @@
 // Simple in-memory file storage for 24-hour access
-import { Document, Packer, Paragraph, TextRun, HeadingLevel, AlignmentType } from 'docx';
+import { Document, Packer, Paragraph, TextRun, HeadingLevel, AlignmentType, BorderStyle } from 'docx';
 
 interface StoredFile {
   content: string;
@@ -219,132 +219,255 @@ function createRtfResume(content: string): string {
 }
 
 async function createWordDocument(content: string, fileName: string): Promise<string> {
-  // Parse the resume content into structured sections
-  const sections = parseResumeContent(content);
+  // Parse the optimized resume content into structured sections
+  const sections = parseOptimizedResumeContent(content);
   
   const doc = new Document({
     sections: [{
-      properties: {},
+      properties: {
+        page: {
+          margin: {
+            top: 720,    // 0.5 inch
+            right: 720,  // 0.5 inch
+            bottom: 720, // 0.5 inch
+            left: 720,   // 0.5 inch
+          },
+        },
+      },
       children: [
-        // Header with name and contact info
+        // Name (Header)
         new Paragraph({
           children: [
             new TextRun({
-              text: sections.name || "Resume",
+              text: sections.name,
               bold: true,
-              size: 24,
+              size: 32, // 16pt
+              font: "Calibri",
+            }),
+          ],
+          alignment: AlignmentType.CENTER,
+          spacing: { after: 120 },
+        }),
+        
+        // Contact Information
+        new Paragraph({
+          children: [
+            new TextRun({
+              text: sections.contact,
+              size: 22, // 11pt
+              font: "Calibri",
             }),
           ],
           alignment: AlignmentType.CENTER,
           spacing: { after: 240 },
         }),
         
-        // Contact information
-        ...(sections.contact ? [new Paragraph({
+        // Education Section
+        new Paragraph({
           children: [
             new TextRun({
-              text: sections.contact,
-              size: 20,
+              text: "EDUCATION",
+              bold: true,
+              size: 24, // 12pt
+              font: "Calibri",
             }),
           ],
-          alignment: AlignmentType.CENTER,
-          spacing: { after: 480 },
-        })] : []),
+          spacing: { before: 160, after: 80 },
+          border: {
+            bottom: {
+              color: "000000",
+              space: 1,
+              style: BorderStyle.SINGLE,
+              size: 6,
+            },
+          },
+        }),
         
-        // Education section
-        ...(sections.education ? [
-          new Paragraph({
-            children: [
-              new TextRun({
-                text: "EDUCATION",
-                bold: true,
-                size: 22,
-              }),
-            ],
-            heading: HeadingLevel.HEADING_2,
-            spacing: { before: 240, after: 120 },
-          }),
-          new Paragraph({
-            children: [
-              new TextRun({
-                text: sections.education,
-                size: 20,
-              }),
-            ],
-            spacing: { after: 240 },
-          }),
-        ] : []),
+        ...sections.education.map(edu => new Paragraph({
+          children: [
+            new TextRun({
+              text: edu,
+              size: 22, // 11pt
+              font: "Calibri",
+            }),
+          ],
+          spacing: { after: 120 },
+        })),
         
-        // Professional Summary section
-        ...(sections.summary ? [
-          new Paragraph({
-            children: [
-              new TextRun({
-                text: "PROFESSIONAL SUMMARY",
-                bold: true,
-                size: 22,
-              }),
-            ],
-            heading: HeadingLevel.HEADING_2,
-            spacing: { before: 240, after: 120 },
-          }),
-          new Paragraph({
-            children: [
-              new TextRun({
-                text: sections.summary,
-                size: 20,
-              }),
-            ],
-            spacing: { after: 240 },
-          }),
-        ] : []),
+        // Professional Summary Section
+        new Paragraph({
+          children: [
+            new TextRun({
+              text: "PROFESSIONAL SUMMARY",
+              bold: true,
+              size: 24, // 12pt
+              font: "Calibri",
+            }),
+          ],
+          spacing: { before: 160, after: 80 },
+          border: {
+            bottom: {
+              color: "000000",
+              space: 1,
+              style: BorderStyle.SINGLE,
+              size: 6,
+            },
+          },
+        }),
         
-        // Technical Skills section
-        ...(sections.skills ? [
-          new Paragraph({
-            children: [
-              new TextRun({
-                text: "TECHNICAL SKILLS",
-                bold: true,
-                size: 22,
-              }),
-            ],
-            heading: HeadingLevel.HEADING_2,
-            spacing: { before: 240, after: 120 },
-          }),
-          new Paragraph({
-            children: [
-              new TextRun({
-                text: sections.skills,
-                size: 20,
-              }),
-            ],
-            spacing: { after: 240 },
-          }),
-        ] : []),
+        new Paragraph({
+          children: [
+            new TextRun({
+              text: sections.summary,
+              size: 22, // 11pt
+              font: "Calibri",
+            }),
+          ],
+          spacing: { after: 160 },
+        }),
         
-        // Professional Experience section
-        ...(sections.experience ? [
+        // Technical Skills Section
+        new Paragraph({
+          children: [
+            new TextRun({
+              text: "TECHNICAL SKILLS",
+              bold: true,
+              size: 24, // 12pt
+              font: "Calibri",
+            }),
+          ],
+          spacing: { before: 160, after: 80 },
+          border: {
+            bottom: {
+              color: "000000",
+              space: 1,
+              style: BorderStyle.SINGLE,
+              size: 6,
+            },
+          },
+        }),
+        
+        new Paragraph({
+          children: [
+            new TextRun({
+              text: sections.skills,
+              size: 22, // 11pt
+              font: "Calibri",
+            }),
+          ],
+          spacing: { after: 160 },
+        }),
+        
+        // Professional Experience Section
+        new Paragraph({
+          children: [
+            new TextRun({
+              text: "PROFESSIONAL EXPERIENCE",
+              bold: true,
+              size: 24, // 12pt
+              font: "Calibri",
+            }),
+          ],
+          spacing: { before: 160, after: 80 },
+          border: {
+            bottom: {
+              color: "000000",
+              space: 1,
+              style: BorderStyle.SINGLE,
+              size: 6,
+            },
+          },
+        }),
+        
+        // Experience entries
+        ...sections.experience.map((exp: any, index: number) => [
+          // Company and dates
           new Paragraph({
             children: [
               new TextRun({
-                text: "PROFESSIONAL EXPERIENCE",
+                text: `${exp.company} | ${exp.location} | ${exp.dates}`,
                 bold: true,
-                size: 22,
+                size: 22, // 11pt
+                font: "Calibri",
               }),
             ],
-            heading: HeadingLevel.HEADING_2,
-            spacing: { before: 240, after: 120 },
+            spacing: { before: index > 0 ? 160 : 80, after: 40 },
           }),
+          
+          // Job title
           new Paragraph({
             children: [
               new TextRun({
-                text: sections.experience,
-                size: 20,
+                text: exp.title,
+                italic: true,
+                size: 22, // 11pt
+                font: "Calibri",
               }),
             ],
-            spacing: { after: 240 },
+            spacing: { after: 80 },
           }),
+          
+          // Bullet points
+          ...exp.bullets.map((bullet: string) => new Paragraph({
+            children: [
+              new TextRun({
+                text: `• ${bullet}`,
+                size: 22, // 11pt
+                font: "Calibri",
+              }),
+            ],
+            spacing: { after: 60 },
+            indent: { left: 360 }, // 0.25 inch indent for bullets
+          })),
+        ]).flat(),
+        
+        // Projects Section (if applicable)
+        ...(sections.projects.length > 0 ? [
+          new Paragraph({
+            children: [
+              new TextRun({
+                text: "PROJECTS",
+                bold: true,
+                size: 24, // 12pt
+                font: "Calibri",
+              }),
+            ],
+            spacing: { before: 160, after: 80 },
+            border: {
+              bottom: {
+                color: "000000",
+                space: 1,
+                style: BorderStyle.SINGLE,
+                size: 6,
+              },
+            },
+          }),
+          
+          ...sections.projects.map((project: any) => [
+            new Paragraph({
+              children: [
+                new TextRun({
+                  text: `${project.name} | ${project.tech} | ${project.year}`,
+                  bold: true,
+                  size: 22, // 11pt
+                  font: "Calibri",
+                }),
+              ],
+              spacing: { after: 40 },
+            }),
+            
+            new Paragraph({
+              children: [
+                new TextRun({
+                  text: `• ${project.description}`,
+                  size: 22, // 11pt
+                  font: "Calibri",
+                }),
+              ],
+              spacing: { after: 120 },
+              indent: { left: 360 },
+            }),
+          ]).flat(),
         ] : []),
       ],
     }],

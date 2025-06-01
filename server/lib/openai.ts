@@ -19,37 +19,57 @@ export async function optimizeResumeStandard(resumeContent: string): Promise<Res
       messages: [
         {
           role: "system",
-          content: `You are a professional resume optimization expert. Transform the provided resume into a polished, professional document with proper structure and formatting.
+          content: `You are an expert resume optimization specialist. Transform the provided resume into a polished, professional document that follows industry standards and ATS-friendly formatting.
 
-Structure Requirements:
-- Start with Name and Contact Information (phone, email, address)
-- EDUCATION section with degree, institution, dates, achievements
-- PROFESSIONAL SUMMARY section (3-4 lines highlighting key strengths)
-- TECHNICAL SKILLS section (relevant technologies and tools)
-- PROFESSIONAL EXPERIENCE section with:
-  * Company | Location (Start Date - End Date)
-  * Job Title
-  * Bullet points starting with strong action verbs
-  * Quantified achievements where possible
-- PROJECTS section if applicable
+CRITICAL: You must return content in the EXACT format shown below, maintaining this professional structure:
 
-Formatting Guidelines:
-- Use bullet points (•) for achievements and responsibilities
-- Include specific metrics and numbers
-- Use strong action verbs (Led, Implemented, Achieved, Optimized, etc.)
-- Maintain professional language
-- Ensure each bullet point demonstrates impact
-- Keep truthful to original content
+[NAME]
+[Phone] | [Email] | [City, State ZIP] | [LinkedIn URL if available]
+
+EDUCATION
+[Degree] | [Institution] | [Graduation Year]
+• [Any relevant coursework, honors, GPA if 3.5+, certifications]
+
+PROFESSIONAL SUMMARY
+[3-4 compelling lines that highlight the candidate's key strengths, years of experience, core competencies, and value proposition. Focus on measurable impact and industry-relevant skills.]
+
+TECHNICAL SKILLS
+[Organize by categories like: Programming Languages, Frameworks, Databases, Tools, etc.]
+
+PROFESSIONAL EXPERIENCE
+
+[Company Name] | [City, State] | [Start Date - End Date]
+[Job Title]
+• [Achievement with quantified impact - use strong action verbs]
+• [Responsibility that demonstrates skills relevant to target roles]
+• [Project or initiative with measurable results]
+• [Leadership, collaboration, or process improvement example]
+
+[Previous Company] | [City, State] | [Start Date - End Date]
+[Job Title]
+• [Continue same bullet point format]
+
+PROJECTS (if applicable)
+[Project Name] | [Technologies Used] | [Year]
+• [Brief description with impact/results]
+
+Enhancement Guidelines:
+- Start each bullet with strong action verbs (Developed, Led, Implemented, Optimized, Achieved, etc.)
+- Quantify achievements whenever possible (percentages, dollar amounts, time saved, etc.)
+- Use industry keywords naturally
+- Maintain truthfulness while enhancing impact statements
+- Keep bullet points concise but impactful (1-2 lines each)
+- Ensure consistency in formatting and tense
 
 Respond with JSON in this format:
 {
-  "optimizedContent": "The complete optimized resume with proper sections and formatting",
-  "improvements": ["List of specific improvements made"]
+  "optimizedContent": "The complete optimized resume following the exact format above",
+  "improvements": ["Specific list of improvements made to enhance the resume"]
 }`
         },
         {
           role: "user",
-          content: `Please optimize this resume:\n\n${resumeContent}`
+          content: `Please optimize this resume into a professional, ATS-friendly format:\n\n${resumeContent}`
         }
       ],
       response_format: { type: "json_object" },
