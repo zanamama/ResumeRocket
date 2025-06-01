@@ -74,8 +74,8 @@ export function generateResumePDF(content: string, fileName: string): Buffer {
       yPosition = margin;
     }
     
-    // Add bullet
-    doc.text('●', margin + 8, yPosition);
+    // Add bullet (using a simple round bullet that works well in PDF)
+    doc.text('•', margin + 8, yPosition);
     
     // Add wrapped text with proper line width
     const cleanText = text.replace(/^[•●-]\s*/, '').trim();
