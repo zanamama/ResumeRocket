@@ -310,8 +310,8 @@ async function createWordDocument(content: string, fileName: string): Promise<st
       if (paragraphs.length > 0) {
         paragraphs.push(new Paragraph({
           children: [new TextRun({ 
-            text: "________________________________________________________________________________________",
-            size: 16,
+            text: "─────────────────────────────────────────────────────────────────────────────────────────",
+            size: 12,
             color: "000000"
           })],
           spacing: { before: 180, after: 120 }
