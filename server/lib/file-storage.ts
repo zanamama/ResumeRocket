@@ -309,11 +309,15 @@ async function createWordDocument(content: string, fileName: string): Promise<st
       // Add divider line before section (except for first section)
       if (paragraphs.length > 0) {
         paragraphs.push(new Paragraph({
-          children: [new TextRun({ 
-            text: "─────────────────────────────────────────────────────────────────────────────────────────",
-            size: 12,
-            color: "000000"
-          })],
+          children: [new TextRun({ text: "" })],
+          border: {
+            bottom: {
+              color: "000000",
+              space: 1,
+              style: BorderStyle.SINGLE,
+              size: 6
+            }
+          },
           spacing: { before: 180, after: 120 }
         }));
       }
