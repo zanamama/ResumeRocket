@@ -12,7 +12,7 @@ export interface ResumeOptimizationResult {
   keywordMatch?: number;
 }
 
-export async function optimizeResumeStandard(resumeContent: string): Promise<ResumeOptimizationResult> {
+export async function optimizeResumeStandard(resumeContent: string, fileName?: string): Promise<ResumeOptimizationResult> {
   try {
     const response = await openai.chat.completions.create({
       model: "gpt-4o",
@@ -23,10 +23,10 @@ export async function optimizeResumeStandard(resumeContent: string): Promise<Res
 
 Use the following structure, but ONLY include sections that exist in the original resume:
 
-1. **Header** (only if name or contact information exists in original)
-   - If name is provided in the original resume: use the actual name (bold and prominent)
-   - If contact information exists: include phone, email, address in one line below the name
-   - If NO name or contact information is found: START with the first section that exists (skip header entirely)
+1. **Header** (if name or contact information exists in original)
+   - Extract the candidate's name from the resume content or filename if available
+   - Include any contact information (phone, email, address) if present in the original
+   - If no header information is available, start with the first existing section
 
 2. **EDUCATION** (only if education information exists in original)
    - Degree and field of study, with dates (YYYY–YYYY)
@@ -86,7 +86,7 @@ Respond with JSON in this format:
         },
         {
           role: "user",
-          content: `Please optimize this resume into a professional, ATS-friendly format:\n\n${resumeContent}`
+          content: `Please optimize this resume into a professional, ATS-friendly format:\n\nFilename: ${fileName || 'Unknown'}\n\nResume Content:\n${resumeContent}`
         }
       ],
       response_format: { type: "json_object" },
