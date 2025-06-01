@@ -12,7 +12,7 @@ export default function HowItWorks() {
           <div className="flex items-center justify-between">
             <Link href="/">
               <div className="flex items-center cursor-pointer">
-                <img src="/assets/logo-2.70e507e8.png" alt="UpMySalary" className="w-8 h-8" />
+                <img src="/assets/logo-2.70e507e8.png" alt="UpMySalary" className="w-16 h-16" />
               </div>
             </Link>
             <div className="hidden md:flex items-center space-x-8">
