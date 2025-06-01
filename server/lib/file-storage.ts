@@ -219,7 +219,7 @@ function createRtfResume(content: string): string {
 }
 
 async function createWordDocument(content: string, fileName: string): Promise<string> {
-  // Create a simple, well-formatted Word document from the optimized content
+  // Create a well-formatted Word document from the optimized content
   const lines = content.split('\n').filter(line => line.trim());
   
   const paragraphs: Paragraph[] = [];
@@ -229,26 +229,35 @@ async function createWordDocument(content: string, fileName: string): Promise<st
     const trimmedLine = line.trim();
     if (!trimmedLine) continue;
     
-    // Check if this is a section header (all caps lines)
-    const isSectionHeader = /^[A-Z\s]+$/.test(trimmedLine) && 
-                           (trimmedLine.includes('EDUCATION') || 
-                            trimmedLine.includes('PROFESSIONAL') || 
-                            trimmedLine.includes('TECHNICAL') || 
-                            trimmedLine.includes('EXPERIENCE') ||
-                            trimmedLine.includes('PROJECTS'));
+    // Remove markdown formatting and detect formatting type
+    const cleanLine = trimmedLine.replace(/^##\s*/, '').replace(/^\*\*(.*)\*\*$/, '$1');
     
-    // Check if this is the name (first non-empty line)
-    const isName = isFirstLine && !isSectionHeader;
+    // Check if this is a section header (starts with ## or is all caps)
+    const isSectionHeader = trimmedLine.startsWith('##') || 
+                           (/^[A-Z\s]+$/.test(cleanLine) && 
+                           (cleanLine.includes('EDUCATION') || 
+                            cleanLine.includes('PROFESSIONAL') || 
+                            cleanLine.includes('TECHNICAL') || 
+                            cleanLine.includes('EXPERIENCE') ||
+                            cleanLine.includes('PROJECTS') ||
+                            cleanLine.includes('LINKEDIN')));
+    
+    // Check if this is the name (first non-empty line or has ** formatting)
+    const isName = (isFirstLine && !isSectionHeader) || 
+                   (trimmedLine.includes('**') && (trimmedLine.includes('Name') || isFirstLine));
     
     // Check if this line starts with bullet point
-    const isBulletPoint = trimmedLine.startsWith('•') || trimmedLine.startsWith('-');
+    const isBulletPoint = cleanLine.startsWith('•') || cleanLine.startsWith('-');
+    
+    // Check if this is bold text (wrapped in **)
+    const isBoldText = trimmedLine.includes('**') && !isName && !isSectionHeader;
     
     if (isName) {
       // Name formatting - centered, large, bold
       paragraphs.push(new Paragraph({
         children: [
           new TextRun({
-            text: trimmedLine,
+            text: cleanLine,
             bold: true,
             size: 32,
             font: "Calibri",
@@ -259,13 +268,13 @@ async function createWordDocument(content: string, fileName: string): Promise<st
       }));
       isFirstLine = false;
     } else if (isSectionHeader) {
-      // Section headers - bold, underlined
+      // Section headers - bold, larger
       paragraphs.push(new Paragraph({
         children: [
           new TextRun({
-            text: trimmedLine,
+            text: cleanLine,
             bold: true,
-            size: 24,
+            size: 26,
             font: "Calibri",
           }),
         ],
@@ -276,7 +285,7 @@ async function createWordDocument(content: string, fileName: string): Promise<st
       paragraphs.push(new Paragraph({
         children: [
           new TextRun({
-            text: trimmedLine,
+            text: cleanLine,
             size: 22,
             font: "Calibri",
           }),
@@ -284,12 +293,25 @@ async function createWordDocument(content: string, fileName: string): Promise<st
         spacing: { after: 60 },
         indent: { left: 360 },
       }));
+    } else if (isBoldText) {
+      // Bold text (job titles, etc.)
+      paragraphs.push(new Paragraph({
+        children: [
+          new TextRun({
+            text: cleanLine,
+            bold: true,
+            size: 22,
+            font: "Calibri",
+          }),
+        ],
+        spacing: { after: 60 },
+      }));
     } else {
       // Regular content
       paragraphs.push(new Paragraph({
         children: [
           new TextRun({
-            text: trimmedLine,
+            text: cleanLine,
             size: 22,
             font: "Calibri",
           }),

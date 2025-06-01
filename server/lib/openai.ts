@@ -58,7 +58,9 @@ Use the following structure:
 
 Rules:
 - Keep formatting professional and consistent
-- Maintain a clean structure with clear section headings in ALL CAPS
+- Use section headings in ALL CAPS (no ## or ** markdown formatting)
+- Use the actual name from the resume, not "[Your Name]" placeholder
+- Use actual contact information provided, not placeholders
 - Use impactful, action-oriented language for responsibilities and achievements
 - Do not include personal photos or creative design elements
 - Keep ALL original company names, job titles, dates, and locations EXACTLY as written
@@ -67,6 +69,8 @@ Rules:
 - Keep ALL original technical skills and certifications EXACTLY as listed
 - DO NOT add any new information, metrics, or claims not in the original
 - DO NOT change any factual details whatsoever
+- DO NOT use markdown formatting (##, **, etc.) - use plain text with proper structure
+- DO NOT add placeholder text - only use actual information from the resume
 
 Respond with JSON in this format:
 {
