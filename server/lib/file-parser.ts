@@ -62,8 +62,74 @@ async function parsePdfContent(buffer: Buffer): Promise<string> {
 
 async function parseDocxContent(buffer: Buffer): Promise<string> {
   try {
-    const result = await mammoth.extractRawText({ buffer });
-    return result.value.trim();
+    // Extract main document content
+    const mainResult = await mammoth.extractRawText({ buffer });
+    let fullContent = mainResult.value;
+
+    // Try to extract headers and footers using mammoth's options
+    try {
+      const headerFooterResult = await mammoth.extractRawText({ 
+        buffer,
+        includeDefaultStyleMap: true,
+        includeEmbeddedStyleMap: true
+      });
+      
+      // The mammoth library doesn't directly expose headers/footers in extractRawText
+      // So we'll try a different approach using the internal document structure
+      const JSZip = require('jszip');
+      const zip = await JSZip.loadAsync(buffer);
+      
+      let headerFooterContent = '';
+      
+      // Extract header files (header1.xml, header2.xml, etc.)
+      const headerFiles = Object.keys(zip.files).filter(name => 
+        name.includes('header') && name.endsWith('.xml')
+      );
+      
+      for (const headerFile of headerFiles) {
+        try {
+          const headerXml = await zip.files[headerFile].async('string');
+          // Extract text content from XML (simple approach)
+          const textContent = headerXml
+            .replace(/<[^>]*>/g, ' ')
+            .replace(/\s+/g, ' ')
+            .trim();
+          headerFooterContent += textContent + '\n';
+        } catch (e) {
+          // Continue if header extraction fails
+        }
+      }
+      
+      // Extract footer files (footer1.xml, footer2.xml, etc.)
+      const footerFiles = Object.keys(zip.files).filter(name => 
+        name.includes('footer') && name.endsWith('.xml')
+      );
+      
+      for (const footerFile of footerFiles) {
+        try {
+          const footerXml = await zip.files[footerFile].async('string');
+          // Extract text content from XML (simple approach)
+          const textContent = footerXml
+            .replace(/<[^>]*>/g, ' ')
+            .replace(/\s+/g, ' ')
+            .trim();
+          headerFooterContent += textContent + '\n';
+        } catch (e) {
+          // Continue if footer extraction fails
+        }
+      }
+      
+      // Combine header/footer content with main content
+      if (headerFooterContent.trim()) {
+        fullContent = headerFooterContent.trim() + '\n\n' + fullContent;
+      }
+      
+    } catch (headerError) {
+      // If header/footer extraction fails, just use main content
+      console.log('Header/footer extraction failed, using main content only');
+    }
+
+    return fullContent.trim();
   } catch (error) {
     throw new Error('Failed to extract text from DOCX');
   }
