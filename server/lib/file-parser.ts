@@ -1,6 +1,18 @@
 import type { FileUpload } from "@shared/schema";
 import mammoth from "mammoth";
 
+// Helper function to extract text content from Word XML
+function extractTextFromWordXml(xml: string): string {
+  return xml
+    // Remove XML tags but preserve text content
+    .replace(/<w:t[^>]*>(.*?)<\/w:t>/g, '$1')
+    .replace(/<w:tab[^>]*>/g, ' ')
+    .replace(/<w:br[^>]*>/g, '\n')
+    .replace(/<[^>]*>/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
 export async function parseFileContent(file: FileUpload): Promise<string> {
   try {
     // Decode base64 content
@@ -66,67 +78,59 @@ async function parseDocxContent(buffer: Buffer): Promise<string> {
     const mainResult = await mammoth.extractRawText({ buffer });
     let fullContent = mainResult.value;
 
-    // Try to extract headers and footers using mammoth's options
+    // Try to extract headers and footers from the DOCX file
     try {
-      const headerFooterResult = await mammoth.extractRawText({ 
-        buffer,
-        includeDefaultStyleMap: true,
-        includeEmbeddedStyleMap: true
-      });
-      
-      // The mammoth library doesn't directly expose headers/footers in extractRawText
-      // So we'll try a different approach using the internal document structure
       const JSZip = require('jszip');
       const zip = await JSZip.loadAsync(buffer);
       
       let headerFooterContent = '';
       
-      // Extract header files (header1.xml, header2.xml, etc.)
+      // Look for header files in word/ directory
       const headerFiles = Object.keys(zip.files).filter(name => 
-        name.includes('header') && name.endsWith('.xml')
+        name.startsWith('word/') && name.includes('header') && name.endsWith('.xml')
       );
       
       for (const headerFile of headerFiles) {
         try {
           const headerXml = await zip.files[headerFile].async('string');
-          // Extract text content from XML (simple approach)
-          const textContent = headerXml
-            .replace(/<[^>]*>/g, ' ')
-            .replace(/\s+/g, ' ')
-            .trim();
-          headerFooterContent += textContent + '\n';
+          // More sophisticated XML text extraction
+          const textContent = extractTextFromWordXml(headerXml);
+          if (textContent.trim()) {
+            headerFooterContent += textContent + '\n';
+          }
         } catch (e) {
-          // Continue if header extraction fails
+          console.log(`Failed to extract header: ${headerFile}`);
         }
       }
       
-      // Extract footer files (footer1.xml, footer2.xml, etc.)
+      // Look for footer files in word/ directory
       const footerFiles = Object.keys(zip.files).filter(name => 
-        name.includes('footer') && name.endsWith('.xml')
+        name.startsWith('word/') && name.includes('footer') && name.endsWith('.xml')
       );
       
       for (const footerFile of footerFiles) {
         try {
           const footerXml = await zip.files[footerFile].async('string');
-          // Extract text content from XML (simple approach)
-          const textContent = footerXml
-            .replace(/<[^>]*>/g, ' ')
-            .replace(/\s+/g, ' ')
-            .trim();
-          headerFooterContent += textContent + '\n';
+          // More sophisticated XML text extraction
+          const textContent = extractTextFromWordXml(footerXml);
+          if (textContent.trim()) {
+            headerFooterContent += textContent + '\n';
+          }
         } catch (e) {
-          // Continue if footer extraction fails
+          console.log(`Failed to extract footer: ${footerFile}`);
         }
       }
       
       // Combine header/footer content with main content
       if (headerFooterContent.trim()) {
         fullContent = headerFooterContent.trim() + '\n\n' + fullContent;
+        console.log('Successfully extracted header/footer content');
+      } else {
+        console.log('No header/footer content found');
       }
       
-    } catch (headerError) {
-      // If header/footer extraction fails, just use main content
-      console.log('Header/footer extraction failed, using main content only');
+    } catch (headerError: any) {
+      console.log('Header/footer extraction failed:', headerError?.message || 'Unknown error');
     }
 
     return fullContent.trim();
