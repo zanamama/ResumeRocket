@@ -306,6 +306,22 @@ async function createWordDocument(content: string, fileName: string): Promise<st
         spacing: { before: 180, after: 60 },
       }));
     } else if (isSectionHeader) {
+      // Add divider line before section (except for first section)
+      if (paragraphs.length > 0) {
+        paragraphs.push(new Paragraph({
+          children: [new TextRun({ text: "", size: 1 })],
+          border: {
+            bottom: {
+              color: "000000",
+              space: 1,
+              style: "single",
+              size: 4
+            }
+          },
+          spacing: { before: 180, after: 120 }
+        }));
+      }
+      
       // Section headers - bold, larger
       paragraphs.push(new Paragraph({
         children: [
@@ -316,7 +332,7 @@ async function createWordDocument(content: string, fileName: string): Promise<st
             font: "Calibri",
           }),
         ],
-        spacing: { before: 240, after: 120 },
+        spacing: { before: 120, after: 120 },
       }));
     } else if (isBulletPoint) {
       // Bullet points - indented
