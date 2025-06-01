@@ -43,7 +43,7 @@ Use the following structure, but ONLY include sections that exist in the origina
    For each job:
    - Company name | Location (Dates)
    - Job title
-   - 4–8 concise bullet points describing duties, technologies used, achievements, and results
+   - 4–8 concise bullet points (•) describing duties, technologies used, achievements, and results
    - List jobs in reverse chronological order
 
 6. **PROJECTS** (only if projects are mentioned in original)
@@ -68,6 +68,7 @@ Rules:
 - If contact information is missing from the original, DO NOT create fake contact details
 - Start with the first available section if no header information exists
 - Use impactful, action-oriented language for responsibilities and achievements
+- Format all bullet points with round bullets (•) instead of dashes (-)
 - Do not include personal photos or creative design elements
 - Keep ALL original company names, job titles, dates, and locations EXACTLY as written
 - Keep ALL original education details, degrees, and institutions EXACTLY as written
