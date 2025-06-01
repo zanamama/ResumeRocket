@@ -68,12 +68,18 @@ export function generateResumePDF(content: string, fileName: string): Buffer {
     doc.setFontSize(9);
     doc.setFont('helvetica', 'normal');
     
+    // Check for page break before adding content
+    if (yPosition > doc.internal.pageSize.getHeight() - 40) {
+      doc.addPage();
+      yPosition = margin;
+    }
+    
     // Add bullet
     doc.text('●', margin + 8, yPosition);
     
-    // Add wrapped text
-    const cleanText = text.replace(/^[•●]\s*/, '').trim();
-    const wrappedLines = doc.splitTextToSize(cleanText, maxLineWidth - 20);
+    // Add wrapped text with proper line width
+    const cleanText = text.replace(/^[•●-]\s*/, '').trim();
+    const wrappedLines = doc.splitTextToSize(cleanText, maxLineWidth - 25);
     doc.text(wrappedLines, margin + 15, yPosition);
     yPosition += wrappedLines.length * lineHeight + 2;
   }

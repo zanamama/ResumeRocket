@@ -90,22 +90,16 @@ async function parseDocxContent(buffer: Buffer): Promise<string> {
         name.startsWith('word/') && name.includes('header') && name.endsWith('.xml')
       );
       
-      console.log('Found header files:', headerFiles);
-      
       for (const headerFile of headerFiles) {
         try {
           const headerXml = await zip.files[headerFile].async('string');
-          console.log(`Processing header file: ${headerFile}`);
-          
-          // More sophisticated XML text extraction
           const textContent = extractTextFromWordXml(headerXml);
-          console.log(`Extracted header text: "${textContent}"`);
           
           if (textContent.trim()) {
             headerFooterContent += textContent + '\n';
           }
         } catch (e) {
-          console.log(`Failed to extract header: ${headerFile}`, e);
+          // Continue if header extraction fails
         }
       }
       
@@ -130,9 +124,6 @@ async function parseDocxContent(buffer: Buffer): Promise<string> {
       // Combine header/footer content with main content
       if (headerFooterContent.trim()) {
         fullContent = headerFooterContent.trim() + '\n\n' + fullContent;
-        console.log('Successfully extracted header/footer content');
-      } else {
-        console.log('No header/footer content found');
       }
       
     } catch (headerError: any) {
