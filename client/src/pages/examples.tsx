@@ -99,7 +99,7 @@ export default function Examples() {
           <div className="flex items-center justify-between">
             <Link href="/">
               <div className="flex items-center cursor-pointer">
-                <img src="/assets/logo-2.70e507e8.png" alt="UpMySalary" className="w-8 h-8" />
+                <img src="/assets/logo-2.70e507e8.png" alt="UpMySalary" className="w-24 h-24" />
               </div>
             </Link>
             <div className="hidden md:flex items-center space-x-8">

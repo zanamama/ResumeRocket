@@ -10,7 +10,7 @@ export default function Landing() {
         <div className="max-w-6xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center">
-              <img src="/assets/logo-2.70e507e8.png" alt="UpMySalary" className="w-8 h-8" />
+              <img src="/assets/logo-2.70e507e8.png" alt="UpMySalary" className="w-24 h-24" />
             </div>
             <div className="hidden md:flex items-center space-x-8">
               <Link href="/how-it-works" className="text-ios-text hover:text-black transition-colors">How it Works</Link>
