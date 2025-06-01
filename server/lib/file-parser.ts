@@ -1,5 +1,6 @@
 import type { FileUpload } from "@shared/schema";
 import mammoth from "mammoth";
+import JSZip from "jszip";
 
 // Helper function to extract text content from Word XML
 function extractTextFromWordXml(xml: string): string {
@@ -80,7 +81,6 @@ async function parseDocxContent(buffer: Buffer): Promise<string> {
 
     // Try to extract headers and footers from the DOCX file
     try {
-      const JSZip = require('jszip');
       const zip = await JSZip.loadAsync(buffer);
       
       let headerFooterContent = '';
@@ -90,16 +90,22 @@ async function parseDocxContent(buffer: Buffer): Promise<string> {
         name.startsWith('word/') && name.includes('header') && name.endsWith('.xml')
       );
       
+      console.log('Found header files:', headerFiles);
+      
       for (const headerFile of headerFiles) {
         try {
           const headerXml = await zip.files[headerFile].async('string');
+          console.log(`Processing header file: ${headerFile}`);
+          
           // More sophisticated XML text extraction
           const textContent = extractTextFromWordXml(headerXml);
+          console.log(`Extracted header text: "${textContent}"`);
+          
           if (textContent.trim()) {
             headerFooterContent += textContent + '\n';
           }
         } catch (e) {
-          console.log(`Failed to extract header: ${headerFile}`);
+          console.log(`Failed to extract header: ${headerFile}`, e);
         }
       }
       
