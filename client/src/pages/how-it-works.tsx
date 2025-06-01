@@ -18,92 +18,112 @@ export default function HowItWorks() {
             <div className="hidden md:flex items-center space-x-8">
               <Link href="/" className="text-ios-text hover:text-black transition-colors">Home</Link>
               <Link href="/how-it-works" className="text-ios-blue font-medium">How it Works</Link>
+              <Link href="/examples" className="text-ios-text hover:text-black transition-colors">Examples</Link>
               <a href="mailto:upmypay@gmail.com?subject=UpMySalary Support Request" className="text-ios-text hover:text-black transition-colors">Support</a>
             </div>
           </div>
         </div>
       </header>
 
-      {/* Hero Section */}
-      <section className="max-w-4xl mx-auto px-6 py-16 text-center">
-        <h1 className="text-5xl md:text-6xl font-bold text-black mb-6 leading-tight">
-          How It Works
-        </h1>
-        <p className="text-xl text-ios-text mb-12 max-w-2xl mx-auto leading-relaxed">
-          Get your professional resume optimized in just 4 simple steps
-        </p>
-      </section>
-
-      {/* Steps Section */}
-      <section className="max-w-4xl mx-auto px-6 py-8">
-        <div className="grid md:grid-cols-4 gap-8">
-          {/* Step 1 */}
-          <div className="text-center">
-            <div className="bg-ios-blue/10 rounded-2xl w-20 h-20 flex items-center justify-center mx-auto mb-6">
-              <Upload className="h-10 w-10 text-ios-blue" />
-            </div>
-            <h3 className="text-xl font-semibold text-black mb-3">1. Upload Resume</h3>
-            <p className="text-ios-text leading-relaxed">
-              Upload your current resume in PDF or DOCX format. Our system supports all standard formats.
-            </p>
-          </div>
-
-          {/* Step 2 */}
-          <div className="text-center">
-            <div className="bg-ios-blue/10 rounded-2xl w-20 h-20 flex items-center justify-center mx-auto mb-6">
-              <Zap className="h-10 w-10 text-ios-blue" />
-            </div>
-            <h3 className="text-xl font-semibold text-black mb-3">2. AI Processing</h3>
-            <p className="text-ios-text leading-relaxed">
-              Our AI analyzes your resume and enhances it with professional formatting and optimized content.
-            </p>
-          </div>
-
-          {/* Step 3 */}
-          <div className="text-center">
-            <div className="bg-ios-blue/10 rounded-2xl w-20 h-20 flex items-center justify-center mx-auto mb-6">
-              <FileCheck className="h-10 w-10 text-ios-blue" />
-            </div>
-            <h3 className="text-xl font-semibold text-black mb-3">3. Review Results</h3>
-            <p className="text-ios-text leading-relaxed">
-              See your enhanced resume with improved structure, formatting, and ATS optimization.
-            </p>
-          </div>
-
-          {/* Step 4 */}
-          <div className="text-center">
-            <div className="bg-ios-blue/10 rounded-2xl w-20 h-20 flex items-center justify-center mx-auto mb-6">
-              <Download className="h-10 w-10 text-ios-blue" />
-            </div>
-            <h3 className="text-xl font-semibold text-black mb-3">4. Download</h3>
-            <p className="text-ios-text leading-relaxed">
-              Download your optimized resume in PDF and DOCX formats, ready for job applications.
-            </p>
-          </div>
+      {/* Main Content */}
+      <main className="max-w-4xl mx-auto px-6 py-16">
+        <div className="text-center mb-16">
+          <h1 className="text-4xl font-bold text-black mb-4">How UpMySalary Works</h1>
+          <p className="text-xl text-ios-text max-w-2xl mx-auto">
+            Transform your resume into a professional, ATS-optimized document in just a few simple steps
+          </p>
         </div>
-      </section>
 
-      {/* Call to Action */}
-      <section className="max-w-2xl mx-auto px-6 py-16 text-center">
-        <h2 className="text-3xl font-bold text-black mb-6">
-          Ready to Get Started?
-        </h2>
-        <p className="text-lg text-ios-text mb-8">
-          Upload your resume and get a professionally optimized version in minutes.
-        </p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Link href="/standard">
-            <Button size="lg" className="w-full sm:w-auto bg-ios-blue text-white hover:bg-blue-600 px-8 py-3">
-              Start Standard Polish
+        {/* Process Steps */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+          <Card className="text-center">
+            <CardHeader>
+              <div className="w-16 h-16 bg-ios-blue/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Upload className="w-8 h-8 text-ios-blue" />
+              </div>
+              <CardTitle className="text-lg">1. Upload Resume</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <CardDescription>
+                Upload your current resume in PDF or Word format. Our system accepts all common resume layouts.
+              </CardDescription>
+            </CardContent>
+          </Card>
+
+          <Card className="text-center">
+            <CardHeader>
+              <div className="w-16 h-16 bg-ios-blue/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Zap className="w-8 h-8 text-ios-blue" />
+              </div>
+              <CardTitle className="text-lg">2. AI Analysis</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <CardDescription>
+                Our advanced AI analyzes your content, identifying areas for improvement and optimization opportunities.
+              </CardDescription>
+            </CardContent>
+          </Card>
+
+          <Card className="text-center">
+            <CardHeader>
+              <div className="w-16 h-16 bg-ios-blue/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <FileCheck className="w-8 h-8 text-ios-blue" />
+              </div>
+              <CardTitle className="text-lg">3. Enhancement</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <CardDescription>
+                We enhance your resume with professional phrasing, better structure, and compelling metrics.
+              </CardDescription>
+            </CardContent>
+          </Card>
+
+          <Card className="text-center">
+            <CardHeader>
+              <div className="w-16 h-16 bg-ios-blue/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Download className="w-8 h-8 text-ios-blue" />
+              </div>
+              <CardTitle className="text-lg">4. Download</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <CardDescription>
+                Receive your professionally optimized resume in both PDF and Word formats, ready for applications.
+              </CardDescription>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Features Section */}
+        <div className="text-center">
+          <h2 className="text-3xl font-bold text-black mb-8">What Makes Us Different</h2>
+          <div className="grid md:grid-cols-3 gap-8 mb-12">
+            <div>
+              <h3 className="text-xl font-semibold text-black mb-4">ATS-Optimized</h3>
+              <p className="text-ios-text">
+                Every resume is optimized to pass through Applicant Tracking Systems used by most employers.
+              </p>
+            </div>
+            <div>
+              <h3 className="text-xl font-semibold text-black mb-4">Professional Templates</h3>
+              <p className="text-ios-text">
+                Your content is formatted using industry-standard templates that recruiters recognize and trust.
+              </p>
+            </div>
+            <div>
+              <h3 className="text-xl font-semibold text-black mb-4">AI-Powered</h3>
+              <p className="text-ios-text">
+                Advanced AI technology enhances your content while maintaining your unique voice and experience.
+              </p>
+            </div>
+          </div>
+
+          <Link href="/">
+            <Button className="bg-ios-blue text-white px-8 py-3 hover:bg-blue-600">
+              Get Started Now
             </Button>
           </Link>
-          <Link href="/advanced">
-            <Button size="lg" variant="outline" className="w-full sm:w-auto border-ios-blue text-ios-blue hover:bg-ios-blue hover:text-white px-8 py-3">
-              Try Advanced Tailoring
-            </Button>
-          </Link>
         </div>
-      </section>
+      </main>
     </div>
   );
 }

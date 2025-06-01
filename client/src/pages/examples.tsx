@@ -1,93 +1,57 @@
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Download, Eye } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
 
 export default function Examples() {
   const resumeExamples = [
     {
-      id: 1,
       title: "Software Developer",
-      name: "Alex Thompson",
-      email: "alex.thompson@email.com",
-      phone: "(555) 123-4567",
-      description: "Full Stack Developer with 5+ years of experience in JavaScript, React, and Node.js",
-      highlights: [
-        "Led development of e-commerce platform serving 100K+ users",
-        "Reduced application load time by 40% through optimization",
-        "Mentored 6 junior developers in modern web technologies"
-      ],
-      skills: "JavaScript, React, Node.js, Python, AWS, MongoDB, PostgreSQL, Docker"
+      jobTitle: "Senior Full Stack Developer",
+      industry: "Technology",
+      experience: "5+ years",
+      keySkills: ["React", "Node.js", "Python", "AWS"],
+      description: "Optimized for modern tech roles with emphasis on full-stack capabilities and cloud experience."
     },
     {
-      id: 2,
       title: "Business Development Manager",
-      name: "Sarah Chen",
-      email: "sarah.chen@email.com", 
-      phone: "(555) 234-5678",
-      description: "Strategic Business Development Manager with 8+ years driving revenue growth",
-      highlights: [
-        "Generated $2.5M in new business revenue over 2 years",
-        "Established partnerships with 15+ Fortune 500 companies",
-        "Increased market penetration by 35% in key territories"
-      ],
-      skills: "Strategic Planning, Sales Management, Partnership Development, CRM, Salesforce, Market Analysis"
+      jobTitle: "Strategic Business Development Manager",
+      industry: "Sales & Marketing",
+      experience: "7+ years",
+      keySkills: ["Strategic Planning", "Client Relations", "Market Analysis", "Revenue Growth"],
+      description: "Enhanced for leadership roles with focus on strategic thinking and relationship building."
     },
     {
-      id: 3,
-      title: "Certified Nursing Assistant (CNA)",
-      name: "Maria Rodriguez",
-      email: "maria.rodriguez@email.com",
-      phone: "(555) 345-6789", 
-      description: "Compassionate CNA with 4+ years providing exceptional patient care",
-      highlights: [
-        "Maintained 98% patient satisfaction scores across all units",
-        "Certified in CPR, BLS, and specialized dementia care",
-        "Supported 25+ patients daily in long-term care facility"
-      ],
-      skills: "Patient Care, Vital Signs, Medical Terminology, ADL Assistance, Documentation, Emergency Response"
+      title: "Certified Nursing Assistant",
+      jobTitle: "Certified Nursing Assistant",
+      industry: "Healthcare",
+      experience: "3+ years",
+      keySkills: ["Patient Care", "Medical Documentation", "Vital Signs", "Healthcare Compliance"],
+      description: "Tailored for healthcare professionals with emphasis on patient care and medical expertise."
     },
     {
-      id: 4,
       title: "Marketing Specialist",
-      name: "David Wilson",
-      email: "david.wilson@email.com",
-      phone: "(555) 456-7890",
-      description: "Digital Marketing Specialist with expertise in SEO, PPC, and content strategy",
-      highlights: [
-        "Increased organic traffic by 150% through SEO optimization",
-        "Managed $500K annual advertising budget with 25% ROI",
-        "Created content strategy that boosted engagement by 80%"
-      ],
-      skills: "SEO/SEM, Google Analytics, Content Marketing, Social Media, PPC, Email Marketing, Adobe Creative Suite"
+      jobTitle: "Digital Marketing Specialist",
+      industry: "Marketing & Advertising",
+      experience: "4+ years",
+      keySkills: ["Digital Marketing", "SEO/SEM", "Analytics", "Content Strategy"],
+      description: "Focused on digital marketing expertise with data-driven results and campaign management."
     },
     {
-      id: 5,
-      title: "Data Analyst",
-      name: "Jennifer Park",
-      email: "jennifer.park@email.com",
-      phone: "(555) 567-8901",
-      description: "Data Analyst with 6+ years transforming complex data into actionable insights",
-      highlights: [
-        "Built predictive models that improved forecasting accuracy by 30%",
-        "Automated reporting processes, saving 20 hours per week",
-        "Presented insights to C-level executives driving $1M cost savings"
-      ],
-      skills: "Python, SQL, Tableau, Power BI, Machine Learning, Statistics, Excel, R, Data Visualization"
+      title: "Financial Analyst",
+      jobTitle: "Senior Financial Analyst",
+      industry: "Finance",
+      experience: "6+ years",
+      keySkills: ["Financial Modeling", "Data Analysis", "Risk Assessment", "Excel/SQL"],
+      description: "Structured for finance roles with emphasis on analytical skills and quantitative expertise."
     },
     {
-      id: 6,
       title: "Project Manager",
-      name: "Michael Brown",
-      email: "michael.brown@email.com",
-      phone: "(555) 678-9012",
-      description: "Agile Project Manager with 7+ years delivering complex technical projects",
-      highlights: [
-        "Successfully delivered 15+ projects on time and under budget",
-        "Led cross-functional teams of up to 20 members",
-        "Achieved 95% stakeholder satisfaction across all projects"
-      ],
-      skills: "Agile/Scrum, Project Planning, Risk Management, Stakeholder Management, JIRA, MS Project, Budget Management"
+      jobTitle: "Senior Project Manager",
+      industry: "Operations",
+      experience: "8+ years",
+      keySkills: ["Project Planning", "Team Leadership", "Agile/Scrum", "Risk Management"],
+      description: "Optimized for management roles with focus on leadership and process improvement."
     }
   ];
 
@@ -112,97 +76,88 @@ export default function Examples() {
         </div>
       </header>
 
-      {/* Hero Section */}
-      <section className="max-w-4xl mx-auto px-6 py-16 text-center">
-        <h1 className="text-5xl md:text-6xl font-bold text-black mb-6 leading-tight">
-          Perfect Resume Examples
-        </h1>
-        <p className="text-xl text-ios-text mb-12 max-w-2xl mx-auto leading-relaxed">
-          See what a professionally optimized resume looks like across different industries and experience levels.
-        </p>
-      </section>
+      {/* Main Content */}
+      <main className="max-w-6xl mx-auto px-6 py-16">
+        <div className="text-center mb-16">
+          <h1 className="text-4xl font-bold text-black mb-4">Resume Examples</h1>
+          <p className="text-xl text-ios-text max-w-3xl mx-auto">
+            See how UpMySalary transforms resumes across different industries and experience levels
+          </p>
+        </div>
 
-      {/* Resume Examples Grid */}
-      <section className="max-w-7xl mx-auto px-6 py-8">
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {resumeExamples.map((resume) => (
-            <Card key={resume.id} className="bg-white border border-gray-200 hover:shadow-lg transition-all duration-300">
-              <CardHeader className="pb-4">
-                <div className="flex items-center justify-between">
-                  <CardTitle className="text-xl font-semibold text-black">{resume.title}</CardTitle>
-                  <div className="flex space-x-2">
-                    <Button size="sm" variant="outline" className="text-xs">
-                      <Eye className="w-3 h-3 mr-1" />
-                      View
-                    </Button>
-                  </div>
+        {/* Resume Examples Grid */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+          {resumeExamples.map((example, index) => (
+            <Card key={index} className="hover:shadow-lg transition-shadow">
+              <CardHeader>
+                <div className="flex items-center justify-between mb-2">
+                  <Badge variant="secondary" className="text-xs">
+                    {example.industry}
+                  </Badge>
+                  <span className="text-xs text-ios-text">
+                    {example.experience}
+                  </span>
                 </div>
-                <CardDescription className="text-ios-text">
-                  {resume.description}
+                <CardTitle className="text-lg">{example.title}</CardTitle>
+                <CardDescription className="text-sm font-medium text-ios-blue">
+                  {example.jobTitle}
                 </CardDescription>
               </CardHeader>
-              <CardContent className="space-y-4">
-                {/* Contact Info */}
-                <div className="text-center py-4 bg-gray-50 rounded-lg">
-                  <h3 className="font-semibold text-black text-lg">{resume.name}</h3>
-                  <p className="text-sm text-ios-text">{resume.email}</p>
-                  <p className="text-sm text-ios-text">{resume.phone}</p>
-                </div>
-
-                {/* Key Highlights */}
-                <div>
-                  <h4 className="font-semibold text-black mb-2">Key Achievements:</h4>
-                  <ul className="space-y-1">
-                    {resume.highlights.map((highlight, index) => (
-                      <li key={index} className="text-sm text-ios-text flex items-start">
-                        <span className="text-ios-blue mr-2">•</span>
-                        {highlight}
-                      </li>
+              <CardContent>
+                <p className="text-sm text-ios-text mb-4">
+                  {example.description}
+                </p>
+                <div className="space-y-2">
+                  <h4 className="text-xs font-semibold text-black">Key Skills Enhanced:</h4>
+                  <div className="flex flex-wrap gap-1">
+                    {example.keySkills.map((skill, skillIndex) => (
+                      <Badge key={skillIndex} variant="outline" className="text-xs">
+                        {skill}
+                      </Badge>
                     ))}
-                  </ul>
-                </div>
-
-                {/* Skills Preview */}
-                <div>
-                  <h4 className="font-semibold text-black mb-2">Core Skills:</h4>
-                  <p className="text-sm text-ios-text leading-relaxed">{resume.skills}</p>
-                </div>
-
-                {/* Action Buttons */}
-                <div className="pt-4 border-t border-gray-100">
-                  <Link href="/standard">
-                    <Button className="w-full bg-ios-blue text-white hover:bg-blue-600">
-                      Create Similar Resume
-                    </Button>
-                  </Link>
+                  </div>
                 </div>
               </CardContent>
             </Card>
           ))}
         </div>
-      </section>
 
-      {/* Call to Action */}
-      <section className="max-w-4xl mx-auto px-6 py-16 text-center">
-        <h2 className="text-3xl font-bold text-black mb-6">
-          Ready to Create Your Perfect Resume?
-        </h2>
-        <p className="text-lg text-ios-text mb-8">
-          Upload your current resume and get a professionally optimized version that stands out to employers.
-        </p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Link href="/standard">
-            <Button size="lg" className="w-full sm:w-auto bg-ios-blue text-white hover:bg-blue-600 px-8 py-3">
-              Start Standard Polish
-            </Button>
-          </Link>
-          <Link href="/advanced">
-            <Button size="lg" variant="outline" className="w-full sm:w-auto border-ios-blue text-ios-blue hover:bg-ios-blue hover:text-white px-8 py-3">
-              Try Advanced Tailoring
+        {/* Benefits Section */}
+        <div className="bg-gray-50 rounded-lg p-8 mb-12">
+          <h2 className="text-2xl font-bold text-black mb-6 text-center">What Our Optimization Includes</h2>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="text-center">
+              <h3 className="font-semibold text-black mb-2">Enhanced Phrasing</h3>
+              <p className="text-sm text-ios-text">Professional language that showcases your achievements</p>
+            </div>
+            <div className="text-center">
+              <h3 className="font-semibold text-black mb-2">ATS Optimization</h3>
+              <p className="text-sm text-ios-text">Keywords and formatting that pass applicant tracking systems</p>
+            </div>
+            <div className="text-center">
+              <h3 className="font-semibold text-black mb-2">Metrics Focus</h3>
+              <p className="text-sm text-ios-text">Quantified results that demonstrate your impact</p>
+            </div>
+            <div className="text-center">
+              <h3 className="font-semibold text-black mb-2">Professional Structure</h3>
+              <p className="text-sm text-ios-text">Clean, industry-standard formatting that recruiters expect</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Call to Action */}
+        <div className="text-center">
+          <h2 className="text-3xl font-bold text-black mb-4">Ready to Transform Your Resume?</h2>
+          <p className="text-ios-text mb-8 max-w-2xl mx-auto">
+            Join thousands of professionals who have successfully improved their job prospects with our AI-powered resume optimization.
+          </p>
+          <Link href="/">
+            <Button className="bg-ios-blue text-white px-8 py-3 hover:bg-blue-600">
+              Start Optimizing Now
             </Button>
           </Link>
         </div>
-      </section>
+      </main>
     </div>
   );
 }
