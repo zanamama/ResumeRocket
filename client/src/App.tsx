@@ -11,11 +11,13 @@ import Processing from "./pages/processing";
 import Success from "./pages/success";
 import HowItWorks from "./pages/how-it-works";
 import Examples from "./pages/examples";
+import Test from "./pages/test";
 
 function Router() {
   return (
     <Switch>
       <Route path="/" component={Landing} />
+      <Route path="/test" component={Test} />
       <Route path="/how-it-works" component={HowItWorks} />
       <Route path="/examples" component={Examples} />
       <Route path="/standard" component={StandardMode} />
@@ -23,7 +25,7 @@ function Router() {
       <Route path="/processing/:jobId" component={Processing} />
       <Route path="/success/:jobId" component={Success} />
       {/* Fallback to 404 */}
-      <Route component={NotFound} />
+      <Route path="*" component={NotFound} />
     </Switch>
   );
 }
