@@ -1,8 +1,12 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { Menu, X } from "lucide-react";
+import { useState } from "react";
 
 export default function Landing() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   return (
     <div className="min-h-screen bg-white">
       {/* Navigation */}
@@ -12,12 +16,52 @@ export default function Landing() {
             <div className="flex items-center">
               <img src="/assets/logo-2.70e507e8.png" alt="UpMySalary" className="w-16 h-16" />
             </div>
+            
+            {/* Desktop Menu */}
             <div className="hidden md:flex items-center space-x-8">
               <Link href="/how-it-works" className="text-ios-text hover:text-black transition-colors">How it Works</Link>
               <Link href="/examples" className="text-ios-text hover:text-black transition-colors">Examples</Link>
               <a href="mailto:upmypay@gmail.com?subject=UpMySalary Support Request" className="text-ios-text hover:text-black transition-colors">Support</a>
             </div>
+            
+            {/* Mobile Menu Button */}
+            <button
+              className="md:hidden p-2 text-ios-text hover:text-black transition-colors"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label="Toggle menu"
+            >
+              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
           </div>
+          
+          {/* Mobile Menu */}
+          {mobileMenuOpen && (
+            <div className="md:hidden mt-4 py-4 border-t border-gray-100">
+              <div className="flex flex-col space-y-4">
+                <Link 
+                  href="/how-it-works" 
+                  className="text-ios-text hover:text-black transition-colors py-2"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  How it Works
+                </Link>
+                <Link 
+                  href="/examples" 
+                  className="text-ios-text hover:text-black transition-colors py-2"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Examples
+                </Link>
+                <a 
+                  href="mailto:upmypay@gmail.com?subject=UpMySalary Support Request" 
+                  className="text-ios-text hover:text-black transition-colors py-2"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Support
+                </a>
+              </div>
+            </div>
+          )}
         </div>
       </nav>
 
