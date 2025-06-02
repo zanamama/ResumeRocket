@@ -5,6 +5,7 @@ import { insertResumeJobSchema, updateResumeJobSchema, type JobDescription } fro
 import { parseFileContent, validateFileUpload } from "./lib/file-parser";
 import { optimizeResumeStandard, tailorResumeToJob } from "./lib/openai";
 import { createDownloadableDocument, createMultipleDownloadableDocuments, generateDownloadZipUrl } from "./lib/google-docs";
+import { sendWelcomeEmail, sendResumeCompletionEmail } from "./lib/email";
 import multer from "multer";
 
 // Configure multer for file uploads
