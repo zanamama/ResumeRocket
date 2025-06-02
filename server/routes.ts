@@ -186,6 +186,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       res.json({ jobId: job.id, status: "created" });
 
+      // Send welcome email if email provided
+      if (email) {
+        try {
+          await sendWelcomeEmail(email);
+        } catch (error) {
+          console.error("Failed to send welcome email:", error);
+        }
+      }
+
       // Process in background
       processStandardOptimization(job.id);
 
@@ -252,6 +261,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
       });
 
       res.json({ jobId: job.id, status: "created", jobCount: jobDescriptions.length });
+
+      // Send welcome email if email provided
+      if (email) {
+        try {
+          await sendWelcomeEmail(email);
+        } catch (error) {
+          console.error("Failed to send welcome email:", error);
+        }
+      }
 
       // Process in background
       processAdvancedOptimization(job.id);
@@ -340,6 +358,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
         },
       });
 
+      // Send completion email if email provided
+      if (job.email) {
+        try {
+          await sendResumeCompletionEmail(job.email, jobId, 'standard');
+        } catch (error) {
+          console.error("Failed to send completion email:", error);
+        }
+      }
+
     } catch (error) {
       console.error("Error processing standard optimization:", error);
       await storage.updateResumeJob(jobId, { status: "failed" });
@@ -408,6 +435,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
           ),
         },
       });
+
+      // Send completion email if email provided
+      if (job.email) {
+        try {
+          await sendResumeCompletionEmail(job.email, jobId, 'advanced');
+        } catch (error) {
+          console.error("Failed to send completion email:", error);
+        }
+      }
 
     } catch (error) {
       console.error("Error processing advanced optimization:", error);
