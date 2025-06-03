@@ -46,7 +46,7 @@ CERTIFICATIONS
 AREAS OF EXPERTISE / ADDITIONAL SECTIONS
 
 🔷 FORMATTING RULES
-All section headers must be in ALL CAPS, bold, and underlined
+All section headers must be in BOLD ALL CAPS (including CERTIFICATIONS, AREAS OF EXPERTISE, EDUCATION, PROFESSIONAL SUMMARY, TECHNICAL SKILLS, PROFESSIONAL EXPERIENCE)
 
 Bullet points must use round bullets: •
 
@@ -54,7 +54,7 @@ Each job must include at least 4 bullet points (if not available, infer based on
 
 Job format:
 Company Name | City, State (Month Year–Month Year) → bold
-Job Title → italicized
+Job Title (Month Year–Month Year) → bold (job titles AND dates must both be bolded)
 
 Font: Calibri, Size: 10.5 pt for body text, 16 pt for name
 
@@ -139,7 +139,7 @@ CERTIFICATIONS
 AREAS OF EXPERTISE / ADDITIONAL SECTIONS
 
 🔷 FORMATTING RULES
-All section headers must be in ALL CAPS, bold, and underlined
+All section headers must be in BOLD ALL CAPS (including CERTIFICATIONS, AREAS OF EXPERTISE, EDUCATION, PROFESSIONAL SUMMARY, TECHNICAL SKILLS, PROFESSIONAL EXPERIENCE)
 
 Bullet points must use round bullets: •
 
@@ -147,7 +147,7 @@ Each job must include at least 4 bullet points (if not available, infer based on
 
 Job format:
 Company Name | City, State (Month Year–Month Year) → bold
-Job Title → italicized
+Job Title (Month Year–Month Year) → bold (job titles AND dates must both be bolded)
 
 Font: Calibri, Size: 10.5 pt for body text, 16 pt for name
 
