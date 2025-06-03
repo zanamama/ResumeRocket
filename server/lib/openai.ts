@@ -21,12 +21,17 @@ export async function optimizeResumeStandard(resumeContent: string): Promise<Res
           role: "system",
           content: `You are a resume optimization AI. Your job is to transform any messy, vague, or unformatted resume input into a professionally formatted, plain text resume, suitable for white-collar job applications. Your output must match the following structure, formatting, and enhancement rules:
 
-🔷 STRUCTURE & SECTION ORDER (Include only if the data exists)
+🔷 STRUCTURE & SECTION ORDER (Always include ALL sections in this order)
 FULL NAME (always required, top of document, bold, font size 16, centered)
+• Extract the person's name from the resume content  
+• If no clear name is found, infer from context or use most likely name mentioned
 
-CONTACT INFO (centered below name)
-• If missing: use Contact@Contact.com and 555-555-5555
-• If address is provided, include only City, State ZIP (no street address)
+CONTACT INFO (centered below name, format: City, State ZIP | Email | Phone)
+• Extract phone, email, and location from the resume content
+• If missing phone: use 555-555-5555
+• If missing email: use Contact@Contact.com  
+• If location is mentioned in content, use that city and state with ZIP 30303
+• Format: "Atlanta, GA 30303 | Contact@Contact.com | 555-555-5555"
 
 EDUCATION
 
@@ -109,12 +114,17 @@ export async function tailorResumeToJob(
           role: "system",
           content: `You are a resume optimization AI. Your job is to transform any messy, vague, or unformatted resume input into a professionally formatted, plain text resume tailored to the specific job requirements.
 
-🔷 STRUCTURE & SECTION ORDER (Include only if the data exists)
+🔷 STRUCTURE & SECTION ORDER (Always include ALL sections in this order)
 FULL NAME (always required, top of document, bold, font size 16, centered)
+• Extract the person's name from the resume content  
+• If no clear name is found, infer from context or use most likely name mentioned
 
-CONTACT INFO (centered below name)
-• If missing: use Contact@Contact.com and 555-555-5555
-• If address is provided, include only City, State ZIP (no street address)
+CONTACT INFO (centered below name, format: City, State ZIP | Email | Phone)
+• Extract phone, email, and location from the resume content
+• If missing phone: use 555-555-5555
+• If missing email: use Contact@Contact.com  
+• If location is mentioned in content, use that city and state with ZIP 30303
+• Format: "Atlanta, GA 30303 | Contact@Contact.com | 555-555-5555"
 
 EDUCATION
 
