@@ -1,0 +1,52 @@
+Prince Ncube finished college in 2016 did a year as an intern doing web development, then had to take a turn and did 3 years in aviation engineering while doing IT support and was awarded a scholarship with google to do android app development at the time also did a few courses in web development then end of 2019 left aviation engineering and became a freelance web developer and worked on a lot of projects then not too sure about the quality of these projects, then moved to England 2023 to do IT support and still freelancing.
+
+EDUCATION
+CompTia A+ Certification 08/2024
+Udemy Online 2018-2020 Web Developer Courses React Certification Laravel Certification
+Harvard CS50 Online, 01/2020 – 02/2020 React Native Developer
+Google Scholarship, 2017 - 2018 Android Mobile Developer
+NCC Education 2013 - 2016 Diploma in Computing Level 5
+
+TECHNICAL SKILLS
+IT Support & System Administration: Microsoft Exchange, Active Directory, Windows & macOS troubleshooting.
+Networking & Security: Network configuration, cybersecurity awareness, data protection policies.
+Software & Tools: Microsoft Office Suite, Google Workspace, Remote Desktop.
+Hardware Management: Device setup & inventory management, hardware troubleshooting.
+General IT Knowledge: Cloud apps, user testing, documentation, problem-solving.
+Frontend: React.js, Next.js, Redux, JavaScript (ES6+), Tailwind CSS, Bootstrap, Material UI
+Backend: Node.js, Express.js, Firebase, MongoDB, PHP (Laravel)
+Development Tools: GitHub, Heroku, Vercel, Webpack, Babel
+Testing & Optimization: Unit Testing (Jest, React Testing Library), Lighthouse Performance Audits
+CMS & Other Tools: WordPress, SEO Optimization, Google Analytics, Adobe Photoshop, Figma
+
+PROFESSIONAL EXPERIENCE	
+Chislehurst Healthcare | Onsite	(07/2023 - Present)
+IT Support/Team Leader
+Provided first-line technical support, resolving hardware/software issues efficiently.
+Managed Microsoft Exchange, adding/removing users and troubleshooting email-related issues.
+Led IT training sessions for new employees, ensuring effective use of company systems.
+Advised teams on cybersecurity best practices and monitored data protection policies.
+Created and maintained a detailed inventory of company devices.
+Took on leadership responsibilities, assisting other departments as required.
+
+Intercom Staffing / UpMySalary | Remote work USA	(02/2021 - 04/2023)
+Full Stack JavaScript Developer, Multiple Projects
+Collaborated with a remote team to develop multiple web applications using React.js and Next.js.
+Served as the go-to developer for React.js debugging and implementation best practices.
+Developed e-commerce solutions using Firebase for authentication and database management.
+Led UI/UX improvements, increasing user engagement and Lighthouse scores.
+Implemented unit testing to enhance application stability and maintainability
+
+We Are Rush | Remote Volunteer Work	(03/2020-01/2021)
+Full Stack Developer
+Assisted in setting up and maintaining IT infrastructure for a digital vaccination certificate project.
+Provided training on IT tools and security practices.
+
+RELEVANT SKILLS
+Strong communication and interpersonal skills
+Ability to diagnose and resolve technical issues efficiently
+Fast learner, adaptable to new technologies
+Team leadership and training experience
+
+REFERENCES
+On request
