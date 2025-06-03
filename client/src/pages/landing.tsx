@@ -72,8 +72,6 @@ export default function Landing() {
           <span className="text-ios-blue">Job-Winning</span> Document
         </h1>
         <p className="text-xl text-ios-text mb-12 max-w-2xl mx-auto leading-relaxed">
-          AI-Powered Resume Optimization That Gets Results
-          <br />
           Instantly upgrade your resume or tailor it to any job in seconds. More interviews, less guesswork—built for professionals who need results fast.
         </p>
 
@@ -143,6 +141,24 @@ export default function Landing() {
           </div>
         </div>
       </section>
+
+      {/* Footer */}
+      <footer className="bg-gray-50 border-t border-gray-100 py-12">
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <h2 className="text-2xl font-semibold text-black mb-4">
+            AI-Powered Resume Optimization That Gets Results
+          </h2>
+          <p className="text-ios-secondary mb-6">
+            Need help? Contact us at{" "}
+            <a href="mailto:upmypay@gmail.com" className="text-ios-blue hover:underline">
+              upmypay@gmail.com
+            </a>
+          </p>
+          <p className="text-sm text-ios-secondary">
+            © {new Date().getFullYear()} UpMySalary. All rights reserved.
+          </p>
+        </div>
+      </footer>
     </div>
   );
 }
