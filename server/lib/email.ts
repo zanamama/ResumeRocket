@@ -116,7 +116,7 @@ export async function sendWelcomeEmail(userEmail: string): Promise<boolean> {
       </div>
       
       <div style="color: #666; font-size: 14px; text-align: center; margin-top: 40px;">
-        <p>Need help? Contact us at <a href="mailto:upmypay@gmail.com" style="color: #007AFF;">upmypay@gmail.com</a></p>
+        <p>Need help? Contact us at <a href="mailto:support@upmysalary.com" style="color: #007AFF;">support@upmysalary.com</a></p>
         <p style="margin: 10px 0 0 0;">© ${new Date().getFullYear()} UpMySalary. All rights reserved.</p>
       </div>
     </div>
