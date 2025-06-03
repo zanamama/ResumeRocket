@@ -456,7 +456,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const fs = await import('fs');
       const path = await import('path');
-      const filePath = path.join(process.cwd(), 'Prince_Ncube_Resume.pdf');
+      const filePath = '/home/runner/workspace/Prince_Ncube_Optimized_Resume.pdf';
+      
+      console.log('Looking for file at:', filePath);
+      console.log('File exists:', fs.existsSync(filePath));
       
       if (!fs.existsSync(filePath)) {
         console.log('File not found at:', filePath);
