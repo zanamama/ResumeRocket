@@ -1,0 +1,81 @@
+PRINCE NCUBE
+
+London, UK | Contact@Contact.com | 555-555-5555
+
+EDUCATION
+
+Diploma in Computing Level 5 — 2016
+NCC Education
+
+CompTIA A+ Certification — 2024
+
+Google Android Developer Scholarship — 2018
+Mobile App Development Specialization
+
+Harvard CS50 Computer Science Course — 2020
+Web Development & Programming Fundamentals
+
+PROFESSIONAL SUMMARY
+
+Full-stack developer and IT professional with 7+ years of progressive experience spanning web development, mobile applications, and enterprise IT support. Proven expertise in React.js, Node.js, and cloud technologies, with a unique background in aviation engineering that strengthens problem-solving and precision-focused development. Currently leading IT operations while maintaining active development skills through freelance projects across international markets.
+
+TECHNICAL SKILLS
+
+Frontend Development: React.js, Next.js, Redux, JavaScript (ES6+), Tailwind CSS, Bootstrap, Material UI
+Backend Development: Node.js, Express.js, PHP (Laravel), Firebase, MongoDB
+Cloud & DevOps: GitHub, Heroku, Vercel, Webpack, Babel
+IT Infrastructure: Microsoft Exchange, Active Directory, Windows & macOS Administration
+Testing & Performance: Jest, React Testing Library, Lighthouse Performance Audits
+Additional Tools: WordPress, SEO Optimization, Google Analytics, Adobe Photoshop, Figma
+
+PROFESSIONAL EXPERIENCE
+
+Chislehurst Healthcare | London, UK (July 2023–Present)
+IT Support Team Leader
+
+• Provide comprehensive technical support for 100+ employees, resolving hardware and software issues with 95% first-call resolution rate
+• Manage Microsoft Exchange environment, handling user provisioning and email troubleshooting for healthcare operations
+• Lead IT training programs for new hires, developing standardized onboarding procedures that reduced setup time by 40%
+• Implement cybersecurity protocols and data protection policies ensuring GDPR compliance in healthcare environment
+• Maintain detailed asset inventory system and coordinate cross-departmental IT initiatives
+
+Intercom Staffing / UpMySalary | Remote, USA (February 2021–April 2023)
+Full Stack JavaScript Developer
+
+• Developed and deployed multiple React.js and Next.js web applications serving thousands of users
+• Specialized in React.js debugging and established development best practices for remote team of 8 developers
+• Built e-commerce solutions using Firebase authentication and real-time database management
+• Led UI/UX optimization initiatives, improving user engagement metrics by 35% and Lighthouse performance scores to 90+
+• Implemented comprehensive unit testing strategies using Jest, reducing production bugs by 60%
+
+Freelance Web Developer | Remote (2019–2023)
+Full Stack Developer
+
+• Delivered custom web solutions for international clients across various industries
+• Specialized in React.js frontend development and Node.js backend architecture
+• Managed complete project lifecycle from requirements gathering to deployment and maintenance
+• Built responsive, mobile-first applications with focus on performance optimization
+
+Aviation Engineering Company | Zimbabwe (2016–2019)
+Aviation Engineer & IT Support Specialist
+
+• Performed aircraft maintenance and inspection procedures while providing IT support for engineering operations
+• Maintained technical documentation systems and digital asset management
+• Bridged engineering precision with technology solutions, developing problem-solving methodologies
+• Completed Google Android Developer Scholarship while working full-time, demonstrating commitment to technology transition
+
+CERTIFICATIONS
+
+CompTIA A+ Certified Professional
+Google Android Developer Scholarship Graduate
+Harvard CS50 Computer Science Certificate
+Multiple Udemy Certifications: React.js, Laravel PHP Framework
+
+AREAS OF EXPERTISE
+
+Full-Stack Web Development
+Enterprise IT Support & Administration
+Team Leadership & Training
+Cross-Functional Problem Solving
+Remote Team Collaboration
+Agile Development Methodologies
