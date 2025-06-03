@@ -68,12 +68,13 @@ export default function Landing() {
       {/* Hero Section */}
       <section className="max-w-4xl mx-auto px-6 py-16 text-center">
         <h1 className="text-5xl md:text-6xl font-bold text-black mb-6 leading-tight">
-          Turn your resume into a{" "}
-          <span className="text-ios-blue">perfect</span> document
+          Turn Your Resume Into a{" "}
+          <span className="text-ios-blue">Job-Winning</span> Document
         </h1>
         <p className="text-xl text-ios-text mb-12 max-w-2xl mx-auto leading-relaxed">
-          AI-powered resume optimization that gets you noticed. 
-          Polish your existing resume or tailor it perfectly to specific job opportunities.
+          AI-Powered Resume Optimization That Gets Results
+          <br />
+          Instantly upgrade your resume or tailor it to any job in seconds. More interviews, less guesswork—built for professionals who need results fast.
         </p>
 
         {/* Main CTA Options */}
