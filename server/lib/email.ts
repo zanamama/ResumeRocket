@@ -66,7 +66,7 @@ export async function sendResumeCompletionEmail(
       </div>
       
       <div style="color: #666; font-size: 14px; text-align: center; margin-top: 40px;">
-        <p>Need help? Contact us at <a href="mailto:upmypay@gmail.com" style="color: #007AFF;">upmypay@gmail.com</a></p>
+        <p>Need help? Contact us at <a href="mailto:support@upmysalary.com" style="color: #007AFF;">support@upmysalary.com</a></p>
         <p style="margin: 10px 0 0 0;">© ${new Date().getFullYear()} UpMySalary. All rights reserved.</p>
       </div>
     </div>
@@ -82,14 +82,14 @@ ${mode === 'standard'
 
 Download your ${mode === 'standard' ? 'resume' : 'resumes'}: ${process.env.REPLIT_DOMAIN ? `https://${process.env.REPLIT_DOMAIN}` : 'http://localhost:5000'}/success?jobId=${jobId}
 
-Need help? Contact us at upmypay@gmail.com
+Need help? Contact us at support@upmysalary.com
 
 © ${new Date().getFullYear()} UpMySalary. All rights reserved.
   `;
 
   return await sendEmail({
     to: userEmail,
-    from: 'noreply@upmysalary.com', // You may need to verify this sender email in SendGrid
+    from: 'support@upmysalary.com',
     subject,
     text,
     html
@@ -129,14 +129,14 @@ Thanks for using our resume optimizer! We're processing your resume and will sen
 
 In the meantime, feel free to explore our other features or contact us if you have any questions.
 
-Need help? Contact us at upmypay@gmail.com
+Need help? Contact us at support@upmysalary.com
 
 © ${new Date().getFullYear()} UpMySalary. All rights reserved.
   `;
 
   return await sendEmail({
     to: userEmail,
-    from: 'noreply@upmysalary.com',
+    from: 'support@upmysalary.com',
     subject: 'Welcome to UpMySalary - Resume Processing Started',
     text,
     html
