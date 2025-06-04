@@ -58,7 +58,7 @@ export async function sendResumeCompletionEmail(
         </p>
         
         <div style="text-align: center; margin: 30px 0;">
-          <a href="https://upmysalary.com/success?jobId=${jobId}" 
+          <a href="https://upmysalary.com/success/${jobId}" 
              style="background: #007AFF; color: white; text-decoration: none; padding: 15px 30px; border-radius: 8px; font-weight: 600; display: inline-block;">
             Download Your ${mode === 'standard' ? 'Resume' : 'Resumes'}
           </a>
@@ -80,7 +80,7 @@ ${mode === 'standard'
   : 'Your resume has been tailored to match specific job requirements with optimized keywords and relevant experience highlighting.'
 }
 
-Download your ${mode === 'standard' ? 'resume' : 'resumes'}: https://upmysalary.com/success?jobId=${jobId}
+Download your ${mode === 'standard' ? 'resume' : 'resumes'}: https://upmysalary.com/success/${jobId}
 
 Need help? Contact us at support@upmysalary.com
 
