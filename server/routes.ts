@@ -361,7 +361,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Send completion email if email provided
       if (job.email) {
         try {
-          await sendResumeCompletionEmail(job.email, jobId, 'standard');
+          await sendResumeCompletionEmail(job.email, jobId, 'standard', docExport.pdfUrl);
         } catch (error) {
           console.error("Failed to send completion email:", error);
         }
@@ -439,7 +439,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Send completion email if email provided
       if (job.email) {
         try {
-          await sendResumeCompletionEmail(job.email, jobId, 'advanced');
+          await sendResumeCompletionEmail(job.email, jobId, 'advanced', zipUrl);
         } catch (error) {
           console.error("Failed to send completion email:", error);
         }
