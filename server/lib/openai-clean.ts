@@ -19,11 +19,11 @@ export async function optimizeResumeStandard(resumeContent: string): Promise<Res
       messages: [
         {
           role: "system",
-          content: `You are a resume optimization AI. Transform the resume into a clean, professionally structured format. Follow these rules exactly:
+          content: `You are a resume optimization AI. Transform the resume into a clean, professionally structured format. 
 
 CRITICAL RULES:
-• Output CLEAN PLAIN TEXT ONLY - NO markdown symbols (**, *, _, etc.)
-• NEVER use asterisks, underscores, or any markup symbols
+• Output the resume content directly as plain text - NO JSON wrapping
+• NO markdown symbols (**, *, _, etc.) 
 • Section headers in ALL CAPS without any symbols
 • Use • for bullet points only
 • NO divider lines, dashes, or special characters
@@ -41,59 +41,11 @@ STRUCTURE:
 7. EDUCATION
 8. CERTIFICATIONS (if present)
 
-CONTENT RULES:
-• Keep all dates, company names, job titles exactly as provided
-• Preserve all technical skills and certifications exactly
-• Improve language clarity while keeping original facts
-• Combine similar sections (avoid duplicate PROJECTS sections)
-• NO fabricated information whatsoever
-
-Example format:
-ZANA MATHUTHU, CSM, CSPO
-
-Philadelphia, PA | (267) 671-4412 | ZanaMathuthu22@gmail.com
-
-PROFESSIONAL SUMMARY
-
-[3-4 sentences summarizing experience]
-
-AREAS OF EXPERTISE
-
-• Customer Relationship Management
-• User Acceptance Testing
-• Project Management
-
-PROFESSIONAL EXPERIENCE
-
-Uber Technologies | Philadelphia, PA
-Senior Business Analyst (Contractor) | 12/2022 - Present
-
-• Achievement with metrics
-• Another achievement
-
-TECHNICAL SKILLS
-
-• SQL
-• JIRA
-• Confluence
-
-EDUCATION
-
-Bachelor of Arts (B.A), Ursinus College
-
-CERTIFICATIONS
-
-Certified Scrum Master (CSM), International SCRUM Institute
-
-Respond with JSON format:
-{
-  "optimizedContent": "Complete formatted resume text",
-  "improvements": ["List of improvements made"]
-}`
+Output ONLY the clean resume text without any JSON formatting, code blocks, or additional commentary.`
         },
         {
           role: "user",
-          content: `Clean and optimize this resume using plain text format. Extract name "ZANA MATHUTHU" and preserve all contact details exactly. Organize professionally without markdown. Respond with JSON format:\n\n${resumeContent}`
+          content: `Clean and optimize this resume using plain text format. Extract name "ZANA MATHUTHU" and preserve all contact details exactly. Output only the clean resume text:\n\n${resumeContent}`
         }
       ]
     });
@@ -103,18 +55,8 @@ Respond with JSON format:
       throw new Error("No response content received from AI");
     }
 
-    let result;
-    try {
-      result = JSON.parse(content);
-    } catch (parseError) {
-      // If JSON parsing fails, treat the entire content as the optimized resume
-      result = { 
-        optimizedContent: content,
-        improvements: ["Resume structure and formatting enhanced"]
-      };
-    }
-
-    const optimizedContent = result.optimizedContent || content;
+    // Since we're now requesting plain text, treat the entire response as the optimized content
+    let optimizedContent = content;
 
     // Comprehensive cleaning of any remaining unwanted formatting
     let cleanedContent = optimizedContent
@@ -145,7 +87,7 @@ Respond with JSON format:
 
     return {
       optimizedContent: cleanedContent,
-      improvements: result.improvements || ["Resume structure and formatting enhanced"],
+      improvements: ["Resume structure and formatting enhanced"],
     };
   } catch (error) {
     console.error("Resume optimization error:", error);
