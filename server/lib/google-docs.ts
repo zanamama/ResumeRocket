@@ -1,4 +1,4 @@
-import { storeFileForDownload, createDownloadableFile } from "./file-storage-clean";
+import { storeFileForDownload, createDownloadableFile } from "./file-storage";
 
 export interface DocumentExport {
   docUrl: string;
