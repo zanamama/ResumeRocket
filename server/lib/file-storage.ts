@@ -223,15 +223,12 @@ async function createWordDocument(content: string, fileName: string): Promise<st
   // Use the new formatter that properly handles bold capitals and spacing
   const document = createFormattedWordDocument(content, fileName);
   
-  for (const line of lines) {
-    const trimmedLine = line.trim();
-    if (!trimmedLine) continue;
-    
-    // Remove markdown formatting and detect formatting type
-    const cleanLine = trimmedLine.replace(/^##\s*/, '').replace(/^\*\*(.*)\*\*$/, '$1');
-    
-    // Check if this is a section header (all caps section names)
-    const sectionNames = ['EDUCATION', 'PROFESSIONAL SUMMARY', 'TECHNICAL SKILLS', 'PROFESSIONAL EXPERIENCE', 'EXPERIENCE', 'CERTIFICATIONS', 'AREAS OF EXPERTISE', 'SKILLS', 'PROJECTS'];
+  // Generate the Word document buffer
+  const buffer = await Packer.toBuffer(document);
+  return buffer.toString('base64');
+}
+
+function parseResumeContent(content: string): any {
     const isSectionHeader = sectionNames.some(section => cleanLine.toUpperCase().trim() === section) ||
                            trimmedLine.startsWith('##');
     
