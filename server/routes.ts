@@ -3,7 +3,7 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertResumeJobSchema, updateResumeJobSchema, type JobDescription } from "@shared/schema";
 import { parseFileContent, validateFileUpload } from "./lib/file-parser";
-import { optimizeResumeStandard, tailorResumeToJob } from "./lib/openai";
+import { optimizeResumeStandard, tailorResumeToJob } from "./lib/openai-fixed";
 import { createDownloadableDocument, createMultipleDownloadableDocuments, generateDownloadZipUrl } from "./lib/google-docs";
 import { sendWelcomeEmail, sendResumeCompletionEmail } from "./lib/email";
 import multer from "multer";
