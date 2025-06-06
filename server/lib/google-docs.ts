@@ -6,6 +6,17 @@ export interface DocumentExport {
   docId: string;
 }
 
+function cleanFabricatedContent(content: string): string {
+  return content
+    .replace(/^.*\d{7}\s+\d{6}.*$/gm, '')  // Remove patterns like "4006850 501650"
+    .replace(/^.*555-555-5555.*$/gm, '')    // Remove placeholder phones
+    .replace(/^.*Contact@Contact\.com.*$/gm, '') // Remove placeholder emails
+    .replace(/^.*\|\s*\|\s*.*$/gm, '')      // Remove empty pipe separators
+    .replace(/^\s*\|\s*$/gm, '')           // Remove standalone pipes
+    .replace(/\n\s*\n\s*\n/g, '\n\n')     // Clean excessive line breaks
+    .trim();
+}
+
 export async function createDownloadableDocument(
   content: string, 
   title: string,
@@ -14,12 +25,15 @@ export async function createDownloadableDocument(
   try {
     const docId = `doc_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
     
+    // Clean any fabricated content before document creation
+    const cleanedContent = cleanFabricatedContent(content);
+    
     // Create PDF version
-    const pdfContent = await createDownloadableFile(content, `${title}.pdf`, 'pdf');
+    const pdfContent = await createDownloadableFile(cleanedContent, `${title}.pdf`, 'pdf');
     const pdfFile = await storeFileForDownload(jobId, `${title}.pdf`, pdfContent, 'pdf');
     
     // Create DOCX version  
-    const docxContent = await createDownloadableFile(content, `${title}.docx`, 'docx');
+    const docxContent = await createDownloadableFile(cleanedContent, `${title}.docx`, 'docx');
     const docxFile = await storeFileForDownload(jobId, `${title}.docx`, docxContent, 'docx');
     
     return {
@@ -40,7 +54,8 @@ export async function createMultipleDownloadableDocuments(
     const results: DocumentExport[] = [];
     
     for (const resume of resumes) {
-      const doc = await createDownloadableDocument(resume.content, resume.title, jobId);
+      const cleanedContent = cleanFabricatedContent(resume.content);
+      const doc = await createDownloadableDocument(cleanedContent, resume.title, jobId);
       results.push(doc);
       
       // Add small delay to avoid overwhelming the system

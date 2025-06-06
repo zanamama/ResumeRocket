@@ -23,12 +23,13 @@ export async function optimizeResumeStandard(resumeContent: string): Promise<Res
 
 CRITICAL FORMATTING RULES:
 • Output PLAIN TEXT ONLY - NO markdown formatting (no **, *, _, etc.)
-• PRESERVE EXACT original contact information IF PRESENT - NEVER add placeholders or fake numbers
-• If no contact information exists in the original resume, omit the contact section entirely
+• ABSOLUTELY FORBIDDEN: Creating any contact information not in the original resume
+• NEVER generate fake phone numbers like "4006850 501650" or "555-555-5555"
+• NEVER generate fake emails like "Contact@Contact.com"
+• If the original resume has no contact information, skip the contact section completely
 • All section headers in BOLD ALL CAPS format
 • Use • for bullet points
 • Job titles and dates must be bold
-• NEVER generate phone numbers, emails, or addresses not in the original
 
 STRUCTURE ORDER:
 1. FULL NAME (centered, bold)
