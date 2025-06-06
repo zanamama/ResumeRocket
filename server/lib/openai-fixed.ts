@@ -1,5 +1,6 @@
 import OpenAI from "openai";
 import type { JobDescription } from "@shared/schema";
+import { enforceResumeFormatting, removeContactFabrication } from "./format-enforcer";
 
 // the newest OpenAI model is "gpt-4o" which was released May 13, 2024. do not change this unless explicitly requested by the user
 const openai = new OpenAI({ 
@@ -103,15 +104,11 @@ Respond with JSON:
       .replace(/__(.*?)__/g, '$1')      // Remove __ bold markdown
       .replace(/_(.*?)_/g, '$1');       // Remove _ italic markdown
 
-    // Remove any fabricated contact information patterns
-    cleanedContent = cleanedContent
-      .replace(/^.*\d{7}\s+\d{6}.*$/gm, '')  // Remove strange number patterns like "4006850 501650"
-      .replace(/^.*555-555-5555.*$/gm, '')    // Remove placeholder phone numbers
-      .replace(/^.*Contact@Contact\.com.*$/gm, '') // Remove placeholder emails
-      .replace(/^.*\|\s*\|\s*.*$/gm, '')      // Remove lines with empty pipe separators
-      .replace(/^\s*\|\s*$/gm, '')           // Remove standalone pipe characters
-      .replace(/\n\s*\n\s*\n/g, '\n\n')     // Clean up excessive line breaks
-      .trim();
+    // Remove fabricated contact information
+    cleanedContent = removeContactFabrication(cleanedContent);
+    
+    // Enforce proper formatting (BOLD ALL CAPS headers, spacing, dividers)
+    cleanedContent = enforceResumeFormatting(cleanedContent);
     
     return {
       optimizedContent: cleanedContent,
@@ -201,15 +198,11 @@ Description: ${jobDescription.description}`
       .replace(/__(.*?)__/g, '$1')      // Remove __ bold markdown
       .replace(/_(.*?)_/g, '$1');       // Remove _ italic markdown
 
-    // Remove any fabricated contact information patterns
-    cleanedContent = cleanedContent
-      .replace(/^.*\d{7}\s+\d{6}.*$/gm, '')  // Remove strange number patterns like "4006850 501650"
-      .replace(/^.*555-555-5555.*$/gm, '')    // Remove placeholder phone numbers
-      .replace(/^.*Contact@Contact\.com.*$/gm, '') // Remove placeholder emails
-      .replace(/^.*\|\s*\|\s*.*$/gm, '')      // Remove lines with empty pipe separators
-      .replace(/^\s*\|\s*$/gm, '')           // Remove standalone pipe characters
-      .replace(/\n\s*\n\s*\n/g, '\n\n')     // Clean up excessive line breaks
-      .trim();
+    // Remove fabricated contact information
+    cleanedContent = removeContactFabrication(cleanedContent);
+    
+    // Enforce proper formatting (BOLD ALL CAPS headers, spacing, dividers)
+    cleanedContent = enforceResumeFormatting(cleanedContent);
     
     return {
       optimizedContent: cleanedContent,
