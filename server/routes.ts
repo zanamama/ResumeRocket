@@ -332,14 +332,30 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // Background processing functions
   async function processStandardOptimization(jobId: number) {
+    const startTime = Date.now();
     try {
       await storage.updateResumeJob(jobId, { status: "processing" });
 
       const job = await storage.getResumeJob(jobId);
-      if (!job) return;
+      if (!job) {
+        console.error(`Job ${jobId} not found during processing`);
+        return;
+      }
 
-      // Optimize resume
-      const result = await optimizeResumeStandard(job.resumeContent);
+      console.log(`Starting standard optimization for job ${jobId}`);
+
+      // Validate content before processing
+      if (!job.resumeContent || job.resumeContent.trim().length < 100) {
+        throw new Error("Resume content is too short or empty");
+      }
+
+      // Optimize resume with timeout
+      const result = await Promise.race([
+        optimizeResumeStandard(job.resumeContent),
+        new Promise((_, reject) => 
+          setTimeout(() => reject(new Error("Optimization timeout")), 60000)
+        )
+      ]) as any;
 
       // Create downloadable document
       const docExport = await createDownloadableDocument(

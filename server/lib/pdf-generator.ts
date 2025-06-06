@@ -15,36 +15,37 @@ export function generateResumePDF(content: string, fileName: string): Buffer {
   // Helper function to add centered header text (name + contact)
   function addHeader(name: string, contact: string) {
     // Name - large, bold, centered
-    doc.setFontSize(14);
+    doc.setFontSize(16);
     doc.setFont('helvetica', 'bold');
     const nameWidth = doc.getTextWidth(name);
     doc.text(name, (pageWidth - nameWidth) / 2, yPosition);
-    yPosition += 8;
+    yPosition += 10;
     
     // Contact info - smaller, centered
-    doc.setFontSize(10);
+    doc.setFontSize(10.5);
     doc.setFont('helvetica', 'normal');
     const contactWidth = doc.getTextWidth(contact);
     doc.text(contact, (pageWidth - contactWidth) / 2, yPosition);
-    yPosition += 12;
+    yPosition += 15;
   }
   
   // Helper function for section headers
   function addSectionHeader(text: string, isFirstSection: boolean = false) {
     yPosition += sectionSpacing;
     
-    // Add divider line before section (except for first section)
+    // Add full-width divider line before section (except for first section)
     if (!isFirstSection) {
-      doc.setLineWidth(0.5);
+      doc.setLineWidth(0.8);
       doc.setDrawColor(0, 0, 0);
       doc.line(margin, yPosition - 5, pageWidth - margin, yPosition - 5);
-      yPosition += 3;
+      yPosition += 5;
     }
     
+    // Bold, all caps section headers matching requirements
     doc.setFontSize(11);
     doc.setFont('helvetica', 'bold');
-    doc.text(text, margin, yPosition);
-    yPosition += 6;
+    doc.text(text.toUpperCase(), margin, yPosition);
+    yPosition += 8;
   }
   
   // Helper function for company header with right-aligned dates
@@ -63,13 +64,20 @@ export function generateResumePDF(content: string, fileName: string): Buffer {
     yPosition += 5;
   }
   
-  // Helper function for job titles
-  function addJobTitle(title: string) {
+  // Helper function for job titles (bold with dates)
+  function addJobTitle(title: string, dates?: string) {
     yPosition += 1;
-    doc.setFontSize(10);
+    doc.setFontSize(10.5);
     doc.setFont('helvetica', 'bold');
-    doc.text(title, margin + 3, yPosition);
-    yPosition += 5;
+    
+    if (dates) {
+      // Job title with dates - both bold as per requirements
+      const titleWithDates = `${title} (${dates})`;
+      doc.text(titleWithDates, margin + 3, yPosition);
+    } else {
+      doc.text(title, margin + 3, yPosition);
+    }
+    yPosition += 6;
   }
   
   // Helper function for bullet points

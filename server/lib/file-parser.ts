@@ -36,14 +36,11 @@ async function parsePdfContent(buffer: Buffer): Promise<string> {
     // Enhanced PDF text extraction with multiple fallback methods
     const text = buffer.toString('binary');
     
-    // Method 1: Extract text from PDF stream objects
-    const streamRegex = /stream\s*(.*?)\s*endstream/gs;
-    const streams = text.match(streamRegex) || [];
-    
+    // Method 1: Extract text from PDF stream objects  
     let extractedText = '';
     
     // Method 2: Look for text operators in content streams
-    const textRegex = /BT\s*(.*?)\s*ET/gs;
+    const textRegex = /BT[\s\S]*?ET/g;
     const textMatches = text.match(textRegex) || [];
     
     for (const match of textMatches) {
@@ -142,6 +139,17 @@ async function parseDocxContent(buffer: Buffer): Promise<string> {
 }
 
 export function validateFileUpload(file: FileUpload): { valid: boolean; error?: string } {
+  // Validate required fields
+  if (!file.fileName || !file.fileContent || !file.fileType) {
+    return { valid: false, error: 'Missing required file information' };
+  }
+
+  // Check file extension matches type
+  const fileExtension = file.fileName.toLowerCase().split('.').pop();
+  if (fileExtension !== file.fileType) {
+    return { valid: false, error: 'File extension does not match file type' };
+  }
+
   // Check file size (base64 encoded, so actual size is ~75% of this)
   const sizeInBytes = (file.fileContent.length * 3) / 4;
   const maxSizeInBytes = 10 * 1024 * 1024; // 10MB
@@ -150,8 +158,19 @@ export function validateFileUpload(file: FileUpload): { valid: boolean; error?: 
     return { valid: false, error: 'File size exceeds 10MB limit' };
   }
 
+  if (sizeInBytes < 100) {
+    return { valid: false, error: 'File appears to be empty or corrupted' };
+  }
+
   if (!['pdf', 'docx'].includes(file.fileType)) {
     return { valid: false, error: 'Only PDF and DOCX files are supported' };
+  }
+
+  // Validate base64 content
+  try {
+    Buffer.from(file.fileContent, 'base64');
+  } catch {
+    return { valid: false, error: 'Invalid file content encoding' };
   }
 
   if (!file.fileName || file.fileName.trim() === '') {
