@@ -6,9 +6,9 @@
 export function enforceResumeFormatting(content: string): string {
   let lines = content.split('\n');
   let formattedLines: string[] = [];
-  let previousWasSectionHeader = false;
+  let lastWasHeader = false;
 
-  // Section headers that must be BOLD ALL CAPS
+  // Section headers that must be formatted
   const sectionHeaders = [
     'EDUCATION',
     'PROFESSIONAL SUMMARY', 
@@ -29,53 +29,58 @@ export function enforceResumeFormatting(content: string): string {
       continue;
     }
 
-    // Force section headers to BOLD ALL CAPS
-    const normalizedLine = line.toUpperCase().replace(/[^\w\s]/g, '').trim();
-    
-    // Check if this line should be a section header
+    // Check if this line is a section header
     let isSectionHeader = false;
-    let correctedHeader = '';
+    let headerMatch = '';
     
     for (const header of sectionHeaders) {
-      const normalizedHeader = header.replace(/[^\w\s]/g, '').trim();
-      if (normalizedLine === normalizedHeader || 
-          normalizedLine.includes(normalizedHeader) ||
-          (header === 'TECHNICAL SKILLS' && normalizedLine.includes('SKILLS')) ||
-          (header === 'PROFESSIONAL EXPERIENCE' && normalizedLine.includes('EXPERIENCE')) ||
-          (header === 'AREAS OF EXPERTISE' && normalizedLine.includes('EXPERTISE'))) {
+      if (line.toUpperCase().trim() === header || 
+          (line.toUpperCase().includes(header.split(' ')[0]) && 
+           header.split(' ').every(word => line.toUpperCase().includes(word)))) {
         isSectionHeader = true;
-        correctedHeader = header;
+        headerMatch = header;
         break;
       }
     }
 
-    // Handle section headers
+    // Handle section headers with spacing and dividers
     if (isSectionHeader) {
-      // Add spacing before section header (except first)
-      if (formattedLines.length > 0 && !previousWasSectionHeader) {
+      // Add spacing and divider before section (except first section)
+      if (formattedLines.length > 0) {
         formattedLines.push('');
-        formattedLines.push('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+        formattedLines.push('');
+        formattedLines.push('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
         formattedLines.push('');
       }
       
-      formattedLines.push(correctedHeader);
+      // Add the properly formatted header
+      formattedLines.push(`**${headerMatch}**`);
       formattedLines.push('');
-      previousWasSectionHeader = true;
+      lastWasHeader = true;
       continue;
     }
 
-    // Regular content lines
+    // Process regular content lines
     if (line !== '') {
-      formattedLines.push(line);
-      previousWasSectionHeader = false;
-    } else if (!previousWasSectionHeader) {
-      formattedLines.push('');
+      // Make all capital words bold
+      let processedLine = line.replace(/\b[A-Z]{2,}\b/g, '**$&**');
+      
+      // Clean up any double-bold formatting
+      processedLine = processedLine.replace(/\*\*\*\*/g, '**');
+      
+      formattedLines.push(processedLine);
+      lastWasHeader = false;
+    } else {
+      // Only add empty line if not after a header
+      if (!lastWasHeader) {
+        formattedLines.push('');
+      }
     }
   }
 
-  // Clean up excessive empty lines
+  // Join and clean up
   let finalContent = formattedLines.join('\n')
-    .replace(/\n{3,}/g, '\n\n')  // Max 2 consecutive newlines
+    .replace(/\n{4,}/g, '\n\n\n')  // Max 3 consecutive newlines
     .trim();
 
   return finalContent;

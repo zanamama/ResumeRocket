@@ -1,5 +1,6 @@
 // Simple in-memory file storage for 24-hour access
 import { Document, Packer, Paragraph, TextRun, HeadingLevel, AlignmentType, BorderStyle } from 'docx';
+import { createFormattedWordDocument } from './word-formatter';
 
 interface StoredFile {
   content: string;
@@ -219,11 +220,8 @@ function createRtfResume(content: string): string {
 }
 
 async function createWordDocument(content: string, fileName: string): Promise<string> {
-  // Create a well-formatted Word document from the optimized content
-  const lines = content.split('\n').filter(line => line.trim());
-  
-  const paragraphs: Paragraph[] = [];
-  let isFirstLine = true;
+  // Use the new formatter that properly handles bold capitals and spacing
+  const document = createFormattedWordDocument(content, fileName);
   
   for (const line of lines) {
     const trimmedLine = line.trim();
@@ -232,15 +230,10 @@ async function createWordDocument(content: string, fileName: string): Promise<st
     // Remove markdown formatting and detect formatting type
     const cleanLine = trimmedLine.replace(/^##\s*/, '').replace(/^\*\*(.*)\*\*$/, '$1');
     
-    // Check if this is a section header (starts with ## or is all caps)
-    const isSectionHeader = trimmedLine.startsWith('##') || 
-                           (/^[A-Z\s]+$/.test(cleanLine) && 
-                           (cleanLine.includes('EDUCATION') || 
-                            cleanLine.includes('PROFESSIONAL') || 
-                            cleanLine.includes('TECHNICAL') || 
-                            cleanLine.includes('EXPERIENCE') ||
-                            cleanLine.includes('PROJECTS') ||
-                            cleanLine.includes('LINKEDIN')));
+    // Check if this is a section header (all caps section names)
+    const sectionNames = ['EDUCATION', 'PROFESSIONAL SUMMARY', 'TECHNICAL SKILLS', 'PROFESSIONAL EXPERIENCE', 'EXPERIENCE', 'CERTIFICATIONS', 'AREAS OF EXPERTISE', 'SKILLS', 'PROJECTS'];
+    const isSectionHeader = sectionNames.some(section => cleanLine.toUpperCase().trim() === section) ||
+                           trimmedLine.startsWith('##');
     
     // Check if this line starts with bullet point
     const isBulletPoint = cleanLine.startsWith('•') || cleanLine.startsWith('-');
