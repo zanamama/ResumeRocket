@@ -134,9 +134,7 @@ ${resumeContent}
 
 JOB DESCRIPTION:
 Position: ${jobDescription.title}
-Company: ${jobDescription.company}
-Location: ${jobDescription.location}
-Requirements: ${jobDescription.requirements?.join(', ')}
+Company: ${jobDescription.company || 'Not specified'}
 Description: ${jobDescription.description}`
         }
       ],
