@@ -33,21 +33,26 @@ export async function parseFileContent(file: FileUpload): Promise<string> {
 
 async function parsePdfContent(buffer: Buffer): Promise<string> {
   try {
-    // For PDF files, we'll use a basic text extraction approach
-    // This handles simple PDFs with extractable text
+    // Enhanced PDF text extraction with multiple fallback methods
     const text = buffer.toString('binary');
     
-    // Extract text between content streams
-    const textRegex = /BT\s*(.*?)\s*ET/g;
-    const textMatches = text.match(textRegex) || [];
+    // Method 1: Extract text from PDF stream objects
+    const streamRegex = /stream\s*(.*?)\s*endstream/gs;
+    const streams = text.match(streamRegex) || [];
     
     let extractedText = '';
+    
+    // Method 2: Look for text operators in content streams
+    const textRegex = /BT\s*(.*?)\s*ET/gs;
+    const textMatches = text.match(textRegex) || [];
+    
     for (const match of textMatches) {
-      // Extract text from PDF operators
       const cleanText = match
         .replace(/BT|ET/g, '')
-        .replace(/\/\w+\s+\d+(\.\d+)?\s+Tf/g, '')
-        .replace(/\d+(\.\d+)?\s+\d+(\.\d+)?\s+Td/g, '')
+        .replace(/\/F\d+\s+\d+(\.\d+)?\s+Tf/g, ' ')
+        .replace(/\d+(\.\d+)?\s+\d+(\.\d+)?\s+Td/g, ' ')
+        .replace(/\d+(\.\d+)?\s+TL/g, ' ')
+        .replace(/T\*/g, '\n')
         .replace(/\((.*?)\)\s*Tj/g, '$1 ')
         .replace(/\[(.*?)\]\s*TJ/g, '$1 ')
         .trim();

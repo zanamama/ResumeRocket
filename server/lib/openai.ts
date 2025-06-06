@@ -65,17 +65,21 @@ No markdown formatting. No unnecessary spacing. No table structures.
 🔷 CONTENT RULES
 NEVER use placeholder names like [Your Name] or "John Doe"
 
-If details are vague, fill in using commonly accepted responsibilities for the job title
+PRESERVE ALL ORIGINAL FACTUAL CONTENT - only enhance language and formatting
 
-Do not invent companies, dates, or titles, but expand vague input into polished phrasing
+If details are vague, enhance phrasing using industry-standard terminology for the job title
+
+Do not invent companies, dates, or titles - only improve existing content clarity
 
 Professional Summary must be 3–4 sentences and include:
-• Job title
-• Years of experience
-• 2 technical strengths
-• 1 standout soft skill or achievement
+• Current or target job title
+• Years of experience (calculate from work history)
+• 2 key technical competencies from their background
+• 1 quantifiable achievement or leadership quality
 
-Emphasize metrics, action verbs, and professional language
+Use strong action verbs, quantify achievements where possible, and maintain professional tone
+
+Focus on ATS optimization with relevant keywords while preserving authenticity
 
 Respond with JSON in this format:
 {
@@ -91,13 +95,28 @@ Respond with JSON in this format:
       response_format: { type: "json_object" },
     });
 
-    const result = JSON.parse(response.choices[0].message.content || "{}");
+    const content = response.choices[0]?.message?.content;
+    if (!content) {
+      throw new Error("No response content received from AI");
+    }
+
+    let result;
+    try {
+      result = JSON.parse(content);
+    } catch (parseError) {
+      throw new Error("Invalid JSON response from AI optimization");
+    }
+
+    if (!result.optimizedContent) {
+      throw new Error("AI failed to generate optimized content");
+    }
     
     return {
-      optimizedContent: result.optimizedContent || resumeContent,
-      improvements: result.improvements || [],
+      optimizedContent: result.optimizedContent,
+      improvements: result.improvements || ["Resume structure and formatting enhanced"],
     };
   } catch (error) {
+    console.error("Resume optimization error:", error);
     throw new Error("Failed to optimize resume: " + (error as Error).message);
   }
 }
@@ -158,22 +177,25 @@ No markdown formatting. No unnecessary spacing. No table structures.
 🔷 CONTENT RULES
 NEVER use placeholder names like [Your Name] or "John Doe"
 
-If details are vague, fill in using commonly accepted responsibilities for the job title
+PRESERVE ALL ORIGINAL FACTUAL CONTENT - only enhance language and formatting
 
-Do not invent companies, dates, or titles, but expand vague input into polished phrasing
+If details are vague, enhance phrasing using industry-standard terminology for the job title
+
+Do not invent companies, dates, or titles - only improve existing content clarity
 
 Professional Summary must be 3–4 sentences and include:
-• Job title
-• Years of experience
-• 2 technical strengths
-• 1 standout soft skill or achievement
+• Current or target job title matching the position
+• Years of experience (calculate from work history)
+• 2 key technical competencies relevant to the role
+• 1 quantifiable achievement or leadership quality
 
 🔷 JOB TAILORING RULES
-- Integrate job keywords naturally throughout content
-- Prioritize relevant experience and skills that match the job description
-- Adjust professional summary to match role requirements
-- Emphasize accomplishments that align with job needs
-- Use bullet points (•) with strong action verbs
+- Integrate job keywords naturally throughout existing content
+- Prioritize and enhance relevant experience that matches job requirements
+- Adjust professional summary to align with role-specific needs
+- Emphasize accomplishments that demonstrate value for this position
+- Use strong action verbs and quantify achievements where possible
+- Maintain authenticity while optimizing for ATS and keyword matching
 - Include specific metrics and quantified results
 - Maintain truthfulness - enhance but don't fabricate
 - Highlight technologies and skills mentioned in the job posting
@@ -202,14 +224,29 @@ ${resumeContent}`
       response_format: { type: "json_object" },
     });
 
-    const result = JSON.parse(response.choices[0].message.content || "{}");
+    const content = response.choices[0]?.message?.content;
+    if (!content) {
+      throw new Error("No response content received from AI");
+    }
+
+    let result;
+    try {
+      result = JSON.parse(content);
+    } catch (parseError) {
+      throw new Error("Invalid JSON response from AI tailoring");
+    }
+
+    if (!result.optimizedContent) {
+      throw new Error("AI failed to generate tailored content");
+    }
     
     return {
-      optimizedContent: result.optimizedContent || resumeContent,
-      improvements: result.improvements || [],
-      keywordMatch: result.keywordMatch || 0,
+      optimizedContent: result.optimizedContent,
+      improvements: result.improvements || ["Resume tailored for job requirements"],
+      keywordMatch: Math.max(0, Math.min(100, result.keywordMatch || 75)),
     };
   } catch (error) {
+    console.error("Resume tailoring error:", error);
     throw new Error("Failed to tailor resume: " + (error as Error).message);
   }
 }

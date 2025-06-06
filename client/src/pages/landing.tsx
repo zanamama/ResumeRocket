@@ -21,7 +21,7 @@ export default function Landing() {
             <div className="hidden md:flex items-center space-x-8">
               <Link href="/how-it-works" className="text-ios-text hover:text-black transition-colors">How it Works</Link>
               <Link href="/examples" className="text-ios-text hover:text-black transition-colors">Examples</Link>
-              <a href="mailto:upmypay@gmail.com?subject=UpMySalary Support Request" className="text-ios-text hover:text-black transition-colors">Support</a>
+              <a href="mailto:support@upmysalary.com?subject=UpMySalary Support Request" className="text-ios-text hover:text-black transition-colors">Support</a>
             </div>
             
             {/* Mobile Menu Button */}
@@ -53,7 +53,7 @@ export default function Landing() {
                   Examples
                 </Link>
                 <a 
-                  href="mailto:upmypay@gmail.com?subject=UpMySalary Support Request" 
+                  href="mailto:support@upmysalary.com?subject=UpMySalary Support Request" 
                   className="text-ios-text hover:text-black transition-colors py-2"
                   onClick={() => setMobileMenuOpen(false)}
                 >
