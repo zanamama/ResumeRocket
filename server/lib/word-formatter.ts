@@ -1,39 +1,6 @@
 import { Document, Paragraph, TextRun, AlignmentType, BorderStyle } from "docx";
 
 /**
- * Creates name text runs with larger font and bold capitals
- */
-function createNameTextRuns(text: string): TextRun[] {
-  const textRuns: TextRun[] = [];
-  
-  // Enhanced regex to capture all capital letter combinations
-  const parts = text.split(/(\b[A-Z]+(?:\.[A-Z]+)*\b|\([A-Z]+\)|\b[A-Z]\b)/);
-  
-  for (const part of parts) {
-    if (!part) continue;
-    
-    // Check if this part is all capitals
-    const isAllCaps = /^[A-Z]+$/.test(part.trim()) || 
-                      /^\([A-Z]+\)$/.test(part.trim()) ||
-                      /^[A-Z]+(?:\.[A-Z]+)*$/.test(part.trim());
-    
-    textRuns.push(new TextRun({
-      text: part,
-      bold: isAllCaps,
-      size: 32, // Larger font for names
-      font: "Calibri"
-    }));
-  }
-  
-  return textRuns.length > 0 ? textRuns : [new TextRun({
-    text: text,
-    size: 32,
-    font: "Calibri",
-    bold: true
-  })];
-}
-
-/**
  * Creates properly formatted Word document with bold capitals and proper spacing
  */
 export function createFormattedWordDocument(content: string, fileName: string): Document {
@@ -173,5 +140,38 @@ function createTextRunsWithBoldCapitals(text: string): TextRun[] {
     text: text,
     size: 22,
     font: "Calibri"
+  })];
+}
+
+/**
+ * Creates name text runs with larger font and bold capitals
+ */
+function createNameTextRuns(text: string): TextRun[] {
+  const textRuns: TextRun[] = [];
+  
+  // Enhanced regex to capture all capital letter combinations
+  const parts = text.split(/(\b[A-Z]+(?:\.[A-Z]+)*\b|\([A-Z]+\)|\b[A-Z]\b)/);
+  
+  for (const part of parts) {
+    if (!part) continue;
+    
+    // Check if this part is all capitals
+    const isAllCaps = /^[A-Z]+$/.test(part.trim()) || 
+                      /^\([A-Z]+\)$/.test(part.trim()) ||
+                      /^[A-Z]+(?:\.[A-Z]+)*$/.test(part.trim());
+    
+    textRuns.push(new TextRun({
+      text: part,
+      bold: isAllCaps,
+      size: 32, // Larger font for names
+      font: "Calibri"
+    }));
+  }
+  
+  return textRuns.length > 0 ? textRuns : [new TextRun({
+    text: text,
+    size: 32,
+    font: "Calibri",
+    bold: true
   })];
 }
