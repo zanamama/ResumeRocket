@@ -5,8 +5,8 @@
  * Tests all core functionality including file parsing, AI optimization, and email delivery
  */
 
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
 
 // Test resume content
 const testResumeContent = `
@@ -78,7 +78,7 @@ async function testSystemComponents() {
   // Test 2: PDF Generation Test
   console.log('✅ Test 2: PDF Generation Capability');
   try {
-    const PDFDocument = require('pdfkit');
+    const { default: PDFDocument } = await import('pdfkit');
     const doc = new PDFDocument();
     console.log('   PDF library loaded successfully');
     console.log('   Ready for resume PDF generation\n');
@@ -89,7 +89,7 @@ async function testSystemComponents() {
   // Test 3: OpenAI Integration Check
   console.log('✅ Test 3: OpenAI Integration');
   try {
-    const OpenAI = require('openai');
+    const { default: OpenAI } = await import('openai');
     console.log('   OpenAI library loaded successfully');
     console.log('   Ready for AI-powered optimization\n');
   } catch (error) {
@@ -99,7 +99,7 @@ async function testSystemComponents() {
   // Test 4: Email Configuration
   console.log('✅ Test 4: SendGrid Email Configuration');
   try {
-    const sgMail = require('@sendgrid/mail');
+    const sgMail = await import('@sendgrid/mail');
     console.log('   SendGrid library loaded successfully');
     console.log('   Email notifications ready\n');
   } catch (error) {
