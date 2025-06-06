@@ -23,15 +23,16 @@ export async function optimizeResumeStandard(resumeContent: string): Promise<Res
 
 CRITICAL FORMATTING RULES:
 • Output PLAIN TEXT ONLY - NO markdown formatting (no **, *, _, etc.)
-• PRESERVE EXACT original contact information (phone, email, location) - NEVER add placeholders
+• PRESERVE EXACT original contact information IF PRESENT - NEVER add placeholders or fake numbers
+• If no contact information exists in the original resume, omit the contact section entirely
 • All section headers in BOLD ALL CAPS format
 • Use • for bullet points
 • Job titles and dates must be bold
-• NO placeholder data like 555-555-5555 or fake emails
+• NEVER generate phone numbers, emails, or addresses not in the original
 
 STRUCTURE ORDER:
 1. FULL NAME (centered, bold)
-2. Contact info (use ONLY original contact details - phone, email, location)
+2. Contact info (ONLY if present in original - no fabricated data)
 3. EDUCATION
 4. PROFESSIONAL SUMMARY
 5. TECHNICAL SKILLS
@@ -40,10 +41,12 @@ STRUCTURE ORDER:
 8. AREAS OF EXPERTISE
 
 CONTENT PRESERVATION:
-• Keep ALL original factual content
-• Only enhance language and formatting
-• Never invent companies, dates, or contact info
+• Keep ALL original factual content exactly as provided
+• Only enhance language and formatting of existing content
+• ABSOLUTELY NEVER invent, generate, or fabricate any contact information
+• If contact details are missing from original, leave them out completely
 • Professional Summary: 3-4 sentences with job title, experience years, key skills
+• Extract name from content only - if unclear, use "CANDIDATE NAME" placeholder
 
 Respond with JSON:
 {
@@ -81,6 +84,16 @@ Respond with JSON:
       .replace(/\*(.*?)\*/g, '$1')      // Remove * italic markdown
       .replace(/__(.*?)__/g, '$1')      // Remove __ bold markdown
       .replace(/_(.*?)_/g, '$1');       // Remove _ italic markdown
+
+    // Remove any fabricated contact information patterns
+    cleanedContent = cleanedContent
+      .replace(/^.*\d{7}\s+\d{6}.*$/gm, '')  // Remove strange number patterns like "4006850 501650"
+      .replace(/^.*555-555-5555.*$/gm, '')    // Remove placeholder phone numbers
+      .replace(/^.*Contact@Contact\.com.*$/gm, '') // Remove placeholder emails
+      .replace(/^.*\|\s*\|\s*.*$/gm, '')      // Remove lines with empty pipe separators
+      .replace(/^\s*\|\s*$/gm, '')           // Remove standalone pipe characters
+      .replace(/\n\s*\n\s*\n/g, '\n\n')     // Clean up excessive line breaks
+      .trim();
     
     return {
       optimizedContent: cleanedContent,
@@ -163,6 +176,16 @@ Description: ${jobDescription.description}`
       .replace(/\*(.*?)\*/g, '$1')      // Remove * italic markdown
       .replace(/__(.*?)__/g, '$1')      // Remove __ bold markdown
       .replace(/_(.*?)_/g, '$1');       // Remove _ italic markdown
+
+    // Remove any fabricated contact information patterns
+    cleanedContent = cleanedContent
+      .replace(/^.*\d{7}\s+\d{6}.*$/gm, '')  // Remove strange number patterns like "4006850 501650"
+      .replace(/^.*555-555-5555.*$/gm, '')    // Remove placeholder phone numbers
+      .replace(/^.*Contact@Contact\.com.*$/gm, '') // Remove placeholder emails
+      .replace(/^.*\|\s*\|\s*.*$/gm, '')      // Remove lines with empty pipe separators
+      .replace(/^\s*\|\s*$/gm, '')           // Remove standalone pipe characters
+      .replace(/\n\s*\n\s*\n/g, '\n\n')     // Clean up excessive line breaks
+      .trim();
     
     return {
       optimizedContent: cleanedContent,
