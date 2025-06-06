@@ -27,20 +27,11 @@ export function createFormattedWordDocument(content: string, fileName: string): 
     );
     
     if (isSectionHeader) {
-      // Add spacing and divider before section (except first)
+      // Add spacing before section (except first)
       if (!isFirstSection) {
         paragraphs.push(new Paragraph({
           children: [new TextRun({ text: "" })],
-          spacing: { before: 400, after: 100 }
-        }));
-        
-        paragraphs.push(new Paragraph({
-          children: [new TextRun({ 
-            text: "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
-            size: 18,
-            font: "Calibri"
-          })],
-          spacing: { before: 100, after: 200 }
+          spacing: { before: 300, after: 200 }
         }));
       }
       
@@ -49,10 +40,10 @@ export function createFormattedWordDocument(content: string, fileName: string): 
         children: [new TextRun({
           text: line.toUpperCase(),
           bold: true,
-          size: 28,
+          size: 26,
           font: "Calibri"
         })],
-        spacing: { before: 100, after: 300 }
+        spacing: { before: 200, after: 200 }
       }));
       
       isFirstSection = false;

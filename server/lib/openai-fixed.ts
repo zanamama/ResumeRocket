@@ -20,52 +20,42 @@ export async function optimizeResumeStandard(resumeContent: string): Promise<Res
       messages: [
         {
           role: "system",
-          content: `You are a resume optimization AI. Transform the resume into a professionally formatted, plain text resume. Follow these rules exactly:
+          content: `You are a resume optimization AI. Transform the resume into a clean, plain text format. Follow these rules exactly:
 
 CRITICAL FORMATTING RULES:
-• Output PLAIN TEXT ONLY - NO markdown formatting (no **, *, _, etc.)
-• ABSOLUTELY FORBIDDEN: Creating any contact information not in the original resume
-• NEVER generate fake phone numbers like "4006850 501650" or "555-555-5555"
-• NEVER generate fake emails like "Contact@Contact.com"
-• If the original resume has no contact information, skip the contact section completely
-• All section headers in BOLD ALL CAPS format
-• Use • for bullet points
-• Job titles and dates must be bold
+• Output CLEAN PLAIN TEXT ONLY - NO markdown symbols (**, *, _, etc.)
+• NEVER use ** asterisks ** around any text
+• NEVER use markdown formatting
+• Section headers in ALL CAPS without any symbols
+• Use • for bullet points only
+• NO divider lines, dashes, or special characters
+• Clean professional text formatting only
 
 STRUCTURE ORDER:
-1. FULL NAME (centered, bold)
-2. Contact info (ONLY if present in original - no fabricated data)
-3. EDUCATION (BOLD ALL CAPS)
-4. PROFESSIONAL SUMMARY (BOLD ALL CAPS)
-5. TECHNICAL SKILLS (BOLD ALL CAPS)
-6. PROFESSIONAL EXPERIENCE (BOLD ALL CAPS)
-7. CERTIFICATIONS (BOLD ALL CAPS)
-8. AREAS OF EXPERTISE (BOLD ALL CAPS)
+1. Full name from original resume
+2. Contact info (ONLY if present in original - never fabricate)
+3. PROFESSIONAL SUMMARY
+4. AREAS OF EXPERTISE  
+5. PROFESSIONAL EXPERIENCE
+6. TECHNICAL SKILLS
+7. EDUCATION
+8. CERTIFICATIONS (if present)
 
-Each section must have:
-- Section header in BOLD ALL CAPS
-- Proper spacing after each section
-- Divider line between sections
-
-CRITICAL FORMATTING EXAMPLES:
-WRONG: "Certifications" or "certifications" 
-CORRECT: "CERTIFICATIONS"
-
-WRONG: "Areas of Expertise"
+FORMATTING EXAMPLES:
+CORRECT: "ZANA MATHUTHU, CSM, CSPO"
+CORRECT: "PROFESSIONAL EXPERIENCE"
 CORRECT: "AREAS OF EXPERTISE"
+WRONG: "**EDUCATION**" or "*EDUCATION*"
+WRONG: "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 
-WRONG: "Technical Skills"
-CORRECT: "TECHNICAL SKILLS"
-
-CONTENT PRESERVATION:
-• Keep ALL original factual content exactly as provided
-• Only enhance language and formatting of existing content
-• ABSOLUTELY NEVER invent, generate, or fabricate any contact information
-• If contact details are missing from original, leave them out completely
-• Professional Summary: 3-4 sentences with job title, experience years, key skills
-• Extract name from content only - if unclear, use "CANDIDATE NAME" placeholder
-• Every section header must be formatted as BOLD ALL CAPS with proper spacing
-• Add divider lines between sections for professional presentation
+CONTENT RULES:
+• Use EXACT name from original resume
+• Keep ALL original contact information exactly as written
+• Preserve all dates, company names, job titles exactly
+• Keep all technical skills and certifications exactly as listed
+• Reorganize content logically but preserve all facts
+• NO fabricated information whatsoever
+• Improve language clarity while keeping original meaning
 
 Respond with JSON:
 {
@@ -75,7 +65,7 @@ Respond with JSON:
         },
         {
           role: "user",
-          content: `Optimize this resume with BOLD ALL CAPS section headers including CERTIFICATIONS and AREAS OF EXPERTISE. Add proper spacing and dividers between sections:\n\n${resumeContent}`
+          content: `Optimize this resume using clean plain text format. Organize with ALL CAPS section headers. NO markdown symbols. Extract the name "ZANA MATHUTHU" and preserve all original contact and certification details exactly:\n\n${resumeContent}`
         }
       ],
       response_format: { type: "json_object" },

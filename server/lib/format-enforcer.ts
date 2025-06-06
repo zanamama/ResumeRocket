@@ -43,32 +43,25 @@ export function enforceResumeFormatting(content: string): string {
       }
     }
 
-    // Handle section headers with spacing and dividers
+    // Handle section headers with clean text formatting
     if (isSectionHeader) {
-      // Add spacing and divider before section (except first section)
+      // Add spacing before section (except first section)
       if (formattedLines.length > 0) {
         formattedLines.push('');
         formattedLines.push('');
-        formattedLines.push('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
-        formattedLines.push('');
       }
       
-      // Add the properly formatted header
-      formattedLines.push(`**${headerMatch}**`);
+      // Add the properly formatted header in plain text
+      formattedLines.push(headerMatch);
       formattedLines.push('');
       lastWasHeader = true;
       continue;
     }
 
-    // Process regular content lines
+    // Process regular content lines without markdown
     if (line !== '') {
-      // Make all capital words bold
-      let processedLine = line.replace(/\b[A-Z]{2,}\b/g, '**$&**');
-      
-      // Clean up any double-bold formatting
-      processedLine = processedLine.replace(/\*\*\*\*/g, '**');
-      
-      formattedLines.push(processedLine);
+      // Keep original line without adding markdown symbols
+      formattedLines.push(line);
       lastWasHeader = false;
     } else {
       // Only add empty line if not after a header
