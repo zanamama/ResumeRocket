@@ -383,20 +383,37 @@ export async function registerRoutes(app: Express): Promise<Server> {
         }
       }
 
+      const processingTime = Date.now() - startTime;
+      console.log(`Standard optimization completed for job ${jobId} in ${processingTime}ms`);
+
     } catch (error) {
-      console.error("Error processing standard optimization:", error);
-      await storage.updateResumeJob(jobId, { status: "failed" });
+      const processingTime = Date.now() - startTime;
+      console.error(`Error processing standard optimization for job ${jobId} after ${processingTime}ms:`, error);
+      await storage.updateResumeJob(jobId, { 
+        status: "failed",
+        outputFiles: { error: (error as Error).message }
+      });
     }
   }
 
   async function processAdvancedOptimization(jobId: number) {
+    const startTime = Date.now();
     try {
       await storage.updateResumeJob(jobId, { status: "processing" });
 
       const job = await storage.getResumeJob(jobId);
-      if (!job || !job.jobDescriptions) return;
+      if (!job) {
+        console.error(`Job ${jobId} not found during advanced processing`);
+        return;
+      }
+
+      if (!job.jobDescriptions || !Array.isArray(job.jobDescriptions) || job.jobDescriptions.length === 0) {
+        throw new Error("No job descriptions provided for advanced optimization");
+      }
 
       const jobDescriptions = job.jobDescriptions as JobDescription[];
+      console.log(`Starting advanced optimization for job ${jobId} with ${jobDescriptions.length} job descriptions`);
+
       const tailoredResumes = [];
 
       // Process each job description
@@ -461,9 +478,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
         }
       }
 
+      const processingTime = Date.now() - startTime;
+      console.log(`Advanced optimization completed for job ${jobId} in ${processingTime}ms - ${tailoredResumes.length} resumes generated`);
+
     } catch (error) {
-      console.error("Error processing advanced optimization:", error);
-      await storage.updateResumeJob(jobId, { status: "failed" });
+      const processingTime = Date.now() - startTime;
+      console.error(`Error processing advanced optimization for job ${jobId} after ${processingTime}ms:`, error);
+      await storage.updateResumeJob(jobId, { 
+        status: "failed",
+        outputFiles: { error: (error as Error).message }
+      });
     }
   }
 
