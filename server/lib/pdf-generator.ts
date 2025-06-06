@@ -143,10 +143,12 @@ export function generateResumePDF(content: string, fileName: string): Buffer {
       continue;
     }
     
-    // Section headers
+    // Section headers - all must be BOLD ALL CAPS
     if (line === 'EDUCATION' || line === 'PROFESSIONAL SUMMARY' || 
         line === 'TECHNICAL SKILLS' || line === 'PROFESSIONAL EXPERIENCE' || 
-        line === 'PROJECTS' || line === 'CERTIFICATIONS') {
+        line === 'PROJECTS' || line === 'CERTIFICATIONS' || 
+        line === 'AREAS OF EXPERTISE' || line === 'SKILLS' || 
+        line === 'EXPERIENCE') {
       addSectionHeader(line, isFirstSection);
       currentSection = line;
       isFirstSection = false;

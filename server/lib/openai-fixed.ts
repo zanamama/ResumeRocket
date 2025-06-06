@@ -34,12 +34,27 @@ CRITICAL FORMATTING RULES:
 STRUCTURE ORDER:
 1. FULL NAME (centered, bold)
 2. Contact info (ONLY if present in original - no fabricated data)
-3. EDUCATION
-4. PROFESSIONAL SUMMARY
-5. TECHNICAL SKILLS
-6. PROFESSIONAL EXPERIENCE
-7. CERTIFICATIONS
-8. AREAS OF EXPERTISE
+3. EDUCATION (BOLD ALL CAPS)
+4. PROFESSIONAL SUMMARY (BOLD ALL CAPS)
+5. TECHNICAL SKILLS (BOLD ALL CAPS)
+6. PROFESSIONAL EXPERIENCE (BOLD ALL CAPS)
+7. CERTIFICATIONS (BOLD ALL CAPS)
+8. AREAS OF EXPERTISE (BOLD ALL CAPS)
+
+Each section must have:
+- Section header in BOLD ALL CAPS
+- Proper spacing after each section
+- Divider line between sections
+
+CRITICAL FORMATTING EXAMPLES:
+WRONG: "Certifications" or "certifications" 
+CORRECT: "CERTIFICATIONS"
+
+WRONG: "Areas of Expertise"
+CORRECT: "AREAS OF EXPERTISE"
+
+WRONG: "Technical Skills"
+CORRECT: "TECHNICAL SKILLS"
 
 CONTENT PRESERVATION:
 • Keep ALL original factual content exactly as provided
@@ -48,6 +63,8 @@ CONTENT PRESERVATION:
 • If contact details are missing from original, leave them out completely
 • Professional Summary: 3-4 sentences with job title, experience years, key skills
 • Extract name from content only - if unclear, use "CANDIDATE NAME" placeholder
+• Every section header must be formatted as BOLD ALL CAPS with proper spacing
+• Add divider lines between sections for professional presentation
 
 Respond with JSON:
 {
@@ -57,7 +74,7 @@ Respond with JSON:
         },
         {
           role: "user",
-          content: `Optimize this resume preserving ALL original contact information:\n\n${resumeContent}`
+          content: `Optimize this resume with BOLD ALL CAPS section headers including CERTIFICATIONS and AREAS OF EXPERTISE. Add proper spacing and dividers between sections:\n\n${resumeContent}`
         }
       ],
       response_format: { type: "json_object" },
@@ -121,10 +138,16 @@ export async function tailorResumeToJob(
 CRITICAL FORMATTING RULES:
 • Output PLAIN TEXT ONLY - NO markdown formatting (no **, *, _, etc.)
 • PRESERVE EXACT original contact information (phone, email, location) - NEVER add placeholders
-• All section headers in BOLD ALL CAPS format
+• ALL section headers must be in BOLD ALL CAPS format (EDUCATION, PROFESSIONAL SUMMARY, TECHNICAL SKILLS, PROFESSIONAL EXPERIENCE, CERTIFICATIONS, AREAS OF EXPERTISE)
 • Use • for bullet points
 • Job titles and dates must be bold
 • NO placeholder data like 555-555-5555 or fake emails
+• Add proper spacing and dividers between sections
+
+FORMATTING EXAMPLES:
+CORRECT: "CERTIFICATIONS"
+CORRECT: "AREAS OF EXPERTISE"
+WRONG: "Certifications" or "Areas of Expertise"
 
 TAILORING RULES:
 • Emphasize skills and experience relevant to the job requirements
