@@ -11,7 +11,7 @@ export function createFormattedWordDocument(content: string, fileName: string): 
   const sectionHeaders = [
     'EDUCATION', 'PROFESSIONAL SUMMARY', 'TECHNICAL SKILLS', 
     'PROFESSIONAL EXPERIENCE', 'EXPERIENCE', 'CERTIFICATIONS', 
-    'AREAS OF EXPERTISE', 'SKILLS', 'PROJECTS'
+    'AREAS OF EXPERTISE', 'SKILLS', 'PROJECTS', 'SUMMARY'
   ];
   
   let isFirstSection = true;
@@ -31,44 +31,50 @@ export function createFormattedWordDocument(content: string, fileName: string): 
       if (!isFirstSection) {
         paragraphs.push(new Paragraph({
           children: [new TextRun({ text: "" })],
-          spacing: { before: 300, after: 200 }
+          spacing: { before: 400, after: 100 }
         }));
         
         paragraphs.push(new Paragraph({
           children: [new TextRun({ 
             text: "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
-            size: 16
+            size: 18,
+            font: "Calibri"
           })],
-          spacing: { after: 200 }
+          spacing: { before: 100, after: 200 }
         }));
       }
       
-      // Section header - BOLD ALL CAPS
+      // Section header - BOLD ALL CAPS with larger font
       paragraphs.push(new Paragraph({
         children: [new TextRun({
           text: line.toUpperCase(),
           bold: true,
-          size: 24,
+          size: 28,
           font: "Calibri"
         })],
-        spacing: { after: 200 }
+        spacing: { before: 100, after: 300 }
       }));
       
       isFirstSection = false;
       continue;
     }
     
-    // Check if line is a name (first line or centered format)
-    const isName = i === 0 || (line.includes(',') && !line.includes('@') && !line.includes('|'));
+    // Check if line is a name (first line or contains credentials like CSM, CSPO)
+    const isName = i === 0 || (i < 3 && (line.includes(',') || line.includes('CSM') || line.includes('CSPO')) && !line.includes('@') && !line.includes('|'));
     
     if (isName && i < 3) {
+      // Process name for bold capitals
+      const nameTextRuns = createTextRunsWithBoldCapitals(line);
+      // Increase font size for name runs
+      nameTextRuns.forEach(run => {
+        run.size = 32;
+        if (!run.bold && /[A-Z]/.test(run.text || '')) {
+          run.bold = true; // Make name parts bold
+        }
+      });
+      
       paragraphs.push(new Paragraph({
-        children: [new TextRun({
-          text: line,
-          bold: true,
-          size: 32,
-          font: "Calibri"
-        })],
+        children: nameTextRuns,
         alignment: AlignmentType.CENTER,
         spacing: { after: 200 }
       }));
@@ -117,12 +123,17 @@ export function createFormattedWordDocument(content: string, fileName: string): 
  */
 function createTextRunsWithBoldCapitals(text: string): TextRun[] {
   const textRuns: TextRun[] = [];
-  const parts = text.split(/(\b[A-Z]{2,}\b)/); // Split on capital words
+  
+  // Enhanced regex to capture all capital letter combinations including single letters and acronyms
+  const parts = text.split(/(\b[A-Z]+(?:\.[A-Z]+)*\b|\([A-Z]+\)|\b[A-Z]\b)/);
   
   for (const part of parts) {
     if (!part) continue;
     
-    const isAllCaps = /^[A-Z]{2,}$/.test(part.trim());
+    // Check if this part is all capitals (including single letters, acronyms, and parentheses)
+    const isAllCaps = /^[A-Z]+$/.test(part.trim()) || 
+                      /^\([A-Z]+\)$/.test(part.trim()) ||
+                      /^[A-Z]+(?:\.[A-Z]+)*$/.test(part.trim());
     
     textRuns.push(new TextRun({
       text: part,
