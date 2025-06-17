@@ -2,15 +2,8 @@
 import { Document, Packer, Paragraph, TextRun, AlignmentType } from 'docx';
 import { generateResumePDF } from './pdf-generator';
 import { createFormattedWordDocument } from './word-formatter';
-
-interface StoredFile {
-  content: string;
-  fileName: string;
-  mimeType: string;
-  expiresAt: Date;
-}
-
-const fileStorage = new Map<string, StoredFile>();
+import { storage } from '../storage';
+import type { StoredFile } from '@shared/schema';
 
 export interface StoredFileInfo {
   downloadUrl: string;
@@ -27,14 +20,17 @@ export async function storeFileForDownload(
   const fileId = `${jobId}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
   const downloadUrl = `/api/download/${fileId}`;
   
-  const file: StoredFile = {
-    content,
+  // Store in database instead of memory
+  await storage.storeFile({
+    jobId,
+    downloadUrl: fileId, // Store just the fileId, not the full URL
     fileName,
+    fileContent: content,
+    fileType,
     mimeType: fileType === 'pdf' ? 'application/pdf' : 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    fileSize: Buffer.from(content, 'base64').length,
     expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000) // 24 hours
-  };
-  
-  fileStorage.set(fileId, file);
+  });
   
   return {
     downloadUrl,
@@ -43,13 +39,14 @@ export async function storeFileForDownload(
   };
 }
 
-export function getStoredFile(fileId: string): StoredFile | null {
-  const file = fileStorage.get(fileId);
-  if (!file || file.expiresAt < new Date()) {
-    if (file) fileStorage.delete(fileId);
+export async function getStoredFile(fileId: string): Promise<StoredFile | null> {
+  try {
+    const file = await storage.getFile(fileId);
+    return file || null;
+  } catch (error) {
+    console.error('Error retrieving stored file:', error);
     return null;
   }
-  return file;
 }
 
 export async function createDownloadableFile(
@@ -76,16 +73,4 @@ async function createWordDocument(content: string, fileName: string): Promise<st
   return buffer.toString('base64');
 }
 
-// Periodic cleanup
-setInterval(() => {
-  const now = new Date();
-  const keysToDelete: string[] = [];
-  
-  fileStorage.forEach((file, fileId) => {
-    if (file.expiresAt < now) {
-      keysToDelete.push(fileId);
-    }
-  });
-  
-  keysToDelete.forEach(fileId => fileStorage.delete(fileId));
-}, 60 * 60 * 1000); // Clean up every hour
+// Database cleanup is handled by the storage class
