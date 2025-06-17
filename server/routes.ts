@@ -41,14 +41,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const { getStoredFile } = await import("./lib/file-storage");
       const fileId = req.params.fileId;
-      const file = getStoredFile(fileId);
+      const file = await getStoredFile(fileId);
       
       if (!file) {
         return res.status(404).json({ error: "File not found or expired" });
       }
 
       // Decode base64 content as text
-      const content = Buffer.from(file.content, 'base64').toString('utf-8');
+      const content = Buffer.from(file.fileContent, 'base64').toString('utf-8');
       
       // Create formatted HTML display
       const htmlContent = `
