@@ -17,16 +17,26 @@ interface EmailParams {
 
 export async function sendEmail(params: EmailParams): Promise<boolean> {
   try {
-    await mailService.send({
+    console.log(`Attempting to send email to: ${params.to}`);
+    console.log(`From: ${params.from}`);
+    console.log(`Subject: ${params.subject}`);
+    
+    const response = await mailService.send({
       to: params.to,
       from: params.from,
       subject: params.subject,
       text: params.text,
       html: params.html,
     });
+    
+    console.log('Email sent successfully:', response[0]?.statusCode);
     return true;
   } catch (error) {
-    console.error('SendGrid email error:', error);
+    console.error('SendGrid email error:', {
+      message: error.message,
+      code: error.code,
+      response: error.response?.body
+    });
     return false;
   }
 }
