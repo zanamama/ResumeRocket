@@ -7,6 +7,7 @@ import NotFound from "./pages/not-found";
 import Landing from "./pages/landing";
 import StandardMode from "./pages/standard-mode";
 import AdvancedMode from "./pages/advanced-mode";
+import CreateResume from "./pages/create-resume";
 import Processing from "./pages/processing";
 import Success from "./pages/success";
 import HowItWorks from "./pages/how-it-works";
@@ -20,6 +21,7 @@ function Router() {
       <Route path="/examples" component={Examples} />
       <Route path="/standard" component={StandardMode} />
       <Route path="/advanced" component={AdvancedMode} />
+      <Route path="/create" component={CreateResume} />
       <Route path="/processing/:jobId" component={Processing} />
       <Route path="/success/:jobId" component={Success} />
       {/* Fallback to 404 */}

@@ -76,7 +76,7 @@ export default function Landing() {
         </p>
 
         {/* Main CTA Options */}
-        <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+        <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
           {/* Standard Mode Card */}
           <Link href="/standard">
             <Card className="bg-white border border-gray-200 hover:shadow-lg transition-all duration-300 cursor-pointer group">
@@ -110,6 +110,25 @@ export default function Landing() {
                 </p>
                 <Button className="w-full bg-ios-blue text-white hover:bg-blue-600">
                   Tailor to Jobs
+                </Button>
+              </CardContent>
+            </Card>
+          </Link>
+
+          {/* Start from Scratch Card */}
+          <Link href="/create">
+            <Card className="bg-white border border-gray-200 hover:shadow-lg transition-all duration-300 cursor-pointer group">
+              <CardContent className="p-8">
+                <div className="w-16 h-16 bg-blue-500/10 rounded-2xl flex items-center justify-center mb-6 mx-auto group-hover:bg-blue-500/20 transition-colors">
+                  <span className="text-2xl">📝</span>
+                </div>
+                <h3 className="text-2xl font-semibold text-black mb-4">Start from Scratch</h3>
+                <p className="text-ios-text mb-6 leading-relaxed">
+                  Don't have a resume? Share your work history and experience, 
+                  and we'll create a professional resume for you.
+                </p>
+                <Button className="w-full bg-blue-500 text-white hover:bg-blue-600">
+                  Create My Resume
                 </Button>
               </CardContent>
             </Card>
