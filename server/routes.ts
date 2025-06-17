@@ -517,6 +517,29 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Test email endpoint
+  app.post("/api/test-email", async (req, res) => {
+    try {
+      const { sendResumeCompletionEmail } = await import("./lib/email");
+      const { email } = req.body;
+      
+      if (!email) {
+        return res.status(400).json({ error: "Email address required" });
+      }
+      
+      console.log(`Testing email to: ${email}`);
+      const success = await sendResumeCompletionEmail(email, 999, 'standard', '/api/download/test');
+      
+      res.json({ 
+        success, 
+        message: success ? 'Email sent successfully' : 'Email failed to send' 
+      });
+    } catch (error) {
+      console.error("Email test error:", error);
+      res.status(500).json({ error: error.message });
+    }
+  });
+
   // Handle sample downloads for job 23
   app.get("/api/download/23_sample", async (req, res) => {
     try {

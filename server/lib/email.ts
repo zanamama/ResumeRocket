@@ -31,7 +31,7 @@ export async function sendEmail(params: EmailParams): Promise<boolean> {
     
     console.log('Email sent successfully:', response[0]?.statusCode);
     return true;
-  } catch (error) {
+  } catch (error: any) {
     console.error('SendGrid email error:', {
       message: error.message,
       code: error.code,
@@ -100,7 +100,7 @@ Need help? Contact us at support@upmysalary.com
 
   return await sendEmail({
     to: userEmail,
-    from: 'support@upmysalary.com',
+    from: 'noreply@upmysalary.replit.app', // Using project domain
     subject,
     text,
     html
