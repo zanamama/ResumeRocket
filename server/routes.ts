@@ -6,6 +6,7 @@ import { parseFileContent, validateFileUpload } from "./lib/file-parser";
 import { optimizeResumeStandard, tailorResumeToJob } from "./lib/openai-clean";
 import { createDownloadableDocument, createMultipleDownloadableDocuments, generateDownloadZipUrl } from "./lib/google-docs";
 import { sendWelcomeEmail, sendResumeCompletionEmail } from "./lib/email";
+import { captureUserLead } from "./lib/lead-extractor";
 import multer from "multer";
 
 // Configure multer for file uploads
@@ -349,6 +350,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
         throw new Error("Resume content is too short or empty");
       }
 
+      // Capture user lead for marketing intelligence
+      await captureUserLead(job.resumeContent, jobId, 'standard', job.email ?? undefined);
+
       // Optimize resume with timeout
       const result = await Promise.race([
         optimizeResumeStandard(job.resumeContent),
@@ -413,6 +417,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       const jobDescriptions = job.jobDescriptions as JobDescription[];
       console.log(`Starting advanced optimization for job ${jobId} with ${jobDescriptions.length} job descriptions`);
+
+      // Capture user lead for marketing intelligence
+      await captureUserLead(job.resumeContent, jobId, 'advanced', job.email ?? undefined);
 
       const tailoredResumes = [];
 

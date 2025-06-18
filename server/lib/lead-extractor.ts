@@ -71,7 +71,7 @@ export async function captureUserLead(
   resumeContent: string,
   jobId: number,
   source: 'standard' | 'advanced' | 'create',
-  providedEmail?: string,
+  providedEmail?: string | null,
   req?: any
 ): Promise<void> {
   try {
