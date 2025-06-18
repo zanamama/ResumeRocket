@@ -650,7 +650,7 @@ ${achievements || 'No achievements provided.'}
             job.email,
             jobId,
             'create',
-            outputFiles
+            docExport.docUrl
           );
         } catch (error) {
           console.error("Failed to send completion email:", error);

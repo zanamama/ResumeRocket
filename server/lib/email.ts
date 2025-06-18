@@ -44,12 +44,14 @@ export async function sendEmail(params: EmailParams): Promise<boolean> {
 export async function sendResumeCompletionEmail(
   userEmail: string,
   jobId: number,
-  mode: 'standard' | 'advanced',
+  mode: 'standard' | 'advanced' | 'create',
   downloadUrl?: string
 ): Promise<boolean> {
   const subject = mode === 'standard' 
     ? 'Your Resume Optimization is Complete!' 
-    : 'Your Job-Tailored Resumes are Ready!';
+    : mode === 'advanced'
+      ? 'Your Job-Tailored Resumes are Ready!'
+      : 'Your Custom Resume is Complete!';
     
   const html = `
     <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">

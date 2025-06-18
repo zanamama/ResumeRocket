@@ -8,7 +8,7 @@ export const resumeJobs = pgTable("resume_jobs", {
   resumeFileName: text("resume_file_name").notNull(),
   resumeContent: text("resume_content").notNull(),
   jobDescriptions: jsonb("job_descriptions").default(null), // For advanced mode - array of job descriptions
-  mode: text("mode").notNull(), // "standard" or "advanced"
+  mode: text("mode").notNull(), // "standard", "advanced", or "create"
   status: text("status").notNull().default("pending"), // "pending", "processing", "completed", "failed"
   outputFiles: jsonb("output_files").default(null), // Array of generated file info
   createdAt: timestamp("created_at").defaultNow(),
