@@ -201,7 +201,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       // Process in background
-      processStandardOptimization(job.id);
+      processStandardOptimization(job.id, req);
 
     } catch (error) {
       console.error("Error creating standard optimization job:", error);
@@ -277,7 +277,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       // Process in background
-      processAdvancedOptimization(job.id);
+      processAdvancedOptimization(job.id, req);
 
     } catch (error) {
       console.error("Error creating advanced optimization job:", error);

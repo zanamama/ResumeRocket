@@ -1,6 +1,10 @@
 // Lead extraction service for marketing intelligence
 import { storage } from '../storage';
+import { createAirtableService } from './airtable-service';
 import type { InsertUserLead } from '@shared/schema';
+
+// Initialize Airtable service
+const airtableService = createAirtableService();
 
 interface ExtractedContact {
   fullName?: string;
@@ -93,7 +97,23 @@ export async function captureUserLead(
         userAgent: req?.get('User-Agent') || null,
       };
       
+      // Save to both database and Airtable
       await storage.createUserLead(leadData);
+      
+      // Try to save to Airtable if configured
+      if (airtableService) {
+        await airtableService.createLead({
+          fullName: extracted.fullName,
+          email: email,
+          phone: extracted.phone,
+          location: extracted.location,
+          source,
+          resumeJobId: jobId,
+          ipAddress: req?.ip || req?.connection?.remoteAddress || null,
+          userAgent: req?.get('User-Agent') || null,
+        });
+      }
+      
       console.log(`Captured lead: ${extracted.fullName || 'Unknown'} (${email || 'no email'}) from ${source} mode`);
     }
   } catch (error) {
