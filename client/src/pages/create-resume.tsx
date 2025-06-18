@@ -64,9 +64,9 @@ ADDITIONAL INFORMATION:
 ${formData.additionalInfo || "Not provided"}
       `.trim();
 
-      // Create a text file from the form data
-      const resumeBlob = new Blob([resumeData], { type: 'text/plain' });
-      const resumeFile = new File([resumeBlob], 'resume_data.txt', { type: 'text/plain' });
+      // Create a Word document from the form data to match expected file types
+      const resumeBlob = new Blob([resumeData], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
+      const resumeFile = new File([resumeBlob], 'resume_data.docx', { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
 
       // Submit to standard optimization endpoint
       const result = await api.optimizeResumeStandard(resumeFile, formData.email || undefined);

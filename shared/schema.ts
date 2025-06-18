@@ -28,6 +28,20 @@ export const storedFiles = pgTable("stored_files", {
   expiresAt: timestamp("expires_at").notNull(), // 24 hours from creation
 });
 
+// User leads table for marketing intelligence
+export const userLeads = pgTable("user_leads", {
+  id: serial("id").primaryKey(),
+  fullName: text("full_name"),
+  email: text("email"),
+  phone: text("phone"),
+  location: text("location"),
+  resumeJobId: integer("resume_job_id").references(() => resumeJobs.id),
+  source: text("source").notNull(), // "standard", "advanced", "create"
+  extractedAt: timestamp("extracted_at").defaultNow(),
+  ipAddress: text("ip_address"),
+  userAgent: text("user_agent"),
+});
+
 export const insertResumeJobSchema = createInsertSchema(resumeJobs).omit({
   id: true,
   createdAt: true,
@@ -44,11 +58,18 @@ export const insertStoredFileSchema = createInsertSchema(storedFiles).omit({
   createdAt: true,
 });
 
+export const insertUserLeadSchema = createInsertSchema(userLeads).omit({
+  id: true,
+  extractedAt: true,
+});
+
 export type InsertResumeJob = z.infer<typeof insertResumeJobSchema>;
 export type UpdateResumeJob = z.infer<typeof updateResumeJobSchema>;
 export type ResumeJob = typeof resumeJobs.$inferSelect;
 export type InsertStoredFile = z.infer<typeof insertStoredFileSchema>;
 export type StoredFile = typeof storedFiles.$inferSelect;
+export type InsertUserLead = z.infer<typeof insertUserLeadSchema>;
+export type UserLead = typeof userLeads.$inferSelect;
 
 // Additional types for file handling
 export const fileUploadSchema = z.object({

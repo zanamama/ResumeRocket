@@ -1,4 +1,4 @@
-import { resumeJobs, storedFiles, type ResumeJob, type InsertResumeJob, type UpdateResumeJob, type InsertStoredFile, type StoredFile } from "@shared/schema";
+import { resumeJobs, storedFiles, userLeads, type ResumeJob, type InsertResumeJob, type UpdateResumeJob, type InsertStoredFile, type StoredFile, type InsertUserLead, type UserLead } from "@shared/schema";
 import { db } from "./db";
 import { eq, and, gt, lt } from "drizzle-orm";
 
@@ -10,6 +10,11 @@ export interface IStorage {
   getResumeJob(id: number): Promise<ResumeJob | undefined>;
   updateResumeJob(id: number, updates: UpdateResumeJob): Promise<ResumeJob | undefined>;
   getResumeJobsByEmail(email: string): Promise<ResumeJob[]>;
+  
+  // User lead tracking for marketing intelligence
+  createUserLead(lead: InsertUserLead): Promise<UserLead>;
+  getUserLeadsByEmail(email: string): Promise<UserLead[]>;
+  getAllUserLeads(): Promise<UserLead[]>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -87,6 +92,29 @@ export class DatabaseStorage implements IStorage {
     await db
       .delete(storedFiles)
       .where(lt(storedFiles.expiresAt, now));
+  }
+
+  // User lead tracking methods
+  async createUserLead(lead: InsertUserLead): Promise<UserLead> {
+    const [userLead] = await db
+      .insert(userLeads)
+      .values(lead)
+      .returning();
+    return userLead;
+  }
+
+  async getUserLeadsByEmail(email: string): Promise<UserLead[]> {
+    return await db
+      .select()
+      .from(userLeads)
+      .where(eq(userLeads.email, email));
+  }
+
+  async getAllUserLeads(): Promise<UserLead[]> {
+    return await db
+      .select()
+      .from(userLeads)
+      .orderBy(userLeads.extractedAt);
   }
 }
 
