@@ -309,6 +309,95 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Create resume from scratch
+  app.post("/api/resume/create", upload.array('supportingDocs', 10), async (req, res) => {
+    try {
+      const { 
+        email, 
+        fullName, 
+        phone, 
+        location, 
+        targetJobTitle, 
+        targetCompany,
+        experience,
+        education,
+        skills,
+        achievements 
+      } = req.body;
+
+      // Build resume content from form data
+      const resumeContent = `
+${fullName}
+${email} | ${phone} | ${location}
+
+OBJECTIVE
+Seeking ${targetJobTitle} position${targetCompany ? ` at ${targetCompany}` : ''}.
+
+EXPERIENCE
+${experience || 'No experience provided.'}
+
+EDUCATION
+${education || 'No education provided.'}
+
+SKILLS
+${skills || 'No skills provided.'}
+
+ACHIEVEMENTS
+${achievements || 'No achievements provided.'}
+      `.trim();
+
+      // Process supporting documents if provided
+      let supportingContent = '';
+      if (req.files && Array.isArray(req.files) && req.files.length > 0) {
+        for (const file of req.files) {
+          try {
+            const fileUpload = {
+              fileName: file.originalname,
+              fileContent: file.buffer.toString('base64'),
+              fileType: (file.mimetype === 'application/pdf' ? 'pdf' : 'docx') as 'pdf' | 'docx',
+            };
+            
+            const content = await parseFileContent(fileUpload);
+            supportingContent += `\n\nSUPPORTING DOCUMENT (${file.originalname}):\n${content}`;
+          } catch (error) {
+            console.error(`Error parsing supporting document ${file.originalname}:`, error);
+          }
+        }
+      }
+
+      const finalContent = resumeContent + supportingContent;
+
+      // Create job record
+      const job = await storage.createResumeJob({
+        email: email || null,
+        resumeFileName: `${fullName.replace(/\s+/g, '_')}_Resume.docx`,
+        resumeContent: finalContent,
+        jobDescriptions: null,
+        mode: "create",
+        status: "pending",
+        outputFiles: null,
+      });
+
+      res.json({ jobId: job.id, status: "created" });
+
+      // Send welcome email if email provided
+      if (email) {
+        try {
+          await sendWelcomeEmail(email);
+        } catch (error) {
+          console.error("Failed to send welcome email:", error);
+        }
+      }
+
+      // Process in background
+      processCreateOptimization(job.id, req);
+
+    } catch (error) {
+      console.error("Error creating resume from scratch:", error);
+      res.status(500).json({ message: "Failed to create resume" });
+    }
+  });
+
   // Get completed job results
   app.get("/api/resume/job/:id/results", async (req, res) => {
     try {
@@ -336,7 +425,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Background processing functions
-  async function processStandardOptimization(jobId: number) {
+  async function processStandardOptimization(jobId: number, req?: any) {
     const startTime = Date.now();
     try {
       await storage.updateResumeJob(jobId, { status: "processing" });
@@ -355,7 +444,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       // Capture user lead for marketing intelligence
-      await captureUserLead(job.resumeContent, jobId, 'standard', job.email ?? undefined);
+      await captureUserLead(job.resumeContent, jobId, 'standard', job.email ?? undefined, req);
 
       // Optimize resume with timeout
       const result = await Promise.race([
@@ -404,7 +493,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   }
 
-  async function processAdvancedOptimization(jobId: number) {
+  async function processAdvancedOptimization(jobId: number, req?: any) {
     const startTime = Date.now();
     try {
       await storage.updateResumeJob(jobId, { status: "processing" });
@@ -423,7 +512,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       console.log(`Starting advanced optimization for job ${jobId} with ${jobDescriptions.length} job descriptions`);
 
       // Capture user lead for marketing intelligence
-      await captureUserLead(job.resumeContent, jobId, 'advanced', job.email ?? undefined);
+      await captureUserLead(job.resumeContent, jobId, 'advanced', job.email ?? undefined, req);
 
       const tailoredResumes = [];
 
@@ -498,6 +587,82 @@ export async function registerRoutes(app: Express): Promise<Server> {
       await storage.updateResumeJob(jobId, { 
         status: "failed",
         outputFiles: { error: (error as Error).message }
+      });
+    }
+  }
+
+  // Background processing for "Start from Scratch" feature
+  async function processCreateOptimization(jobId: number, req?: any) {
+    const startTime = Date.now();
+    try {
+      await storage.updateResumeJob(jobId, { status: "processing" });
+
+      const job = await storage.getResumeJob(jobId);
+      if (!job) {
+        console.error(`Job ${jobId} not found during create processing`);
+        return;
+      }
+
+      console.log(`Starting resume creation optimization for job ${jobId}`);
+
+      // Capture user lead for marketing intelligence
+      await captureUserLead(job.resumeContent, jobId, 'create', job.email ?? undefined, req);
+
+      // Optimize the constructed resume with timeout
+      const result = await Promise.race([
+        optimizeResumeStandard(job.resumeContent),
+        new Promise((_, reject) => 
+          setTimeout(() => reject(new Error("Optimization timeout")), 60000)
+        )
+      ]) as any;
+
+      // Create downloadable document
+      const docExport = await createDownloadableDocument(
+        result.optimizedContent,
+        job.resumeFileName.replace(/\.(pdf|docx)$/i, ''),
+        jobId
+      );
+
+      // Update job with results
+      const outputFiles = {
+        type: 'standard' as const,
+        googleDoc: {
+          docUrl: docExport.docUrl,
+          pdfUrl: docExport.pdfUrl,
+          docId: docExport.docId
+        },
+        improvements: result.improvements
+      };
+
+      await storage.updateResumeJob(jobId, {
+        status: "completed",
+        outputFiles,
+        completedAt: new Date(),
+      });
+
+      const duration = Date.now() - startTime;
+      console.log(`✅ Resume creation completed for job ${jobId} in ${duration}ms`);
+
+      // Send completion email if email provided
+      if (job.email) {
+        try {
+          await sendResumeCompletionEmail(
+            job.email,
+            jobId,
+            'create',
+            outputFiles
+          );
+        } catch (error) {
+          console.error("Failed to send completion email:", error);
+        }
+      }
+
+    } catch (error) {
+      console.error(`❌ Create optimization failed for job ${jobId}:`, error);
+      await storage.updateResumeJob(jobId, {
+        status: "failed",
+        outputFiles: { error: error instanceof Error ? error.message : "Unknown error" },
+        completedAt: new Date(),
       });
     }
   }
