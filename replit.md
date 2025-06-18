@@ -98,6 +98,10 @@ UpMySalary is a web application that uses AI to optimize resumes, offering both 
 
 ## Changelog
 
+- June 18, 2025. Implemented Airtable integration for lead capture and storage
+- June 18, 2025. Added "Start from Scratch" feature with supporting document uploads  
+- June 18, 2025. Fixed API routing issues and enhanced email notifications
+- June 18, 2025. Removed Git version control at user request
 - June 17, 2025. Initial setup
 
 ## User Preferences

@@ -1,3 +1,7 @@
+# This file was previously used for Git version control
+# Git has been removed from this project
+# Keep this for reference if version control is re-added later
+
 node_modules
 dist
 .DS_Store
